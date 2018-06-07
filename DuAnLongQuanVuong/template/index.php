@@ -24,7 +24,12 @@
     <div class="container-fluid">
         <div class="row bg-transparent">
             <div class="col-sm-12 text-center">
-                <h1 class="text-info text-capitalize">Chương trình quản lý nhạc cụ</h1>
+                <div class="col-sm-4">
+                    
+                </div>
+                <div class="col-sm-8">
+                
+                </div>
             </div>
         </div>
 <?php
