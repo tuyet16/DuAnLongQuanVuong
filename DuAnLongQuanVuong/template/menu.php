@@ -4,15 +4,15 @@ ob_start(); //Bien luu = chuoi
 <div class="row bg-dark">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
       <!-- Brand -->
-      <a class="navbar-brand" href="../Controllers/admin_controller.php">Logo</a>
+      <a class="navbar-brand" href="../Controllers/home_controller.php">Logo</a>
     
       <!-- Links -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="#">Link 1</a>
+          <a class="nav-link" href="#">Trang chủ</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link 2</a>
+          <a class="nav-link" href="#">Giới thiệu</a>
         </li>
     
         <!-- Dropdown -->

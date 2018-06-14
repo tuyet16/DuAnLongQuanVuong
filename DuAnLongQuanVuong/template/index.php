@@ -20,26 +20,36 @@
 </head>
 
 <body>
-    
-    <div class="container-fluid">
-        <div class="row bg-transparent">
-            <div class="col-sm-12 text-center">
-                <div class="col-sm-4">
-                    
-                </div>
-                <div class="col-sm-8">
-                
-                </div>
-            </div>
-        </div>
-<?php
+    <?php
     if(isset($GLOBALS['template']['menu'])){
         echo $GLOBALS['template']['menu'];
     }
-    if(isset($GLOBALS['template']['content'])){
-        echo $GLOBALS['template']['content'];
-    }
+    
 ?>
+    <div class="container-fluid" style="padding-top: 70px;">
+        <div class="row">
+            
+        </div>
+        <div class="row bg-transparent">
+           <div class="col-sm-3">
+                <?php
+                
+                if(isset($GLOBALS['template']['leftmenu'])){
+                    echo $GLOBALS['template']['leftmenu'];
+                 }
+                ?>
+         </div>
+        
+            <div class="col-md-9" id="dichvu">
+                    <?php
+                if(isset($GLOBALS['template']['content'])){
+                    echo $GLOBALS['template']['content'];
+                }
+            ?>
+    </div>
+        </div>
+
+
 
     </div>     
    
