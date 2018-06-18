@@ -1,4 +1,5 @@
-<!DOCTYPE HTML><head>
+<!DOCTYPE HTML>
+<head>
 	<meta http-equiv="content-type" content="text/html" />
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -10,11 +11,13 @@
     ?>
     </title>
 
-    <link type="text/css" rel="stylesheet" href="../views/css/bootstrap.min.css"/> 
-     <script src="../views/js/jquery.js"> </script>
-    <script src="../views/js/bootstrap.min.js"></script>       
+   <link type="text/css" rel="stylesheet" href="../views/css/bootstrap.min.css"/> 
+   <link type="text/css" rel="stylesheet" href="../views/css/font-awesome.css"/>
+     <script src="../Views/js/jquery.min.js"> </script>
+    <script src="../Views/js/bootstrap.min.js"></script>       
     <script src="../Views/js/jquery.validate.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="../views/css/styles.css"  />
+   <link type="text/css" rel="stylesheet" href="../views/css/styles.css"/>
+    <link type="text/css" rel="stylesheet" href="../views/css/designer.css"/>
     <script src="../views/js/script.js"></script>
 
 </head>
@@ -26,10 +29,8 @@
     }
     
 ?>
-    <div class="container-fluid" style="padding-top: 70px;">
-        <div class="row">
-            
-        </div>
+    <div class="container-fluid">
+
         <div class="row bg-transparent">
            <div class="col-sm-3">
                 <?php
@@ -38,21 +39,28 @@
                     echo $GLOBALS['template']['leftmenu'];
                  }
                 ?>
-         </div>
+            </div>
         
-            <div class="col-md-9" id="dichvu">
+            <div class="col-sm-9">
                     <?php
                 if(isset($GLOBALS['template']['content'])){
                     echo $GLOBALS['template']['content'];
                 }
             ?>
-    </div>
+            </div>
+        </div>
+        <div class="row">
+            <?php 
+                if(isset($GLOBALS['template']['footer'])){
+                    echo $GLOBALS['template']['footer'];
+            }
+             ?>
         </div>
 
 
 
     </div>     
    
-    </div> 
+     
 </body>
 </html>
