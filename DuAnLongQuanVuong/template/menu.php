@@ -54,7 +54,21 @@ ob_start(); //Bien luu = chuoi
               <li><a href="#">Page 1-3</a></li>
             </ul>
           <li><a href="#" style="color: white;">Liên hệ</a></li>
-          <li><a href="#" style="color: white;">Page 3</a></li>
+          <!-- Dropdown -->
+            <li class="nav-item dropdown">
+              	<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: white;"> Quản lý <span class="caret"></span></a>
+              	<ul class="dropdown-menu">
+					  <?php
+                        foreach($tables as $table):
+                      		?>
+                            <li><a class="dropdown-item" href="../Controllers/<?php echo $table->Tables_in_duan .'_controller.php';?>">
+                                <?php echo $table->Tables_in_duan;?>
+                            </a></li>
+                          <?php
+                        endforeach;
+                      ?>
+              </ul>
+            </li>
         </ul>
       </div>
     </nav>

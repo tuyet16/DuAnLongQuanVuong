@@ -6,5 +6,5 @@
  * and open the template in the editor.
  */
 
-header('Location: Controllers/admin_controller.php');
+header('Location: Controllers/home_controller.php');
 ?>

@@ -11,6 +11,8 @@
     }
 	switch($action){
 		case 'index':
+			$tableDB = new Database();
+            $tables = $tableDB->getTables();
 			$view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
             $GLOBALS['template']['leftmenu'] = include_once'../template/leftmenu.php';
