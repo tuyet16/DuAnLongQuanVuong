@@ -1,10 +1,65 @@
-
-.list-group-item{
-    background-color:darkblue;
+.list-title{
     color: white;
+    background-color: darkblue;
+    padding:10px;
+    font-size:120%;
+    
+}
+.list-group .list-group-item{
+   background-color: #F3F3F3;    
     font-family:sans-serif;
-    border: 1px solid white;
+    border: thin solid white;
 }
 .ul li{
     list-style: none;
+}
+.wish-list {
+	padding: 15px 0;
+	border-bottom: 1px solid #E5E5E5;
+	border-top: 1px solid #E5E5E5;
+}
+.wish-list li {
+	display: inline-block;
+	margin-right: 45px;
+}
+.wish-list li a {
+	color:#df1f26;
+	font:500 14px/14px 'Lato', sans-serif;
+	padding-left: 22px;
+	text-decoration: underline;
+}
+.wish-list li a:hover{
+	text-decoration:none;
+}
+.wish-list li.wish {
+	background: url(../images/wishlist.png) no-repeat 0;
+}
+.wish-list li.compare {
+	background: url(../images/compare.png) no-repeat 0;
+	margin-right: 0;
+}
+ul.size {
+	padding: 0;
+	list-style: none;
+	margin-top: 2em;
+}
+ul.size h3 {
+	color:#3e3f3f;
+	font:600 16px/16px 'Lato', sans-serif;
+	text-transform: uppercase;
+	margin-bottom: 15px;
+}
+ul.size li {
+	display: inline-block;
+	margin: 0 10px 0 0;
+}
+ul.size li a {
+	color: #555;
+	font:500 14px/14px 'Lato', sans-serif;
+	background:#DFDFDF;
+	padding: 5px 10px;
+}
+ul.size li a:hover{
+	background:#df1f26;
+	color:#fff;
 }
