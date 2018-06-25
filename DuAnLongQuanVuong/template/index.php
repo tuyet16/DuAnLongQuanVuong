@@ -18,6 +18,8 @@
     <script src="../Views/js/jquery.validate.min.js"></script>
    <link type="text/css" rel="stylesheet" href="../views/css/styles.css"/>
     <link type="text/css" rel="stylesheet" href="../views/css/designer.css"/>
+    <link type="text/css" rel="stylesheet" href="../views/css/pgwslideshow.min.css"/>
+    <script src="../Views/js/pgwslideshow.min.js"></script>
     <script src="../views/js/script.js"></script>
 
 </head>
@@ -29,7 +31,7 @@
     }
     
 ?>
-    <div class="container-fluid">
+    <div class="container-fluid" style="padding-top: 10px;" >
 
         <div class="row bg-transparent">
            <div class="col-sm-3">

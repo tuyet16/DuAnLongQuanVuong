@@ -1,11 +1,20 @@
-<?php ob_start(); ?>
+<?php ob_start(); 
+?>
+<script>
+    $(document).ready(function(){
+        $('.pgwSlideshow').pgwSlideshow();
+    });
+</script>
 <div class="row">
-    <div class="col-md-5">
-        <div class="col-md-12" style="padding-bottom: 10px;"><img src="../Views/images/q1.jpg" /></div>
+    <div class="col-md-4">
         <div class="row">
-            <div class="col-md-3"><img src="../Views/images/q1.jpg" width="100px" /></div>
-            <div class="col-md-3"><img src="../Views/images/q1.jpg" width="100px" /></div>
-            <div class="col-md-3"><img src="../Views/images/q1.jpg" width="100px" /></div>
+            <ul class="pgwSlideshow">
+                <li><img src="../Views/images/q1.jpg" alt="San Francisco, USA" data-description="Golden Gate Bridge"/></li>
+                <li><img src="../Views/images/q1.jpg" alt="Rio de Janeiro, Brazil"/></li>
+               <!-- <li><img src="../Views/images/q1.jpg" alt="" data-large-src="london.jpg"/></li>-->
+                <li><img src="../Views/images/q1.jpg" alt=""/></li>
+                <li><img src="../Views/images/q1.jpg" alt=""/></li>               
+            </ul>
         </div>
     </div>
     <form method="post">

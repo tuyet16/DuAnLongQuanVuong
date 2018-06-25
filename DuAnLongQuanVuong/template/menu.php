@@ -16,11 +16,11 @@ ob_start(); //Bien luu = chuoi
   <!-- Wrapper for slides -->
   <div class="carousel-inner">
     <div class="item active">
-      <img src="../Views/images/cr5.jpg" width="100%" alt="Los Angeles">
+      <img src="../Views/images/cr5.jpg" width="100%" alt="Los Angeles"/>
     </div>
 
     <div class="item">
-      <img src="../Views/images/cr4.jpg" width="100%" alt="Chicago">
+      <img src="../Views/images/cr4.jpg" width="100%" alt="Chicago"/>
     </div>
 
    
@@ -38,25 +38,26 @@ ob_start(); //Bien luu = chuoi
 </div>
     </div>
 </div>
-    <nav class="navbar navbar-default" style="background-color: darkblue;">
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: darkblue;color: yellow;border: 1px solid darkblue;">
       <div class="container">
         <div class="navbar-header">
            <a class="navbar-brand" href="../Controllers/home_controller.php" style="color: white;">Logo</a>
         </div>
-        <ul class="nav navbar-nav" >
-          <li><a href="#" style="color: white;">Trang Chủ</a></li>
+        <ul class="nav navbar-nav">
+          <li><a href="#">Trang Chủ</a></li>
           <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="color: white;">Sản Phẩm
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sản Phẩm
             <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="#">Page 1-1</a></li>
               <li><a href="#">Page 1-2</a></li>
               <li><a href="#">Page 1-3</a></li>
             </ul>
-          <li><a href="#" style="color: white;">Liên hệ</a></li>
+          <li>
+          <a href="#">Liên hệ</a></li>
           <!-- Dropdown -->
             <li class="nav-item dropdown">
-              	<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color: white;"> Quản lý <span class="caret"></span></a>
+              	<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> Quản lý <span class="caret"></span></a>
               	<ul class="dropdown-menu">
 					  <?php
                         foreach($tables as $table):
@@ -69,7 +70,19 @@ ob_start(); //Bien luu = chuoi
                       ?>
               </ul>
             </li>
+            
         </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <form class="navbar-form navbar-left">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Tìm Kiếm"/>
+              </div>
+              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </form>
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span>Đăng Ký</a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</a></li>
+        </ul>
+        
       </div>
     </nav>
 <!--

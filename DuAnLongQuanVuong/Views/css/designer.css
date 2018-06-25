@@ -9,10 +9,17 @@
    background-color: #F3F3F3;    
     font-family:sans-serif;
     border: thin solid white;
+    
 }
 .ul li{
     list-style: none;
 }
+.navbar-nav{
+    color: yellow;
+    background-color: darkblue;
+}
+
+
 .wish-list {
 	padding: 15px 0;
 	border-bottom: 1px solid #E5E5E5;

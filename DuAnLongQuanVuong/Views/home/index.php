@@ -1,7 +1,7 @@
 <?php
 ob_start();
 ?>
-    <div class="row well well-sm"><b>Sản Phẩm Mới</b></div>
+    <div class="row well well-sm"><b style="font-size: 120%;color:#FF2020;">Sản Phẩm Mới</b></div>
     <div class="row" style="padding-top: 10px;">        
         <div class="col-md-3">
             <div class="card" style="border: 1px solid silver;">
@@ -11,7 +11,7 @@ ob_start();
                 <div class="card-body" style="padding: 20px;text-align: center;">
                     <h4>Set đồ đẹp</h4>
                     <h4 style="color: #D52072;">500.000 vnđ</h4>
-                    <button class="btn btn-primary" style="background-color: blue;">Mua hàng</button>
+                    <button class="btn btn-danger">Mua hàng</button>
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@ ob_start();
                 <div class="card-body" style="padding: 20px;">
                     <h4>Set đồ đẹp</h4>
                     <h4 style="color: #D52072;">500.000 vnđ</h4>
-                    <button class="btn btn-primary" style="background-color: blue;">Mua hàng</button>
+                    <button class="btn btn-danger">Mua hàng</button>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@ ob_start();
                 <div class="card-body" style="padding: 20px;">
                     <h4>Set đồ đẹp</h4>
                     <h4 style="color: #D52072;">500.000 vnđ</h4>
-                    <button class="btn btn-primary" style="background-color: blue;">Mua hàng</button>
+                    <button class="btn btn-danger">Mua hàng</button>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@ ob_start();
                 <div class="card-body" style="padding: 20px;">
                     <h4>Set đồ đẹp</h4>
                     <h4 style="color: #D52072;">500.000 vnđ</h4>
-                    <button class="btn btn-primary" style="background-color: blue;">Mua hàng</button>
+                    <button class="btn btn-danger">Mua hàng</button>
                 </div>
             </div>
         </div>
@@ -62,7 +62,7 @@ ob_start();
                 <div class="card-body" style="padding: 20px;">
                     <h4>Set đồ đẹp</h4>
                     <h4 style="color: #D52072;">500.000 vnđ</h4>
-                    <button class="btn btn-primary" style="background-color: blue;">Mua hàng</button>
+                    <button class="btn btn-danger">Mua hàng</button>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@ ob_start();
                 <div class="card-body" style="padding: 20px;">
                     <h4>Set đồ đẹp</h4>
                     <h4 style="color: #D52072;">500.000 vnđ</h4>
-                    <button class="btn btn-primary" style="background-color: blue;">Mua hàng</button>
+                    <button class="btn btn-danger">Mua hàng</button>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@ ob_start();
                 <div class="card-body" style="padding: 20px;">
                     <h4>Set đồ đẹp</h4>
                     <h4 style="color: #D52072;">500.000 vnđ</h4>
-                    <button class="btn btn-primary" style="background-color: blue;">Mua hàng</button>
+                    <button class="btn btn-danger">Mua hàng</button>
                 </div>
             </div>
         </div>
@@ -98,7 +98,7 @@ ob_start();
                 <div class="card-body" style="padding: 20px;">
                     <h4>Set đồ đẹp</h4> 
                     <h4 style="color: #D52072;">500.000 vnđ</h4>                   
-                    <button class="btn btn-primary" style="background-color: blue;">Mua hàng</button>
+                    <button class="btn btn-danger">Mua hàng</button>
                 </div>
             </div>
         </div>        

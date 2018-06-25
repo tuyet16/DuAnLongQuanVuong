@@ -2,7 +2,7 @@
 	ob_start();
 ?>
     	<fieldset>
-        	<legend style="80%">Thêm nhân viên</legend>
+        	<legend style="80%;color: #21B124;"><b>Thêm nhân viên</b></legend>
                 <form method="post" action="">
                     <div class="row">
                     	<div class="col-md-2">Mã nhân viên</div> 
@@ -28,7 +28,7 @@
         <fieldset>
         	<legend>Danh sách nhân viên</legend>
                 <table class="table table-bordered table-striped">
-                  <tr style="background-color:darkblue;color:#FFF">
+                  <tr style="background-color: darkblue;color:#FFF">
                     <td>&nbsp;STT</td>
                     <td>&nbsp; Mã NV</td>
                     <td>&nbsp; Tên NV</td>
