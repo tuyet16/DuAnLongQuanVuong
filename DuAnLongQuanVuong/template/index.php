@@ -10,14 +10,12 @@
         } 
     ?>
     </title>
-
-   <link type="text/css" rel="stylesheet" href="../views/css/bootstrap.min.css"/> 
-   <link type="text/css" rel="stylesheet" href="../views/css/font-awesome.css"/>
+    <link type="text/css" rel="stylesheet" href="../views/css/designer.css"/>
+   	<link type="text/css" rel="stylesheet" href="../views/css/bootstrap.min.css"/> 
+   	<link type="text/css" rel="stylesheet" href="../views/css/font-awesome.css"/>
      <script src="../Views/js/jquery.min.js"> </script>
     <script src="../Views/js/bootstrap.min.js"></script>       
     <script src="../Views/js/jquery.validate.min.js"></script>
-   <link type="text/css" rel="stylesheet" href="../views/css/styles.css"/>
-    <link type="text/css" rel="stylesheet" href="../views/css/designer.css"/>
     <link type="text/css" rel="stylesheet" href="../views/css/pgwslideshow.min.css"/>
     <script src="../Views/js/pgwslideshow.min.js"></script>
     <script src="../views/js/script.js"></script>
@@ -59,10 +57,16 @@
              ?>
         </div>
 
+<<<<<<< HEAD
 
 
     </div>   
     
+=======
+    </div>     
+   
+  </div>
+>>>>>>> 77b1da4fd6ec8bb62d219ff86eeb36f3a7788a4f
      
 </body>
 </html>
