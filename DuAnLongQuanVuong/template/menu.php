@@ -80,7 +80,7 @@ ob_start(); //Bien luu = chuoi
               <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
             </form>
             <li><a href="#"><span class="glyphicon glyphicon-user"></span>Đăng Ký</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</a></li>
+      <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</a></li>
         </ul>
         
       </div>
