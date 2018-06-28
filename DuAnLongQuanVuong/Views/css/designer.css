@@ -11,6 +11,23 @@
     border: thin solid white;
     
 }
+.close_modal {
+	float:right;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1;
+    color:#F00;
+    text-shadow: 0 0px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: 1;
+}
+.close_modal:hover, .close_modal:focus{
+	color: #006;
+    text-decoration: none;
+    cursor: pointer;
+    filter: alpha(opacity=50);
+    opacity: 1;	
+}
 .ul li{
     list-style: none;
 }
@@ -175,7 +192,7 @@ button.close:hover{
 
 /*--Login form--*/
 .login-form input[type="text"],.login-form input[type="password"]  {
-    width: 85%;
+    width: 100%;
     padding: 10px 10px 10px 35px;
     font-weight: normal;
     background: none;
@@ -217,7 +234,7 @@ button.close:hover{
     opacity:0.95;
 }
 input#email {
-    width: 85%;
+    width: 100%;
     padding: 10px 10px 10px 35px;
     font-weight: normal;
     background: none;
@@ -233,8 +250,25 @@ input#email {
     -moz-transition: 0.5s all;
 	    background: url(../images/email.png)no-repeat 8px 10px #fff;
 }
+input#address {
+    width: 100%;
+    padding: 10px 10px 10px 35px;
+    font-weight: normal;
+    background: none;
+    border: 1px solid #8FA4B9;
+    color: #545454;
+    outline: none;
+    font-size: 14px;
+    margin: 6px 0 17px 0px;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+	    background: url(../images/map.png)no-repeat 8px 10px #fff;
+}
 input#username {
-	width: 85%;
+	width: 100%;
     padding: 10px 10px 10px 35px;
     font-weight: normal;
     background: none;
@@ -251,7 +285,7 @@ input#username {
 	    background: url(../images/user.png)no-repeat 8px 10px #fff;	
 }
 input#tel {
-	width: 85%;
+	width: 100%;
     padding: 10px 10px 10px 35px;
     font-weight: normal;
     background: none;
@@ -267,7 +301,7 @@ input#tel {
     -moz-transition: 0.5s all;
 	    background: url(../images/phone.png)no-repeat 8px 10px #fff;	
 }
-.login-form input.user {
+.login-form input.email {
   background: url(../images/email.png)no-repeat 8px 10px #fff;
 }
 .login-form input.lock {
@@ -335,3 +369,4 @@ h5.or {
 	display:inline-block;
 	margin:0 5px;
 }
+
