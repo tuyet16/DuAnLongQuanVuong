@@ -1,7 +1,21 @@
 <?php
 ob_start(); //Bien luu = chuoi
 ?>
-
+ <script type="text/javascript">
+	window.onload = function () {
+		document.getElementById("password1").onchange = validatePassword;
+		document.getElementById("password2").onchange = validatePassword;
+	}
+	function validatePassword(){
+	var pass2=document.getElementById("password2").value;
+	var pass1=document.getElementById("password1").value;
+	if(pass1!=pass2)
+		document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+	else
+		document.getElementById("password2").setCustomValidity('');
+	//empty string means no validation error
+	}
+</script>
 <div class="row" style="background-color:#AAD5FF ;">
    
     <div class="col-md-12">
@@ -79,53 +93,103 @@ ob_start(); //Bien luu = chuoi
               </div>
               <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
             </form>
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span>Đăng Ký</a></li>
-      <li><a href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#mySignup"><span class="glyphicon glyphicon-user"></span>Đăng Ký</a></li>
+      <li><a href="#" data-toggle="modal" data-target="#myLogin"><span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</a></li>
         </ul>
         
       </div>
     </nav>
-<!--
-
--->
-<!--
-<div class="row bg-dark">
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-      <!-- Brand 
-      <a class="navbar-brand" href="../Controllers/admin_controller.php">Logo</a>
-    
-      <!-- Links 
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link 1</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link 2</a>
-        </li>
-           
-        <!-- Dropdown -->
-        <!--
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-            Quản lý
-          </a>
-          <div class="dropdown-menu">
-          <?php
-            //foreach($tables as $table):
-          ?>
-            <a class="dropdown-item" href="../Controllers/<?php //echo $table->Tables_in_my_guitar_shop2 .'_controller.php';?>">
-                <?php //echo $table->Tables_in_my_guitar_shop2;?>
-            </a>
-          <?php
-           // endforeach;
-          ?>
-          </div>
-        </li>
+    <!-- Modal -->
+   		<!--Login-->
+    <div class="modal fade" id="myLogin" role="dialog">
+        <div class="modal-dialog" style="width:28%">
         
-      </ul>
-    </nav>
-</div>
--->
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none;text-align: center;background-color: #314D68;padding: 22px 12px; color:#FFF">
+              <button type="button" class="close" data-dismiss="modal">x</button>
+              <h4 class="modal-title">Đăng nhập</h4>
+            </div>
+            <div class="modal-body" style="padding: 30px 35px 35px;">
+                <div class="login-form">
+                    <form action="" method="post" id="signin">
+                        <input type="text" class="user" name="email" placeholder="Email" required="">
+                        <input type="password" class="lock" name="password" placeholder="Mật khẩu" required="" value="">
+                        <div class="signin-rit">
+                            <span class="checkbox1">
+                                 <label class="chk"><input type="checkbox" name="checkbox" checked="">Ghi nhớ</label>
+                            </span>
+                                <a class="forgot play-icon popup-with-zoom-anim" href="#small-dialog3">Quên mật khẩu?</a>
+                            <div class="clear"> </div>
+                        </div>
+                        <input type="submit" value="Đăng nhập">
+                    </form>
+                    <p>Bạn chưa có tài khoản?<a href="#small-dialog2" class="play-icon popup-with-zoom-anim">Tạo tài khoản</a></p>
+                  <!--<h5 class="or">(or)</h5>
+                    <div class="social-icons">
+                        <ul>
+                            <li><a href="#"class="facebook"><img src="../Views/images/fb.png" title="facebook" alt="facebook" /></a></li>
+                            <li><a href="#"class="twitter"><img src="../Views/images/tw.png" width="80%" title="Tiwtter" alt="Tiwtter" /></a></a></li>
+                            <li><a href="#"class="googleplus"><img src="../Views/images/gp.png" width="10%" title="Google Plus" alt="Google Plus" /></a></a></li>
+                        </ul>
+                    </div>-->
+                </div>
+            </div>
+          </div>
+          </div>
+        </div>
+        
+        <!--Sign up-->
+        <div class="modal fade" id="mySignup" role="dialog">
+        <div class="modal-dialog" style="width:28%">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none;text-align: center;background-color: #314D68;padding: 22px 12px; color:#FFF">
+              <button type="button" class="close" data-dismiss="modal">x</button>
+              <h4 class="modal-title">Đăng kí</h4>
+            </div>
+            <div class="modal-body" style="padding: 30px 35px 35px;">
+               	<div class="login-form">
+                    <form action="" method="post" id="signup">
+                        <ol>
+                            <li>
+                                <input type="text" id="username" name="username" placeholder="Họ và tên" title="Vui lòng nhập tên của bạn" required="">
+                            </li>
+                            <li>
+                                <input type="email" id="email" name="email" placeholder="mail@example.com" title="Vui lòng nhập email" required="">
+                                <p class="validation01">
+                                    <span class="invalid">Ví dụ: ryan@example.com</span>
+                                </p>
+                            </li>
+                            <li>
+                                <input type="tel" id="tel" name="tel" placeholder="Vui lòng nhập số điện thoại" required="">
+                                <p class="validation01">
+                                    <span class="invalid">Ví dụ: 09612345678</span>
+                                </p>
+                            </li>
+                            <li>
+                            	<input type="password" class="lock" name="password" placeholder="Mật khẩu" id="password1" required="">
+        
+                            </li>
+                            <li>
+                       			 <input type="password" class="lock" name="password1" placeholder="Mật khẩu nhập lại" id="password2" required="">
+                        	</li>
+                        </ol>
+                        <div class="signin-rit">
+                            <span class="checkbox1">
+                                 <label class="chk"><input type="checkbox" name="checkbox" checked="">Tôi đồng ý với<a class="pp" target="_blank" href="#"> Điều khoản bảo mật</a></label>
+                            </span>
+                            <div class="clear"> </div>
+                        </div>
+                         <input type="submit" value="Đăng kí">
+                    </form>
+                    <p>Bạn đã có tài khoản? <a href="#myLogin" class="play-icon popup-with-zoom-anim">Đăng nhập ngay</a></p>
+                </div>
+                </div>
+              </div>
+            </div>
+        </div>
 <?php
 return ob_get_clean();
 ?>
