@@ -16,44 +16,47 @@
             $tables = $tableDB->getTables();
             $view = Page::View();
             $GLOBALS['template']['menu'] = include_once '../template/menu.php';
-            $GLOBALS['template']['leftmenu'] = include_once '../template/leftmenu.php';
+            $GLOBALS['template']['leftmenu'] = include_once '../template/shopleftmenu.php';
             $GLOBALS['template']['content'] = include_once $view;
             $GLOBALS['template']['footer'] = include_once'../template/footer.php';
             include_once('../template/index.php');           
         break;
-        case 'services':
+        case 'dangnhap':
 			$tableDB = new Database();
             $tables = $tableDB->getTables();
             $view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
-            $GLOBALS['template']['leftmenu'] = include_once'../template/leftmenu.php';
+            $GLOBALS['template']['leftmenu'] = include_once'../template/shopleftmenu.php';
             $GLOBALS['template']['content'] = include_once $view;
             $GLOBALS['template']['footer'] = include_once'../template/footer.php';
             include_once('../template/index.php');
         break;
-         case 'chitiet':
-		 	$tableDB = new Database();
+        case 'suasanpham':
+         $tableDB = new Database();
             $tables = $tableDB->getTables();
             $view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
-            $GLOBALS['template']['leftmenu'] = include_once'../template/leftmenu.php';
+            $GLOBALS['template']['leftmenu'] = include_once'../template/shopleftmenu.php';
             $GLOBALS['template']['content'] = include_once $view;
             $GLOBALS['template']['footer'] = include_once'../template/footer.php';
             include_once('../template/index.php');
-        break;
-         case 'mypham':
-		 	$tableDB = new Database();
+            break;
+         case 'themsanpham':
+            $tableDB = new Database();
             $tables = $tableDB->getTables();
             $view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
-            $GLOBALS['template']['leftmenu'] = include_once'../template/leftmenu.php';
+            $GLOBALS['template']['leftmenu'] = include_once'../template/shopleftmenu.php';
             $GLOBALS['template']['content'] = include_once $view;
             $GLOBALS['template']['footer'] = include_once'../template/footer.php';
             include_once('../template/index.php');
-        break;
-        case 'dathang':
+            break;
+         case 'donhang':
+            $tableDB = new Database();
+            $tables = $tableDB->getTables();
+            $view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
-            $GLOBALS['template']['leftmenu'] = include_once'../template/leftmenu.php';
+            $GLOBALS['template']['leftmenu'] = include_once'../template/shopleftmenu.php';
             $GLOBALS['template']['content'] = include_once $view;
             $GLOBALS['template']['footer'] = include_once'../template/footer.php';
             include_once('../template/index.php');

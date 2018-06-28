@@ -3,7 +3,7 @@
 ?>
     	<fieldset>
         	<legend style="80%;color: darkblue;"><b>Thêm nhân viên</b></legend>
-                <form method="post" action="">
+                <form method="post" action="../Controllers/home_controller.php?action=dathang">
                     <div class="row">
                     	<div class="col-md-2">Mã nhân viên</div> 
                        	<div class="col-md-5"> <input type="text" class="form-control" width="60%"/></div>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once '../Errors/mvcexception.php';
 /**
  * Hàm này tự động tìm các tập tin có cùng tên với class và nạp vào file đang thiếu class đó 
