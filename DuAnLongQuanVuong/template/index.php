@@ -56,17 +56,7 @@
             }
              ?>
         </div>
-
-<<<<<<< HEAD
-
-
     </div>   
-    
-=======
-    </div>     
-   
-  </div>
->>>>>>> 77b1da4fd6ec8bb62d219ff86eeb36f3a7788a4f
      
 </body>
 </html>
