@@ -33,6 +33,7 @@
                   <div class="card-body">
                     <div class="container-fluid">
                     <div class="row">
+                        <legend>Danh Sách Đơn Hàng</legend>
                         <table class="table table-bordered table-striped text-center">
                             <tr style="background-color:green; color: white; ">
                                 <td>STT</td>

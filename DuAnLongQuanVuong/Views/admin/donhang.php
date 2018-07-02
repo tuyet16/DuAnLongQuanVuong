@@ -15,7 +15,8 @@
       </tr>
       <div id="accordion">
       <tr>
-        <td colspan="7" style="color: red;"><h4>Ngày 28/6/2018</h4></td>
+        <td colspan="7" style="color: red;"><h4>Ngày 28/6/2018
+        <input type="submit" name="in" value="In đơn hàng" class="btn btn-danger"/></h4></td>
       </tr>
       
           <tr>
@@ -73,14 +74,10 @@
                                     <option>Nguyễn Văn b</option>
                                 </select>
                             </div>
-                            <div class="row">
-                                Phí Ship: 
-                                30.000đ
-                            </div>
                         </div>
-                            <div class="col-md-2"><input type="radio" name="dagiao" value="" /> Đã Giao</div>
-                            <div class="col-md-2"><input type="radio" name="chuagiao" value="" /> Chưa Giao</div>
-                            <div class="col-md-2"><input type="radio" name="huydon" value="" /> Hủy đơn hàng</div>
+                            <div class="col-md-2"><input type="radio" name="rd" value="1" /> Đã Giao</div>
+                            <div class="col-md-2"><input type="radio" name="rd" value="2" checked/> Chưa Giao</div>
+                            <div class="col-md-2"><input type="radio" name="rd" value="3" /> Hủy đơn hàng</div>
                             <div class="col-md-3 text-center"><button type="submit" class="btn btn-success">Gửi đơn hàng</button></div>
                         </div>
                     </div>
@@ -257,12 +254,7 @@
         
 
 </table>
-<div class="pull-right">
-    <a href="../Controllers/employees_controller.php?action=bangluong"><input type="submit" name="in" value="Bảng lương nhân viên" class="btn btn-danger"/></a>    
-    <a href="../Controllers/shop_controller.php?action=doanhthu"><input type="submit" name="in" value="Doanh Thu" class="btn btn-danger"/></a>
-    <input type="submit" name="in" value="In đơn hàng" class="btn btn-danger"/>
-</div>
-  
+
 <?php
 	return ob_get_clean();
 ?>

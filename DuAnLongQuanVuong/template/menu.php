@@ -93,8 +93,14 @@ ob_start(); //Bien luu = chuoi
               </div>
               <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
             </form>
+            <?php if(isset($_SESSION['email']))
+            {
+                echo '<li><a>Xin chào '. $_SESSION['email'].'</a></li>';
+                echo '<li><a href="../Controllers/users_controller.php?action=logout">Logout</a></li>';
+            } else{?>       
             <li><a href="#" data-toggle="modal" data-target="#mySignup"><span class="glyphicon glyphicon-user"></span>Đăng Ký</a></li>
       <li><a href="#" data-toggle="modal" data-target="#myLogin"><span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</a></li>
+        <?php }?>
         </ul>
         
       </div>

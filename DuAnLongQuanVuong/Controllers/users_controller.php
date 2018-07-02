@@ -22,24 +22,23 @@ include_once('../Libs/messagebox_lib.php');
         include_once('../template/index.php');
         break;
         case 'dangnhap':
+            
             if(isset($_POST['email']) && isset($_POST['password']))
             {
                 if($_POST['email']=='admin' && $_POST['password']=='admin')
                 {
-                    $role = 1;
-                    if(isset($_POST['dangnhap']))
-                    {
-                        setcookie('email',$_POST['email'],time()+3600);
-                        setcookie('password',$_POST['password'],time()-3600);                        
-                    }
                     $_SESSION['email']= $_POST['email'];
-                    $_SESSION['role']= $role;
-                    header('Location: shop_controller.php');
+                    header('Location: admin_controller.php');
                     exit();
                 }
                 else
                 {
-                    MessageBox::Show('Tài khoản hoặc mật khẩu không đúng',MB_CONFIRM);                    
+                    if($_POST['email']=='abc' && $_POST['password']=='abc')
+                    {
+                        $_SESSION['email']= $_POST['email'];
+                        header('Location: shop_controller.php');
+                        exit();
+                    }
                 }
             }
             else
@@ -48,9 +47,13 @@ include_once('../Libs/messagebox_lib.php');
                 {
                      header('Location: home_controller.php'); 
                 }
-            }
-           
+            }           
         break;
+        case 'logout':
+            session_destroy();
+            header('Location: home_controller.php');
+        break;
+        
     }
 
 ?>

@@ -10,7 +10,7 @@
                     </div>
                     <div class="row" style="margin-top:2px">
                     	<div class="col-md-2">Shop</div> 
-                       	<div class="col-md-5"> <input type="text" class="form-control" width="60%" disabled/></div>
+                       	<div class="col-md-5"> <input type="text" class="form-control" width="60%" disabled /></div>
                     </div>
                      <div class="row" style="margin-top:2px">
                     	<div class="col-md-2">Loại sản phẩm</div> 
