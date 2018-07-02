@@ -1,8 +1,6 @@
 <?php
 ob_start(); //Bien luu = chuoi
 ?>
-<div class="row" style="background-color:#AAD5FF;margin-top: 3%;">    
-
  <script type="text/javascript">
 	window.onload = function () {
 		document.getElementById("password1").onchange = validatePassword;
@@ -19,35 +17,39 @@ ob_start(); //Bien luu = chuoi
 	}
 </script>
 <div class="row" style="background-color:#AAD5FF ;">
+   
     <div class="col-md-12">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
-          <!-- Indicators -->
-          <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-          </ol>
-        
-          <!-- Wrapper for slides -->
-          <div class="carousel-inner">
-            <div class="item active">
-              <img src="../Views/images/cr5.jpg" width="100%" alt="Los Angeles"/>
-            </div>
-        
-            <div class="item">
-              <img src="../Views/images/cr4.jpg" width="100%" alt="Chicago"/>
-            </div>
-        </div>        
-          <!-- Left and right controls -->
-          <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active">
+      <img src="../Views/images/cr5.jpg" width="100%" alt="Los Angeles"/>
+    </div>
+
+    <div class="item">
+      <img src="../Views/images/cr4.jpg" width="100%" alt="Chicago"/>
+    </div>
+
+   
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
     </div>
 </div>
     <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: darkblue;color: yellow;border: 1px solid darkblue;">
@@ -91,89 +93,6 @@ ob_start(); //Bien luu = chuoi
               </div>
               <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
             </form>
-
-            <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user" style="font-size: 24px;"></i>
-            <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-               <li><a href="#"><span class="glyphicon glyphicon-user"></span> Đăng Ký</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#myModal" ><span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</a></li>
-            </ul>
-          <li>
-           
-        </ul>        
-      </div>
-    </nav>
-
-<form method="post" action="users_controller.php?action=dangnhap">
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-    
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header" style="background-color: red;color: white;">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Đăng Nhập Tài Khoản</h4>
-          </div>
-          <div class="modal-body">
-          <div class="row">
-            <div class="col-md-3">Tài khoản</div>
-            <div class="col-md-9"><input type="text" class="form-control" name="user" /></div>
-          </div>
-          <div class="row" style="padding-top: 10px;">
-            <div class="col-md-3">Mật khẩu</div>
-            <div class="col-md-9"><input type="password" class="form-control" name="pass" /></div>
-          </div> 
-          <div class="row">
-              <div class="col-md-3"></div>
-              <div class="col-md-9"><input  type="checkbox" /> Nhớ mật khẩu</div>            
-          </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-danger" name="dangnhap" >Đăng Nhập</button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-    
-      </div>
-    </div>
-   </form>
-<!--
-
--->
-<!--
-<div class="row bg-dark">
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-      <!-- Brand 
-      <a class="navbar-brand" href="../Controllers/admin_controller.php">Logo</a>
-    
-      <!-- Links 
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link 1</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link 2</a>
-        </li>
-           
-        <!-- Dropdown -->
-        <!--
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-            Quản lý
-          </a>
-          <div class="dropdown-menu">
-          <?php
-            //foreach($tables as $table):
-          ?>
-            <a class="dropdown-item" href="../Controllers/<?php //echo $table->Tables_in_my_guitar_shop2 .'_controller.php';?>">
-                <?php //echo $table->Tables_in_my_guitar_shop2;?>
-            </a>
-          <?php
-           // endforeach;
-          ?>
-
             <li><a href="#" data-toggle="modal" data-target="#mySignup"><span class="glyphicon glyphicon-user"></span>Đăng Ký</a></li>
       <li><a href="#" data-toggle="modal" data-target="#myLogin"><span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</a></li>
         </ul>
@@ -193,17 +112,17 @@ ob_start(); //Bien luu = chuoi
             </div>
             <div class="modal-body" style="padding: 30px 35px 35px;">
                 <div class="login-form">
-                    <form action="" method="post" id="signin">
-                        <input type="text" class="email" name="email" placeholder="Email" required="">
-                        <input type="password" class="lock" name="password" placeholder="Mật khẩu" required="" value="">
+                    <form action="../Controllers/users_controller.php?action=dangnhap" method="post" id="signin">
+                        <input type="text" class="email" name="email" placeholder="Email" required=""/>
+                        <input type="password" class="lock" name="password" placeholder="Mật khẩu" required="" value=""/>
                         <div class="signin-rit">
                             <span class="checkbox1">
-                                 <label class="chk"><input type="checkbox" name="checkbox" checked="">Ghi nhớ</label>
+                                 <label class="chk"><input type="checkbox" name="checkbox" checked=""/>Ghi nhớ</label>
                             </span>
                                 <a class="close_modal" data-dismiss="modal" href="#" data-toggle="modal" data-target="#myGetpass">Quên mật khẩu?</a>
                             <div class="clear"> </div>
                         </div>
-                        <input type="submit" value="Đăng nhập">
+                       <button type="submit" name="dangnhap" class="btn btn-primary">Đăng nhập</button>
                     </form>
                     <p>Bạn chưa có tài khoản?<a href="#" class="close_modal" data-dismiss="modal" data-toggle="modal" data-target="#mySignup">Tạo tài khoản</a></p>
                   <!--<h5 class="or">(or)</h5>
@@ -217,7 +136,6 @@ ob_start(); //Bien luu = chuoi
                 </div>
             </div>
           </div>
-
           </div>
         </div>
         
@@ -266,7 +184,7 @@ ob_start(); //Bien luu = chuoi
                             </span>
                             <div class="clear"> </div>
                         </div>
-                         <input type="submit" value="Đăng kí">
+                         <input type="submit" value="Đăng kí"/>
                     </form>
                     <p>Bạn đã có tài khoản? <a href="#" class="close_modal" data-dismiss="modal" data-toggle="modal" data-target="#myLogin">Đăng nhập ngay</a></p>
                 </div>
@@ -292,14 +210,6 @@ ob_start(); //Bien luu = chuoi
                         <input type="text" class="email" name="getEmail" placeholder="Email" required="">
                         <input type="submit" value="Gửi">
                     </form>
-                  <!--<h5 class="or">(or)</h5>
-                    <div class="social-icons">
-                        <ul>
-                            <li><a href="#"class="facebook"><img src="../Views/images/fb.png" title="facebook" alt="facebook" /></a></li>
-                            <li><a href="#"class="twitter"><img src="../Views/images/tw.png" width="80%" title="Tiwtter" alt="Tiwtter" /></a></a></li>
-                            <li><a href="#"class="googleplus"><img src="../Views/images/gp.png" width="10%" title="Google Plus" alt="Google Plus" /></a></a></li>
-                        </ul>
-                    </div>-->
                 </div>
             </div>
           </div>

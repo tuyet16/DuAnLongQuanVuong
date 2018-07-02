@@ -1,6 +1,7 @@
 <?php
 	ob_start();
 ?>
+    
 
     <table class="table table-bordered table-striped">
       <tr style="background-color:darkblue;color:#FFF">
@@ -63,7 +64,25 @@
                             </tr>
                             
                         </table>
-                        <div class="text-right"><button type="submit" class="btn btn-success">Gửi đơn hàng</button></div>
+                        <div class="row">
+                        <div class="col-md-3 text-right">
+                            <div class="row">
+                            Chọn nhân viên: 
+                                <select>
+                                    <option>Nguyễn Văn A</option>
+                                    <option>Nguyễn Văn b</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                Phí Ship: 
+                                30.000đ
+                            </div>
+                        </div>
+                            <div class="col-md-2"><input type="radio" name="dagiao" value="" /> Đã Giao</div>
+                            <div class="col-md-2"><input type="radio" name="chuagiao" value="" /> Chưa Giao</div>
+                            <div class="col-md-2"><input type="radio" name="huydon" value="" /> Hủy đơn hàng</div>
+                            <div class="col-md-3 text-center"><button type="submit" class="btn btn-success">Gửi đơn hàng</button></div>
+                        </div>
                     </div>
                     </div>    
                   </div>
@@ -227,7 +246,7 @@
                 <div id="collapse3" class="collapse" data-parent="#accordion">
                   <div class="card-body">
                     Lorem ipsum..
-                  </div>
+                  </div>    
                 </div>
               </div>
             </td>
@@ -238,9 +257,11 @@
         
 
 </table>
-
-
-  
+<div class="pull-right">
+    <a href="../Controllers/employees_controller.php?action=bangluong"><input type="submit" name="in" value="Bảng lương nhân viên" class="btn btn-danger"/></a>    
+    <a href="../Controllers/shop_controller.php?action=doanhthu"><input type="submit" name="in" value="Doanh Thu" class="btn btn-danger"/></a>
+    <input type="submit" name="in" value="In đơn hàng" class="btn btn-danger"/>
+</div>
   
 <?php
 	return ob_get_clean();

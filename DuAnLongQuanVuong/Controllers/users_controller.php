@@ -22,18 +22,17 @@ include_once('../Libs/messagebox_lib.php');
         include_once('../template/index.php');
         break;
         case 'dangnhap':
-            if(isset($_POST['user']) && isset($_POST['pass']))
+            if(isset($_POST['email']) && isset($_POST['password']))
             {
-                if($_POST['user']=='admin' && $_POST['pass']=='admin')
+                if($_POST['email']=='admin' && $_POST['password']=='admin')
                 {
                     $role = 1;
                     if(isset($_POST['dangnhap']))
                     {
-                        setcookie('user',$_POST['user'],time()+3600);
-                        setcookie('pass',$_POST['pass'],time()-3600);
-                        
+                        setcookie('email',$_POST['email'],time()+3600);
+                        setcookie('password',$_POST['password'],time()-3600);                        
                     }
-                    $_SESSION['user']= $_POST['user'];
+                    $_SESSION['email']= $_POST['email'];
                     $_SESSION['role']= $role;
                     header('Location: shop_controller.php');
                     exit();
