@@ -2,6 +2,7 @@
     <div class="list-group" style="background-color: #F3F3F3;">
         <div class="list-title text-center">Quản Lý</div>
         <div class="list-group-item ">Shop</div>
+        <div class="list-group-item "><a href="../Controllers/categories_controller.php">Loại Sản Phẩm</a></div>
         <div class="list-group-item list-group-item-action">
             <a href="../Controllers/shop_controller.php?action=mypham">Khách Hàng</a>
         </div>
