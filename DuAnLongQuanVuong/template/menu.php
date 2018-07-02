@@ -1,4 +1,4 @@
-<?php
+ <?php
 ob_start(); //Bien luu = chuoi
 ?>
  <script type="text/javascript">
