@@ -1,16 +1,43 @@
 <?php
 	ob_start();
 ?>
+ <script>
+$().ready(function() {
+	// validate the form when it is submitted
+	var validator = $("#quan").validate({
+		errorPlacement: function(error, element) {
+			// Append error within linked label
+			$( element )
+				.closest( "form" )
+					.find( "label[for='" + element.attr( "id" ) + "_error']" )
+						.append( error );
+		},
+		errorElement: "span",
+		messages: {
+			maquan: {
+				required: " (Không được để trống)",
+                },
+            tenquan: {
+				required: " (Không được để trống)"
+		   }
+            }
+	});
+});
+</script>
+
     	<fieldset>
         	<legend style="80%">Thêm Quận</legend>
-                <form method="post" action="">
+                <form method="post" action="" id="quan">
                     <div class="row" style="margin-top:2px">
                     	<div class="col-md-2">Mã Quận </div> 
-                       	<div class="col-md-3"> <input type="text" class="form-control" width="80%"/></div>
+                       	<div class="col-md-3"> 
+                           <input type="text" name="maquan" id="maquan" class="form-control" width="80%" required/></div>
+                        <label for="maquan_error" class="form-error"></label>
                     </div>
                      <div class="row"  style="margin-top:2px">
                     	<div class="col-md-2">Tên Quận </div> 
-                       	<div class="col-md-3"> <input type="text" class="form-control" width="80%"/></div> 
+                       	<div class="col-md-3"> <input type="text" name="tenquan" id="tenquan" class="form-control" width="80%" required/></div> 
+                        <label for="tenquan_error" class="form-error"></label>
                     </div>
                      <div class="row"  style="margin-top:4px;margin-left:17%">
                         	<button type="submit" class="btn" style="background-color:darkblue;color:#FFF"/> Lưu

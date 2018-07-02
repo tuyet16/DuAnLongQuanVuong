@@ -20,9 +20,6 @@
         <div class="list-group-item list-group-item-action">
             <a href="../Controllers/shop_controller.php?action=donhang">Đơn hàng</a>
         </div>
-        <div class="list-group-item list-group-item-action">
-            <a href="../Controllers/shop_controller.php?action=donhangadmin">Đơn hàng admin</a>
-        </div>
     </div>
      <div class="list-group" style="padding-top: 3%;">
         <div class="list-title">

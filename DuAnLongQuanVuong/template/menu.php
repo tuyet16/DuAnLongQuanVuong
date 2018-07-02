@@ -69,22 +69,17 @@ ob_start(); //Bien luu = chuoi
             </ul>
           <li>
           <a href="#">Liên hệ</a></li>
-          <!-- Dropdown -->
-            <li class="nav-item dropdown">
-              	<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown"> Quản lý <span class="caret"></span></a>
-              	<ul class="dropdown-menu">
-					  <?php
-                        foreach($tables as $table):
-                      		?>
-                            <li><a class="dropdown-item" href="../Controllers/<?php echo $table->Tables_in_duan .'_controller.php';?>">
-                                <?php echo $table->Tables_in_duan;?>
-                            </a></li>
-                          <?php
-                        endforeach;
-                      ?>
-              </ul>
-            </li>
-            
+          <?php if(isset($_SESSION['email'])){
+                    if($_SESSION['email']=='admin')
+                    {
+                        echo '<li><a href="../Controllers/admin_controller.php?action=index">Quản Lý</a></li>';
+            }
+            else
+            {
+                echo '<li><a href="../Controllers/shop_controller.php?action=index">Quản Lý</a></li>';
+            }
+            }?>
+          
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <form class="navbar-form navbar-left">
