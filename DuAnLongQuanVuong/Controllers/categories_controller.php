@@ -42,10 +42,7 @@
 						include_once '../template/index.php';
 					}
 				}
-				catch(MVCException $e)
-				{
-					
-				}
+				catch(MVCException $e){}
 			}
 			else
 			{

@@ -28,15 +28,12 @@ $().ready(function() {
 </script>
 <fieldset>
 <legend style="80%">Sửa loại sản phẩm</legend>
-<?php
-        foreach($CateByID as $row){
-?>
          <form id="formEditCate" method="post" action="?action=<?php echo $_GET['action'];?>">
-            <input type="hidden" name="category_id" value="<?php echo $row->categoryID?>" />
+            <input type="hidden" name="category_id" value="<?php echo $CateByID[0]->categoryID?>" />
             <div class="row">
                 <div class="col-md-2">Tên loại sản phẩm: </div> 
                 <div class="col-md-4"> 
-                	<input type="text" id="category_name" name="category_name" class="form-control" width="80%" value="<?php echo $row->categoryName?>" required minlength="3"/>
+                	<input type="text" id="category_name" name="category_name" class="form-control" width="80%" value="<?php echo $CateByID[0]->categoryName?>" required minlength="3"/>
                     <label for="category_name_error" class="form-error"></label>
                	</div>
                 <div class="col-md-6">
@@ -44,9 +41,6 @@ $().ready(function() {
                 </div>
             </div>
         </form>
-<?php
-		}
-?>
 </fieldset>
 <fieldset style="margin-top:2%">
     <legend><div class="col-md-4">Danh sách loại sản phẩm</div>

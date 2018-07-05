@@ -107,7 +107,7 @@ class Page{
             $query_string = $menu;
         }
         
-        return '../views/' . $path . '/' . $query_string . '.php';
+        return '../Views/' . $path . '/' . $query_string . '.php';
     }
 }
 ?>
