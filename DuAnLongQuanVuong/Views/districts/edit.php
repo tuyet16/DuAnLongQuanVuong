@@ -24,14 +24,18 @@ $().ready(function() {
 
     	<fieldset>
         	<legend style="80%">Thêm Quận</legend>
-                <form method="post" action="?action=add" id="quan">
-                     <div class="row"  style="margin-top:2px">
+                <form method="post" action="?action=edit" id="quan">
+                <input type="hidden" name="id" value="<?php echo $district[0]->districtID; ?>" />
+                     <div class="row"  style="margin-top:2px">                     
                     	<div class="col-md-2">Tên Quận </div> 
-                       	<div class="col-md-3"> <input type="text" name="tenquan" id="tenquan" class="form-control" width="80%" required/></div> 
+                       	<div class="col-md-3"> 
+                           <input type="text" name="tenquan" id="tenquan" value="<?php echo $district[0]->districtName; ?>" class="form-control" width="80%" required/>
+                        </div> 
                         <label for="tenquan_error" class="form-error" style="color: red;"></label>
                     </div>
+                    <textarea class="form-control"><?php echo $district[0]->districtName; ?></textarea>
                      <div class="row"  style="margin-top:4px;margin-left:17%">
-                        	<button type="submit" class="btn" style="background-color:darkblue;color:#FFF"/> Lưu
+                        	<button type="submit" name="submit" class="btn" style="background-color:darkblue;color:#FFF"/> Lưu
                     </div>
                 </form>
         </fieldset>
