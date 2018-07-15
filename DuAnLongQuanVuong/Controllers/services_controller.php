@@ -9,8 +9,12 @@
             $action ='index';
         }
     }
+	$model_districts = new districts();
+	$areas = new Areas();
 	switch($action){
 		case 'index':
+			$dsDistricts=$model_districts->getDistrict();
+			$dsAreas = $areas->getAreas();
 			$view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
             $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';

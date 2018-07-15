@@ -27,11 +27,22 @@ $().ready(function() {
                 <form method="post" action="?action=add" id="quan">
                      <div class="row"  style="margin-top:2px">
                     	<div class="col-md-2">Tên Quận </div> 
-                       	<div class="col-md-3"> <input type="text" name="tenquan" id="tenquan" class="form-control" width="80%" required/></div> 
-                        <label for="tenquan_error" class="form-error" style="color: red;"></label>
+                       	<div class="col-md-3"> <input type="text" name="tenquan" id="tenquan" class="form-control" width="80%" required/> 
+                        	<label for="tenquan_error" class="form-error" style="color: red;"></label>
+                        </div>
                     </div>
-                     <div class="row"  style="margin-top:4px;margin-left:17%">
+                    <div class="row"  style="margin-top:2px">
+                    	<div class="col-md-2">Khu vực </div> 
+                       	<div class="col-md-3"> 
+                        <select name="slKV" id="slKV" class="form-control" >
+                        	<?php foreach($dsAreas as $row){ 
+									echo "<option value='".$row->areasID."'>".$row->areasName."</option>"; 
+							}?>  
+                        </select>
+                        </div>
+                         <div class="col-md-1">
                         	<button type="submit" class="btn" style="background-color:darkblue;color:#FFF"/> Lưu
+                    	</div>
                     </div>
                 </form>
         </fieldset>
