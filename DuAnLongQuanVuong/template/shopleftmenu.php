@@ -26,7 +26,7 @@
            Chức Năng
         </div>
         <div class="list-group-item list-group-item-action">
-            <a href="../Controllers/shop_controller.php?action=themsanpham"><i class="fa fa-plus-circle"></i> Thêm Sản Phẩm</a>
+            <a href="../Controllers/products_controller.php?action=index"><i class="fa fa-plus-circle"></i> Thêm Sản Phẩm</a>
         </div>  
     </div>
 <?php return ob_get_clean(); ?>

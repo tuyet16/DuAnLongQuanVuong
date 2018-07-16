@@ -18,14 +18,15 @@ class Employees extends Database{
         $rs = $this->doQuery($query, $param);
         return $rs;
     }
-    public function insertNewEmployee($manv,$tennv,$diachi,$sdt){
-        $query = 'INSERT INTO employees(employeeID,employeeName,address,phone)';
-        $query.= ' VALUES(?,?,?,?)';
+    public function insertNewEmployee($manv,$tennv,$diachi,$sdt,$hinhanh){
+        $query = 'INSERT INTO employees(employeeID,employeeName,address,phone,hinhanh)';
+        $query.= ' VALUES(?,?,?,?,?)';
         $param = array();
         $param[] = $manv;
 		$param[] = $tennv;
 		$param[] = $diachi;
 		$param[] = $sdt;
+        $param[] = $hinhanh;
         $this->doQuery($query, $param);
     }
     public function deleteEmployee($id){
@@ -34,13 +35,14 @@ class Employees extends Database{
         $param[]= $id;
         $this->doQuery($query, $param);
     }
-    public function editEmployee($manv,$tennv,$diachi,$sdt,$id){
-        $query = 'UPDATE employees SET employeeID=?,employeeName=?,address=?,phone=? WHERE idEm=?';
+    public function editEmployee($manv,$tennv,$diachi,$sdt,$hinhanh,$id){
+        $query = 'UPDATE employees SET employeeID=?,employeeName=?,address=?,phone=?,hinhanh=? WHERE idEm=?';
         $param = array();
         $param[] = $manv;
 		$param[] = $tennv;
 		$param[] = $diachi;
 		$param[] = $sdt;
+        $param[] = $hinhanh;
         $param[] = $id;
         $this->doQuery($query, $param);
     }

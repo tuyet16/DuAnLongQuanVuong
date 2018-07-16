@@ -3,7 +3,7 @@
 ?>
     	<fieldset>
         	<legend style="80%">Sửa sản phẩm</legend>
-                <form method="post" action="">
+                <form method="post" action="?action=themsanpham">
                     <div class="row">
                     	<div class="col-md-2">Tên sản phẩm</div> 
                        	<div class="col-md-5"> <input type="text" class="form-control" width="60%"/></div>

@@ -48,7 +48,7 @@ $().ready(function() {
 </script>
 <fieldset>
     <legend style="80%;color: darkblue;"><b>Thêm nhân viên</b></legend>
-        <form id="formAddEmployee" method="post" action="?action=add_employee">
+        <form id="formAddEmployee" method="post" action="?action=add_employee" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-2">Mã nhân viên</div> 
                 <div class="col-md-5"><input type="text" id="manv" name="manv" class="form-control" width="60%" 
@@ -70,8 +70,12 @@ $().ready(function() {
                 <div class="col-md-2">Số điện thoại</div> 
                 <div class="col-md-5"> <input id="sdt" name="sdt" type="text" class="form-control" width="60%" required minLength='10' maxlength="11"/>
                 <label for="sdt_error" class="form-error"></label></div>
+            </div>
+            <div class="row" style="margin-top:2px">
+                <div class="col-md-2">Hình ảnh</div> 
+                <div class="col-md-5"> <input id="hinhanh" name="hinhanh" type="file" class="form-control" width="60%" />
                 <div class="col-md-4"> <button type="submit" name="submit" class="btn" style="background-color:darkblue;color:#FFF"> Lưu </button> </div>
-            </div>	
+            </div>		
         </form>
 </fieldset>
 <fieldset style="margin-top:2%">
@@ -83,6 +87,7 @@ $().ready(function() {
             <td>&nbsp; Tên NV</td>
             <td>&nbsp; Địa chỉ</td>
             <td>&nbsp; Số điện thoại</td>
+            <td>&nbsp; Hình ảnh</td>
             <td>&nbsp; Thao tác</td>
           </tr>
          
@@ -95,6 +100,7 @@ $().ready(function() {
 					<td>&nbsp;'.ucfirst($row->employeeName).'</td>
 					<td>&nbsp;'.$row->address.'</td>
 					<td>&nbsp;'.$row->phone.'</td>
+                    <td><img src="../Views/img/'.$row->hinhanh.'" width="30%"/></td>
 					<td><a href="../Controllers/employees_controller.php?action=edit_employee&id='.$row->idEm.'"><span class="glyphicon glyphicon-pencil"></span></a> &nbsp; 
 						<a href="../Controllers/employees_controller.php?action=delete_employee&id='.$row->idEm.'"><span class="glyphicon glyphicon-remove"></span></a></td>
 				  </tr>';

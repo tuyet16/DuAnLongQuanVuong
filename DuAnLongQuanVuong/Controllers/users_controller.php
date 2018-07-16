@@ -13,8 +13,8 @@ include_once('../Libs/messagebox_lib.php');
     switch($action)
     {
         case 'index':
-    	$tableDB = new Database();
-        $tables = $tableDB->getTables();
+    	$user = new Users();
+        $dsuser = $user->getUser();
 		$view = Page::View();
         $GLOBALS['template']['menu'] = include_once'../template/menu.php';
         $GLOBALS['template']['leftmenu'] = include_once'../template/shopleftmenu.php';
@@ -36,6 +36,7 @@ include_once('../Libs/messagebox_lib.php');
                     if($_POST['email']=='abc' && $_POST['password']=='abc')
                     {
                         $_SESSION['email']= $_POST['email'];
+                         $_SESSION['userid']='1';
                         header('Location: shop_controller.php');
                         exit();
                     }
@@ -52,6 +53,19 @@ include_once('../Libs/messagebox_lib.php');
         case 'logout':
             session_destroy();
             header('Location: home_controller.php');
+        break;
+        
+        case 'dangky':
+            $hoten = $_POST['username'];
+            $email = $_POST['email'];
+            $tenshop = $_POST['tenshop'];
+            $diachi= $_POST['address'];
+            $sdt = $_POST['tel'];
+            $pass = $_POST['password1'];
+            $user = new Users();
+            $dsUsers = $user->addUser($pass,$hoten,$email,$diachi,$sdt,$tenshop);
+           // print_r($_POST);
+           header('Location:admin_controller.php');
         break;
         
     }

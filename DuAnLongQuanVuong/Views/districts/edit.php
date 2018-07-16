@@ -33,7 +33,7 @@ $().ready(function() {
                         </div> 
                         <label for="tenquan_error" class="form-error" style="color: red;"></label>
                     </div>
-                    <textarea class="form-control"><?php echo $district[0]->districtName; ?></textarea>
+                    
                      <div class="row"  style="margin-top:4px;margin-left:17%">
                         	<button type="submit" name="submit" class="btn" style="background-color:darkblue;color:#FFF"/> Lưu
                     </div>

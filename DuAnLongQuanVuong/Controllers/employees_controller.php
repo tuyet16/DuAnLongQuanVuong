@@ -29,7 +29,9 @@
 			$tennv=$_POST['tennv'];
 			$dc = $_POST['diachi'];
 			$dt = $_POST['sdt'];
-			$model->insertNewEmployee($manv,$tennv,$dc,$dt);
+            $i = $_FILES['hinhanh'];
+            $img = Image::GetFile($i);
+			$model->insertNewEmployee($manv,$tennv,$dc,$dt,$img);
 			header('Location: employees_controller.php');
 			break;
 		}
@@ -73,7 +75,9 @@
 					$dc = $_POST['diachi'];
 					$dt = $_POST['sdt'];
 					$id = $_POST['idem'];
-					$model->editEmployee($manv,$tennv,$dc,$dt,$id);
+                    $i = $_FILES['hinhanh'];
+                    $img = Image::GetFile($i);
+					$model->editEmployee($manv,$tennv,$dc,$dt,$img,$id);
 					header('Location: employees_controller.php');
 				}
 			break;

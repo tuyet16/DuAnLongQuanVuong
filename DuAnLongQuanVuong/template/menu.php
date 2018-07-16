@@ -56,6 +56,7 @@ ob_start(); //Bien luu = chuoi
       <div class="container">
         <div class="navbar-header">
            <a class="navbar-brand" href="../Controllers/home_controller.php" style="color: white;">Logo</a>
+           
         </div>
         <ul class="nav navbar-nav">
           <li><a href="#">Trang Chủ</a></li>
@@ -67,8 +68,8 @@ ob_start(); //Bien luu = chuoi
               <li><a href="#">Page 1-2</a></li>
               <li><a href="#">Page 1-3</a></li>
             </ul>
-          <li>
-          <a href="#">Liên hệ</a></li>
+            </li>
+          <li><a href="#">Liên hệ</a></li>
           <?php if(isset($_SESSION['email'])){
                     if($_SESSION['email']=='admin')
                     {
@@ -79,25 +80,39 @@ ob_start(); //Bien luu = chuoi
                 echo '<li><a href="../Controllers/shop_controller.php?action=index">Quản Lý</a></li>';
             }
             }?>
-          
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
+            
             <form class="navbar-form navbar-left">
               <div class="form-group">
+                
                 <input type="text" class="form-control" placeholder="Tìm Kiếm"/>
               </div>
               <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
             </form>
             <?php if(isset($_SESSION['email']))
             {
-                echo '<li><a>Xin chào '. $_SESSION['email'].'</a></li>';
-                echo '<li><a href="../Controllers/users_controller.php?action=logout">Logout</a></li>';
-            } else{?>       
-            <li><a href="#" data-toggle="modal" data-target="#mySignup"><span class="glyphicon glyphicon-user"></span>Đăng Ký</a></li>
-      <li><a href="#" data-toggle="modal" data-target="#myLogin"><span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</a></li>
+               echo '<li><a href="#" data-toggle="modal" data-target="#mySignup"><span class="glyphicon glyphicon-user"></span>Đăng Ký</a></li>';
+               echo '<li><a>Xin chào '. $_SESSION['email'].'</a></li>';
+               echo '<li><a href="../Controllers/users_controller.php?action=logout">Đăng Xuất</a></li>';
+            } else{?>     
+     
+            <li><a href="#" data-toggle="modal" data-target="#myLogin">
+            <span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</a></li>
         <?php }?>
         </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="../Controllers/shoppingcart_controller.php?action=viewcart">
+                    <img src='../Views/img/cart3.png' width="25%"/>
+                    Giỏ Hàng<?php if(isset($_SESSION['cart']))
+                    {
+                        echo '                            
+                             <span class="badge" style="font-size:130%">
+                                '.$_SESSION['sosl'].'';
+                    } ?>                   
+                    </span>
+            </a></li>
         
+        </ul>
+               
       </div>
     </nav>
     <!-- Modal -->
@@ -123,9 +138,9 @@ ob_start(); //Bien luu = chuoi
                                 <a class="close_modal" data-dismiss="modal" href="#" data-toggle="modal" data-target="#myGetpass">Quên mật khẩu?</a>
                             <div class="clear"> </div>
                         </div>
-                       <button type="submit" name="dangnhap" class="btn btn-primary">Đăng nhập</button>
+                       <input type="submit" name="dangnhap" class="btn btn-primary" value="Đăng nhập"/>
                     </form>
-                    <p>Bạn chưa có tài khoản?<a href="#" class="close_modal" data-dismiss="modal" data-toggle="modal" data-target="#mySignup">Tạo tài khoản</a></p>
+                    
                   <!--<h5 class="or">(or)</h5>
                     <div class="social-icons">
                         <ul>
@@ -152,7 +167,7 @@ ob_start(); //Bien luu = chuoi
             </div>
             <div class="modal-body" style="padding: 30px 35px 35px;">
                	<div class="login-form">
-                    <form action="" method="post" id="signup">
+                    <form action="users_controller.php?action=dangky" method="post" id="signup">
                         <ol>
                             <li>
                                 <input type="text" id="username" name="username" placeholder="Họ và tên" title="Vui lòng nhập tên của bạn" required="">
@@ -163,8 +178,11 @@ ob_start(); //Bien luu = chuoi
                                     <span class="invalid">Ví dụ: ryan@example.com</span>
                                 </p>
                             </li>
+                            <li>
+                                <input type="text" id="tenshop" name="tenshop" placeholder="Tên Shop" title="Vui lòng nhập email" required=""/>
+                            </li>
                              <li>
-                                <input type="text" id="address" name="address" placeholder=" Địa chỉ" title="Vui lòng nhập email" required="">
+                                <input type="text" id="address" name="address" placeholder=" Địa chỉ" title="Vui lòng nhập email" required=""/>
                             </li>
                             <li>
                                 <input type="tel" id="tel" name="tel" placeholder="Vui lòng nhập số điện thoại" required="">
@@ -208,8 +226,8 @@ ob_start(); //Bien luu = chuoi
                 <div class="login-form">
                 	<h5 class="text-center"><i>Nhập địa chỉ email của bạn vào bên dưới <br />và chúng tôi sẽ gửi cho bạn một email<br /> kèm theo hướng dẫn.</i></h5>
                     <form action="" method="post" id="getpass">
-                        <input type="text" class="email" name="getEmail" placeholder="Email" required="">
-                        <input type="submit" value="Gửi">
+                        <input type="text" class="email" name="getEmail" placeholder="Email" required=""/>
+                        <input type="submit" value="Gửi"/>
                     </form>
                 </div>
             </div>
