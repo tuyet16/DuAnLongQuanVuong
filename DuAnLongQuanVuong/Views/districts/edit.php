@@ -23,19 +23,40 @@ $().ready(function() {
 </script>
 
     	<fieldset>
-        	<legend style="80%">Thêm Quận</legend>
+        	<legend style="80%">Sửa Quận</legend>
                 <form method="post" action="?action=edit" id="quan">
                 <input type="hidden" name="id" value="<?php echo $district[0]->districtID; ?>" />
                      <div class="row"  style="margin-top:2px">                     
                     	<div class="col-md-2">Tên Quận </div> 
                        	<div class="col-md-3"> 
                            <input type="text" name="tenquan" id="tenquan" value="<?php echo $district[0]->districtName; ?>" class="form-control" width="80%" required/>
+                       		  <label for="tenquan_error" class="form-error" style="color: red;"></label>
                         </div> 
-                        <label for="tenquan_error" class="form-error" style="color: red;"></label>
                     </div>
+<<<<<<< HEAD
                     
                      <div class="row"  style="margin-top:4px;margin-left:17%">
                         	<button type="submit" name="submit" class="btn" style="background-color:darkblue;color:#FFF"/> Lưu
+=======
+                    <div class="row"  style="margin-top:2px">
+                    	<div class="col-md-2">Khu vực </div> 
+                       	<div class="col-md-3"> 
+                        <select name="slKV" id="slKV" class="form-control" >
+                        	<?php
+								$select = $district[0]->areasID; 
+								//echo "<option>".$select."</option>";
+								 foreach($dsAreas as $row){
+									 if($row->areasID == $select)
+										echo "<option name='optquan' value='".$row->areasID."' selected>".$row->areasName."</option>"; 
+									else
+										echo "<option name='optquan' value='".$row->areasID."'>".$row->areasName."</option>"; 
+								}?> 
+                        </select>
+                        </div>
+                         <div class="col-md-1">
+                        	<button type="submit" class="btn" style="background-color:darkblue;color:#FFF"/> Lưu
+                    	</div>
+>>>>>>> cc33e16a41d1289f425b0909724fc3734e97b947
                     </div>
                 </form>
         </fieldset>

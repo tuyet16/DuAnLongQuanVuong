@@ -51,3 +51,4 @@ class Categories extends Database{
         $this->doQuery($query, $param);
     }
 }
+?>

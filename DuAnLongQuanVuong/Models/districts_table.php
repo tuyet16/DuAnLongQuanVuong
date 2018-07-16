@@ -17,18 +17,20 @@
             $rs = $this->doQuery($query,$param);
             return $rs;
         }
-        public function addDistricts($name)
+        public function addDistricts($name,$areas)
         {
-            $query = 'insert into districts(districtName) values(?)';
+            $query = 'insert into districts(districtName,areasID) values(?,?)';
             $param = array();
             $param[]=$name;
+			$param[]=$areas;
             $this->doQuery($query,$param);
         }
-        public function editDistricts($name,$id)
+        public function editDistricts($name,$areas,$id)
         {
-            $query = 'update districts set districtName =? where districtID=?';
+            $query = 'update districts set districtName =?,areasID=? where districtID=?';
             $param = array();
             $param[]=$name;
+			$param[]=$areas;
             $param[]=$id;
             $this->doQuery($query,$param);
         }
