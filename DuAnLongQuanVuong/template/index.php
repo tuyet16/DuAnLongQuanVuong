@@ -29,9 +29,11 @@
     }
     
 ?>
-    <div class="container-fluid" style="padding-top: 10px;" >
 
+    <div class="container-fluid" style="padding-top: 10px;" >
+        
         <div class="row bg-transparent">
+            <?php if(isset($GLOBALS['template']['leftmenu'])): ?>
            <div class="col-sm-3">
                 <?php
                 
@@ -40,7 +42,7 @@
                  }
                 ?>
             </div>
-        
+            
             <div class="col-sm-9">
                     <?php
                 if(isset($GLOBALS['template']['content'])){
@@ -48,7 +50,17 @@
                 }
             ?>
             </div>
+            <?php else: ?>
+            <div class="col-sm-12">
+                    <?php
+                if(isset($GLOBALS['template']['content'])){
+                    echo $GLOBALS['template']['content'];
+                }
+            ?>
+            </div>
+            <?php endif;?>
         </div>
+      
         <div class="row">
             <?php 
                 if(isset($GLOBALS['template']['footer'])){

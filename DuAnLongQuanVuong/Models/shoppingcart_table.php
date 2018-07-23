@@ -1,7 +1,7 @@
 <?php 
     class ShoppingCart extends Database{
         private $total = 0;
-        private $tongsl =0;
+        private $tongsl =1;
         public function __construct(){
 			parent::__construct();
 		}
@@ -76,6 +76,41 @@
                 $tongsl = count($_SESSION['cart']);
             }
             return $tongsl;
+        }
+        public function addCustomer($name,$dc,$dt,$districtID)
+        {
+            $query = 'insert into customers(customerName,address,phone,districtID) values(?,?,?,?)';
+            $param = array();
+            $param[]=$name;
+			$param[]=$dc;
+			$param[]=$dt;
+			$param[]=$districtID;
+            $rs = $this->doQuery($query,$param);
+            $con = $this->getconnect();
+            return $con->lastInsertId('customerID');
+        }
+        public function addBills($customerID,$billing,$date,$loaiship,$tongtien)
+        {
+            $query = 'insert into bills(customerID,billingAddress,setDate,delivery,totalPrice) values(?,?,?,?,?)';
+            $param = array();
+            $param[]=$customerID;
+			$param[]=$billing;
+			$param[]=$date;
+			$param[]=$loaiship;
+            $param[]=$tongtien;
+            $this->doQuery($query,$param);
+            $con = $this->getconnect();
+            return $con->lastInsertId('billID');
+        }
+        public function addDetails($prodcutID,$amount,$price,$billID)
+        {
+            $query ='insert into detailsbills(productID,amount,price,billID) values(?,?,?,?)';
+            $param = array();
+            $param[] = $prodcutID;
+            $param[] = $amount;
+            $param[] = $price;
+            $param[] = $billID;
+            $this->doQuery($query,$param);
         }
     }
     

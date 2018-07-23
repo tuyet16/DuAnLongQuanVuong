@@ -10,7 +10,7 @@
      <div id="menu1" class="tab-pane fade in active">   
         <div class="row" style="margin:2%">
                 <table class="table table-bordered table-striped">
-                  <tr style="background-color:#66C;color:#FFF">
+                  <tr style="background-color:darkblue;color:#FFF">
                         <td>&nbsp; Quận/Huyện</td>
                         <td>&nbsp; Mã khu vực</td>
                         <td>&nbsp; Số KM vượt quá</td>
@@ -30,7 +30,7 @@
         <div id="menu2" class="tab-pane fade">
              <div class="row" style="margin-top:3%">
                 <table class="table table-bordered table-striped" style="width:98%">
-                  <tr style="background-color:#66C;color:#FFF">
+                  <tr style="background-color:darkblue;color:#FFF">
                         <td>&nbsp; Số tiền</td>
                         <td>&nbsp; Phí tiền ứng</td>
                         <td>&nbsp; Thao tác</td>
@@ -46,7 +46,7 @@
          <div id="menu3" class="tab-pane fade">
              <div class="row" style="margin-top:3%">    
                 <table class="table table-bordered table-striped" style="width:98%">
-                  <tr style="background-color:#66C;color:#FFF">
+                  <tr style="background-color:darkblue;color:#FFF">
                         <td>&nbsp; Khối lượng hàng không vượt qá</td>
                         <td>&nbsp; 10kg(Trên 10kg, phụ thu 1k/kg)</td>
                         <td>&nbsp; Thao tác</td>

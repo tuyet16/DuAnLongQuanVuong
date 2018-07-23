@@ -35,7 +35,9 @@
             </tr>       
                 
         </table>
-        <div class="text-center"><a class="btn btn-danger">ĐẶT HÀNG</a></div>
+        <div class="text-center">
+            <a class="btn btn-danger" href="../Controllers/shoppingcart_controller.php?action=muahang">ĐẶT HÀNG</a>
+        </div>
         </form>
     </fieldset>
 
