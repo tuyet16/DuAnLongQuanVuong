@@ -52,6 +52,8 @@
 			
 				?>
                 <table class="table table-bordered table-striped" >
+             <div class="row" style="margin-top:3%">
+                <table class="table table-bordered table-striped" style="width:98%">
                   <tr style="background-color:darkblue;color:#FFF">
                         <td>&nbsp; Số tiền</td>
                         <td>&nbsp; Phí tiền ứng</td>
@@ -84,6 +86,18 @@
 							</tr>";
 				  }
 				  ?>
+             <div class="row" style="margin-top:3%">    
+                <table class="table table-bordered table-striped" style="width:98%">
+                  <tr style="background-color:darkblue;color:#FFF">
+                        <td>&nbsp; Khối lượng hàng không vượt qá</td>
+                        <td>&nbsp; 10kg(Trên 10kg, phụ thu 1k/kg)</td>
+                        <td>&nbsp; Thao tác</td>
+                  </tr>
+                  <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td><a href="#"><span class="glyphicon glyphicon-pencil"></span></a> &nbsp; <a href="#"><span class="glyphicon glyphicon-remove"></span></a></td>
+                  </tr>
                 </table>
             </div>
         </div>

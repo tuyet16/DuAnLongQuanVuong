@@ -5,7 +5,7 @@
 		}
 		public function getProduct()
         {
-            $query = 'select * from products';
+            $query = 'select * from products pr, users us where pr.userid= us.userid';
             $rs = $this->doQuery($query);
             return $rs;
         }

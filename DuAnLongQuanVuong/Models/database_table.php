@@ -24,6 +24,10 @@ class Database{
             exit();
         }
     }
+    public function getconnect()
+    {
+        return $this->conn;
+    }
     public function doQuery($strQuery, $param = null){
         if($param == null){
             $rs = $this->conn->prepare($strQuery);

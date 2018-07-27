@@ -70,8 +70,8 @@ ob_start(); //Bien luu = chuoi
             </ul>
             </li>
           <li><a href="#">Liên hệ</a></li>
-          <?php if(isset($_SESSION['email'])){
-                    if($_SESSION['email']=='admin')
+          <?php if(isset($_SESSION['role'])){
+                    if($_SESSION['role']==0)
                     {
                         echo '<li><a href="../Controllers/admin_controller.php?action=index">Quản Lý</a></li>';
             }
@@ -88,16 +88,17 @@ ob_start(); //Bien luu = chuoi
               </div>
               <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
             </form>
-            <?php if(isset($_SESSION['email']))
+            <?php if(isset($_SESSION['fullname']))
             {
                echo '<li><a href="#" data-toggle="modal" data-target="#mySignup"><span class="glyphicon glyphicon-user"></span>Đăng Ký</a></li>';
-               echo '<li><a>Xin chào '. $_SESSION['email'].'</a></li>';
+               echo '<li><a>Xin chào '. $_SESSION['fullname'].'</a></li>';
                echo '<li><a href="../Controllers/users_controller.php?action=logout">Đăng Xuất</a></li>';
             } else{?>     
      
             <li><a href="#" data-toggle="modal" data-target="#myLogin">
             <span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</a></li>
         <?php }?>
+        
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="../Controllers/shoppingcart_controller.php?action=viewcart">
@@ -105,7 +106,7 @@ ob_start(); //Bien luu = chuoi
                     Giỏ Hàng<?php if(isset($_SESSION['cart']))
                     {
                         echo '                            
-                             <span class="badge" style="font-size:130%">
+                             <span class="badge" style="font-size:120%">
                                 '.$_SESSION['sosl'].'';
                     } ?>                   
                     </span>
@@ -138,6 +139,9 @@ ob_start(); //Bien luu = chuoi
                                 <a class="close_modal" data-dismiss="modal" href="#" data-toggle="modal" data-target="#myGetpass">Quên mật khẩu?</a>
                             <div class="clear"> </div>
                         </div>
+                        <label style="color: red;">
+                            <?php if(isset($_SESSION['erro'])) echo $_SESSION['erro']; ?>
+                            </label>
                        <input type="submit" name="dangnhap" class="btn btn-primary" value="Đăng nhập"/>
                     </form>
                     

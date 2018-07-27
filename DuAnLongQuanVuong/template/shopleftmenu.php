@@ -18,7 +18,7 @@
            Danh Mục Đơn Hàng
         </div>
         <div class="list-group-item list-group-item-action">
-            <a href="../Controllers/shop_controller.php?action=donhang">Đơn hàng</a>
+            <a href="../Controllers/users_controller.php?action=donhang">Đơn hàng</a>
         </div>
     </div>
      <div class="list-group" style="padding-top: 3%;">
