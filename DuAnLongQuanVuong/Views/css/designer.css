@@ -369,4 +369,6 @@ h5.or {
 	display:inline-block;
 	margin:0 5px;
 }
-
+.form-error{
+	color:red;	
+}
