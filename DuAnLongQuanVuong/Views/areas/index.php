@@ -16,7 +16,8 @@ $().ready(function() {
 		messages: {
 			areas_name: {
 				required: " (Không được để trống)",
-				minlength: " (Độ dài từ 3 ký tự trở lên)"
+				number:" Chỉ được nhập số",
+				max:"Số lớn nhất 20"
 			},
 			sokm:{
 				number:" Chỉ được nhập số",
@@ -32,6 +33,10 @@ $().ready(function() {
 			}
 		},
 		rules:{
+			areas_name: {
+				required:true,
+				number:true
+			},
 			sokm: {
 			  number:true
 			},
@@ -53,30 +58,30 @@ $().ready(function() {
     <legend style="80%">Thêm khu vực</legend>
         <form id="formAddAreas" method="post" action="?action=add_areas">
             <div class="row">
-                <div class="col-md-2 text-right">Tên khu vực: </div> 
+                <div class="col-md-2 text-right">Mã khu vực: </div> 
                 <div class="col-md-4"> 
-                    <input type="text" id="areas_name" name="areas_name" class="form-control" width="80%" required minlength="3"/>
+                    <input type="text" id="areas_name" name="areas_name" class="form-control" width="80%" required max="20"/>
                     <label for="areas_name_error" class="form-error"></label>
                 </div>             
             </div>
             <div class="row">
                 <div class="col-md-2 text-right">Số Km vượt quá: </div> 
                 <div class="col-md-4"> 
-                    <input type="number" id="sokm" name="sokm" class="form-control" width="80%" max="999"/>
+                    <input type="text" id="sokm" name="sokm" class="form-control" width="80%" max="999"/>
                     <label for="sokm_error" class="form-error"></label>
                 </div>
             </div>
              <div class="row">
                 <div class="col-md-2 text-right">Giá giao thường </div> 
                 <div class="col-md-4"> 
-                    <input type="number" id="often" name="often" class="form-control" width="80%" max="999"/>
+                    <input type="text" id="often" name="often" class="form-control" width="80%" max="999"/>
                     <label for="often_error" class="form-error"></label>
                 </div> 
             </div>
             <div class="row">
                 <div class="col-md-2 text-right">Giá giao nhanh </div> 
                 <div class="col-md-4"> 
-                    <input type="number" id="fast" name="fast" class="form-control" width="80%" max="999"/>
+                    <input type="text" id="fast" name="fast" class="form-control" width="80%" max="999"/>
                     <label for="fast_error" class="form-error"></label>
                 </div>
                 <div class="col-md-4"> 
@@ -91,7 +96,7 @@ $().ready(function() {
         <table class="table table-bordered table-striped" width="80%">
           <tr style="background-color:darkblue;color:#FFF">
             <td>&nbsp;STT</td>
-            <td>&nbsp; Tên khu vực</td>
+            <td>&nbsp; Mã khu vực</td>
             <td>&nbsp; Số Km vượt quá</td>
             <td>&nbsp; Giá giao thường</td>
             <td>&nbsp; Giá giao nhanh</td>

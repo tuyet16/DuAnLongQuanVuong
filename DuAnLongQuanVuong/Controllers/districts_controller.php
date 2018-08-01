@@ -33,8 +33,8 @@
             header('Location:districts_controller.php');
         break;
         case "edit":
-		{
-			if(!isset($_POST['submit'])){
+		{	$name = filter_input(INPUT_POST, 'tenquan');
+			if($name==NULL){
 				try{
 					$tablesDB = new Database();
 					$tables = $tablesDB->getTables();				
@@ -61,7 +61,7 @@
 			else
 			{
 				$name = $_POST['tenquan'];
-				$id = $_POST['id'];
+				$id = $_POST['id_dis'];
 				$areas= $_POST['slKV'];
 				//print_r($_POST);
 				$distric_model = new districts();

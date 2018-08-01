@@ -49,15 +49,14 @@
 				$dc = $_POST['diachi'];
 				$dt = $_POST['sdt'];
 				$quan=$_POST['maquan'];
-				$phuong = $_POST['maphuong'];
 				$model->addCustomer($name);
 				header('Location: customers_controller.php');
 			}
 			break;
 		}
-		case 'edit_category':
+		case 'edit_customer':
 		{
-				$name = filter_input(INPUT_POST, 'category_name');
+				$name = filter_input(INPUT_POST, 'ten_kh');
 				if($name == NULL)
 				{
 					try{
@@ -68,8 +67,8 @@
 						{
 							$tablesDB = new Database();
 							$tables = $tablesDB->getTables();
-							$dsCategories=$model->getCategories();
-							$CateByID = $model->getCategoryByID( $_GET['id']);
+							$dsCustomers=$model->getCustomers();
+							$CustomerByID = $model->getByIDCustomer( $_GET['id']);
 							$GLOBALS['template']['menu'] = include_once '../template/menu.php';
 							$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
 							$GLOBALS['template']['content'] = include_once $view;
@@ -83,11 +82,11 @@
 				{
 					$id = $_POST['category_id'];
 					$model->editCategory($name,$id);
-					header('Location: categories_controller.php');
+					header('Location: customers_controller.php');
 				}
 				break;
 		}
-		case "delete_category":
+		case "delete_customer":
 			if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){
 					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);
@@ -96,9 +95,9 @@
 			else
 			{
 				if($_GET['confirm'] == true){
-					$category_id = $_GET['id'];
-					$model->deleteCategory($category_id);
-					header('Location: categories_controller.php');
+					$id = $_GET['id'];
+					$model->deleteCustomer($id);
+					header('Location: customers_controller.php');
 				}
 			}
 			break;

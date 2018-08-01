@@ -25,19 +25,14 @@ $().ready(function() {
     	<fieldset>
         	<legend style="80%">Sửa Quận</legend>
                 <form method="post" action="?action=edit" id="quan">
-                <input type="hidden" name="id" value="<?php echo $district[0]->districtID; ?>" />
+                <input type="hidden" name="id_dis" value="<?php echo $district[0]->districtID; ?>" />
                      <div class="row"  style="margin-top:2px">                     
                     	<div class="col-md-2">Tên Quận </div> 
                        	<div class="col-md-3"> 
-                           <input type="text" name="tenquan" id="tenquan" value="<?php echo $district[0]->districtName; ?>" class="form-control" width="80%" required/>
+                           <input type="text" name="tenquan" id="tenquan" value="<?php if(isset($_GET['id'])) echo $district[0]->districtName; ?>" class="form-control" width="80%" required/>
                        		  <label for="tenquan_error" class="form-error" style="color: red;"></label>
                         </div> 
                     </div>
-<<<<<<< HEAD
-                    
-                     <div class="row"  style="margin-top:4px;margin-left:17%">
-                        	<button type="submit" name="submit" class="btn" style="background-color:darkblue;color:#FFF"/> Lưu
-=======
                     <div class="row"  style="margin-top:2px">
                     	<div class="col-md-2">Khu vực </div> 
                        	<div class="col-md-3"> 
@@ -54,9 +49,8 @@ $().ready(function() {
                         </select>
                         </div>
                          <div class="col-md-1">
-                        	<button type="submit" class="btn" style="background-color:darkblue;color:#FFF"/> Lưu
+                        	<button type="submit" class="btn" style="background-color:darkblue;color:#FFF"> Lưu</button>
                     	</div>
->>>>>>> cc33e16a41d1289f425b0909724fc3734e97b947
                     </div>
                 </form>
         </fieldset>
@@ -65,13 +59,15 @@ $().ready(function() {
                 <table class="table table-bordered table-striped" width="80%">
                   <tr style="background-color:darkblue;color:#FFF">
                     <td>&nbsp;STT</td>
-                     <td>&nbsp; Tên Quận</td>
+                    <td>&nbsp; Tên Quận</td>
+                    <td>&nbsp; Khu vực</td>
                     <td>&nbsp; Thao tác</td>
                   </tr>
                   <?php $i=1; foreach($DSdistrict as $row){  ?>
                   <tr>
                     <td><?php echo $i++; ?></td>
                     <td><?php echo ucfirst($row->districtName); ?></td>
+                    <td><?php echo $row->areasID; ?></td>
                     <td><a href="../Controllers/districts_controller.php?action=edit&id=<?php echo $row->districtID; ?>">
                         <span class="glyphicon glyphicon-pencil"></span></a> &nbsp; 
                         <a href="../Controllers/districts_controller.php?action=delete&id=<?php echo $row->districtID; ?>">

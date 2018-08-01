@@ -15,10 +15,11 @@ $().ready(function() {
 		errorElement: "span",
 		messages: {
 			areas_name: {
+				areas_name: {
 				required: " (Không được để trống)",
-				minlength: " (Độ dài từ 3 ký tự trở lên)"
-			}
-			,
+				number:" Chỉ được nhập số",
+				max:"Số lớn nhất 20"
+			},
 			sokm:{
 				number:" Chỉ được nhập số",
 				max:"Số lớn nhất 999"
@@ -33,8 +34,12 @@ $().ready(function() {
 			}
 		},
 		rules:{
+			areas_name: {
+				required:true,
+				number:true
+			},
 			sokm: {
-			  number:true
+			  number:true,
 			},
 			often: {
 			  number:true
@@ -43,6 +48,7 @@ $().ready(function() {
 			  number:true
 			}
   		}
+	}
 	});
 
 	$(".cancel").click(function() {
@@ -55,9 +61,9 @@ $().ready(function() {
         <form id="formEditAreas" method="post" action="?action=edit_areas">
         <input type="hidden" name="id_areas" value="<?php echo $AreasByID[0]->areasID ?>"/>
             <div class="row">
-                <div class="col-md-2 text-right">Tên khu vực: </div> 
+                <div class="col-md-2 text-right">Mã khu vực: </div> 
                 <div class="col-md-4"> 
-                    <input type="text" id="areas_name" name="areas_name" value="<?php echo $AreasByID[0]->areasName ?>" class="form-control" width="80%" required minlength="3"/>
+                    <input type="text" id="areas_name" name="areas_name" value="<?php echo $AreasByID[0]->areasName ?>" class="form-control" width="80%" required max="20"/>
                     <label for="areas_name_error" class="form-error"></label>
                 </div>
             </div>
@@ -94,7 +100,7 @@ $().ready(function() {
         <table class="table table-bordered table-striped" width="80%">
           <tr style="background-color:darkblue;color:#FFF">
             <td>&nbsp;STT</td>
-            <td>&nbsp; Tên khu vực</td>
+            <td>&nbsp;	Mã khu vực</td>
             <td>&nbsp; Số Km vượt quá</td>
             <td>&nbsp; Giá giao thường</td>
             <td>&nbsp; Giá giao nhanh</td>

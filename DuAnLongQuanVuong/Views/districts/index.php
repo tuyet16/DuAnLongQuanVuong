@@ -41,7 +41,7 @@ $().ready(function() {
                         </select>
                         </div>
                          <div class="col-md-1">
-                        	<button type="submit" class="btn" style="background-color:darkblue;color:#FFF"/> Lưu
+                        	<button type="submit" class="btn" style="background-color:darkblue;color:#FFF"> Lưu</button>
                     	</div>
                     </div>
                 </form>
@@ -51,13 +51,15 @@ $().ready(function() {
                 <table class="table table-bordered table-striped" width="80%">
                   <tr style="background-color:darkblue;color:#FFF">
                     <td>&nbsp;STT</td>
-                     <td>&nbsp; Tên Quận</td>
+                    <td>&nbsp; Tên Quận</td>
+                    <td>&nbsp;Khu vực</td>
                     <td>&nbsp; Thao tác</td>
                   </tr>
                   <?php $i=1; foreach($DSdistrict as $row){  ?>
                   <tr>
                     <td><?php echo $i++; ?></td>
                     <td><?php echo ucfirst($row->districtName); ?></td>
+                     <td><?php echo $row->areasID; ?></td>
                     <td><a href="../Controllers/districts_controller.php?action=edit&id=<?php echo $row->districtID; ?>">
                         <span class="glyphicon glyphicon-pencil"></span></a> &nbsp; 
                         <a href="../Controllers/districts_controller.php?action=delete&id=<?php echo $row->districtID; ?>">
