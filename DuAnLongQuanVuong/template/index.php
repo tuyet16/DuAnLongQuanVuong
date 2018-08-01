@@ -16,6 +16,7 @@
      <script src="../Views/js/jquery.min.js"> </script>
     <script src="../Views/js/bootstrap.min.js"></script>       
     <script src="../Views/js/jquery.validate.min.js"></script>
+    <script src="../Views/js/additional-methods.min.js"></script>
     <link type="text/css" rel="stylesheet" href="../views/css/pgwslideshow.min.css"/>
     <script src="../Views/js/pgwslideshow.min.js"></script>
     <script src="../views/js/script.js"></script>

@@ -4,7 +4,7 @@
 <script>
 $().ready(function() {
 	// validate the form when it is submitted
-	var validator = $("#formEditAreas").validate({
+	var validator = $("#formAddAreas").validate({
 		errorPlacement: function(error, element) {
 			// Append error within linked label
 			$( element )
@@ -15,40 +15,44 @@ $().ready(function() {
 		errorElement: "span",
 		messages: {
 			areas_name: {
-				areas_name: {
-				required: " (Không được để trống)",
-				number:" Chỉ được nhập số",
-				max:"Số lớn nhất 20"
+				required: "Vui lòng không để trống",
+				min:" Vui lòng nhập giá trị bằng 1 hoặc lớn hơn 1",
+				//max:"Số lớn nhất 20"
 			},
 			sokm:{
-				number:" Chỉ được nhập số",
-				max:"Số lớn nhất 999"
+				required: "Vui lòng không để trống",
+				min:" Vui lòng nhập giá trị bằng 1 hoặc lớn hơn 1",
+				//max:"Số lớn nhất 999"
 			},
 			often:{
-				number:" Chỉ được nhập số",
-				max:"Số lớn nhất 999"
+				required: "Vui lòng không để trống",
+				min:" Số tiền phải lớn hơn hoặc bằng 1000",
+				range:"Số tiền nhập từ 1000 và nhỏ hơn 1 tỷ",
+				//max:"Số lớn nhất 999"
 			},
 			fast:{
-				number:" Chỉ được nhập số",
-				max:"Số lớn nhất 999"
+				required: "Vui lòng không để trống",
+				min:" Số tiền phải lớn hơn hoặc bằng 1000",
+				range:" Số tiền nhập từ 1000 và nhỏ hơn 1 tỷ",
+				//max:"Số lớn nhất 999"
 			}
 		},
 		rules:{
 			areas_name: {
-				required:true,
-				number:true
+				required:true
 			},
 			sokm: {
-			  number:true,
+			 min:1
 			},
 			often: {
-			  number:true
+			  min:1,
+			 range:[1000,1000000000]
 			},
 			fast: {
-			  number:true
+			  min:1,
+			  range:[1000,1000000000]
 			}
-  		}
-	}
+  		}	
 	});
 
 	$(".cancel").click(function() {
@@ -63,28 +67,28 @@ $().ready(function() {
             <div class="row">
                 <div class="col-md-2 text-right">Mã khu vực: </div> 
                 <div class="col-md-4"> 
-                    <input type="text" id="areas_name" name="areas_name" value="<?php echo $AreasByID[0]->areasName ?>" class="form-control" width="80%" required max="20"/>
+                    <input type="text" id="areas_name" name="areas_name" value="<?php echo $AreasByID[0]->areasName ?>" class="form-control" width="80%" required/>
                     <label for="areas_name_error" class="form-error"></label>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-2 text-right">Số Km vượt quá: </div> 
                 <div class="col-md-4"> 
-                    <input type="text" id="sokm" name="sokm" value="<?php echo $AreasByID[0]->km ?>" class="form-control" width="80%" max="999"/>
+                    <input type="text" id="sokm" name="sokm" value="<?php echo $AreasByID[0]->km ?>" class="form-control" width="80%" required/>
                     <label for="sokm_error" class="form-error"></label>
                 </div>
             </div>
              <div class="row">
                 <div class="col-md-2 text-right">Giá giao thường </div> 
                 <div class="col-md-4"> 
-                    <input type="text" id="often" name="often" value="<?php echo $AreasByID[0]->often ?>" class="form-control" width="80%"  max="999" />
+                    <input type="text" id="often" name="often" value="<?php echo $AreasByID[0]->often ?>" class="form-control" width="80%"  required />
                     <label for="often_error" class="form-error"></label>
                 </div> 
             </div>
             <div class="row">
                 <div class="col-md-2 text-right">Giá giao nhanh </div> 
                 <div class="col-md-4"> 
-                    <input type="text" id="fast" name="fast" class="form-control" value="<?php echo $AreasByID[0]->fast?>" width="80%"  max="999"/>
+                    <input type="text" id="fast" name="fast" class="form-control" value="<?php echo $AreasByID[0]->fast?>" width="80%" required/>
                     <label for="fast_error" class="form-error"></label>
                 </div>
                 <div class="col-md-4"> 
@@ -113,8 +117,8 @@ $().ready(function() {
                 <td>&nbsp; '.$i++.'</td>
                 <td>&nbsp; '.$row->areasName.'</td>
 				 <td>&nbsp; '.$row->km.'Km</td>
-				 <td>&nbsp; '.$row->often.'K</td>
-				 <td>&nbsp; '.$row->fast.'K</td>
+				 <td>&nbsp; '.$row->often.' VNĐ</td>
+				 <td>&nbsp; '.$row->fast.' VNĐ</td>
                 <td><a href="../Controllers/areas_controller.php?action=edit_areas&id='.$row->areasID.'"><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="Sửa"></span></a> 
                     &nbsp; <a href="../Controllers/areas_controller.php?action=delete_areas&id='.$row->areasID.'"><span class="glyphicon glyphicon-remove" title="Xóa"></span></a></td>
               </tr>';

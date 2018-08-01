@@ -77,7 +77,22 @@ include_once('../Libs/messagebox_lib.php');
             
         }
             
-        break;
-        
+        break; 
+		case 'delete_user':
+		if(!isset($_GET['confirm'])){
+				if(isset($_GET['id'])){
+					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);
+				}
+        	}
+			else
+			{
+				if($_GET['confirm'] == true){
+					$user_id = $_GET['id'];
+					 $user = new Users();
+                	$user->deleteUsers($user_id);
+					header('Location:admin_controller.php?action=dsshop');
+				}
+			}
+			break; 
     }
 ?>

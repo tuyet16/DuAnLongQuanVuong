@@ -1,37 +1,82 @@
 <?php ob_start();?>
+        <script>
+$().ready(function() {
+	// validate the form when it is submitted
+	var validator = $("#formTTShop").validate({
+		errorPlacement: function(error, element) {
+			// Append error within linked label
+			$( element )
+				.closest( "form" )
+					.find( "label[for='" + element.attr( "id" ) + "_error']" )
+						.append( error );
+		},
+		errorElement: "span",
+		messages: {
+					username:{
+						required: "Vui lòng không để trống"
+					},
+					email:{
+						required: "Vui lòng không để trống",
+						email: "Ví dụ: mail@example.com"
+					},
+					tenshop:{
+						required: "Vui lòng không để trống"
+					},
+					address:{
+						required: "Vui lòng không để trống"
+					},
+					tel:{
+						required: "Vui lòng không để trống",
+						phoneUK:"Chỉ được nhập 10 đến 11 số"
+					}	
+				},
+		rules:{
+			email:{
+				required: true,
+      			email: true
+			},	
+			tel:{
+				required:true,
+				phoneUK:true
+			}
+  		}	
+	});
+});
+</script>
     <fieldset>
         <legend>Sửa Users</legend>
     
    	<div class="col-md-9">
-        <form action="?action=suashop" method="post" id="signup">  
+        <form action="?action=suashop" method="post" id="formTTShop">  
         <input type="hidden" name="userid" type="text" value="<?php echo $rsUsers[0]->userid; ?>" />         
             <div class="row">
                 <div class="col-md-2">Họ và tên</div>
                 <div class="col-md-10">
-                    <input type="text" id="username" name="username" class="form-control" value="<?php echo $rsUsers[0]->fullname; ?>" required=""/>
+                    <input type="text" id="username" name="username" class="form-control" value="<?php echo $rsUsers[0]->fullname; ?>" required/>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-2">Email</div>
-                <div class="col-md-10"><input type="email" id="email" value="<?php echo $rsUsers[0]->email; ?>" name="email" placeholder="mail@example.com" class="form-control" required=""/></div>
+                <div class="col-md-10"><input type="email" id="email" value="<?php echo $rsUsers[0]->email; ?>" name="email" placeholder="mail@example.com" class="form-control" required/></div>
             </div> 
               
             <div class="row">
                 <div class="col-md-2">Tên Shop</div>
-                <div class="col-md-10"><input type="text" id="tenshop" name="tenshop"value="<?php echo $rsUsers[0]->shopName; ?>" class="form-control" required=""/></div>
+                <div class="col-md-10"><input type="text" id="tenshop" name="tenshop"value="<?php echo $rsUsers[0]->shopName; ?>" class="form-control" required/></div>
             </div> 
             <div class="row">
                 <div class="col-md-2">Địa chỉ</div>
                 <div class="col-md-10">
-                    <input type="text" id="address" name="address" value="<?php echo $rsUsers[0]->address; ?>" class="form-control" required=""/></div>
+                    <input type="text" id="address" name="address" value="<?php echo $rsUsers[0]->address; ?>" class="form-control" required/></div>
             </div> 
             <div class="row">
-                <div class="col-md-2">Địa chỉ</div>
+                <div class="col-md-2">Điện Thoại</div>
                 <div class="col-md-10">
-                   <input type="tel" id="tel" name="tel" value="<?php echo $rsUsers[0]->phone; ?>" class="form-control" required=""/>
+                   <input type="text" id="tel" name="tel" value="<?php echo $rsUsers[0]->phone; ?>" class="form-control" required/>
+                   <label for="tel_error" class="form-error"></label>
                 </div>
             </div>          
-            <input type="submit" name="submit" value="Lưu"/>
+            <input type="submit" class="btn btn-primary" name="submit" value="Lưu"/>
         </form>
     </div>
     </fieldset>

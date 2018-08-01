@@ -156,20 +156,6 @@ button.close:hover{
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
-#signup input:focus + .validation01
-#signup input:focus:required:invalid
-#signup input.error:focus + .validation01 .valid,
-#signup input.required:focus + .validation01 .valid,
-#signup input:focus + .validation01 .valid					{ display: none; }
-
-#signup input:focus:required:valid + .validation01,
-#signup input.valid:focus + .validation01					{ background: green; }
-
-#signup input:focus:required:valid + .validation01 .invalid,
-#signup input.valid:focus + .validation01 .invalid			{ display: none; }
-
-#signup input:focus:required:valid + .validation01 .valid,
-#signup input.valid:focus + .validation01 .valid				{ display: block; }
 
 #signup fieldset input:required:valid
 {
@@ -331,32 +317,13 @@ input#tel {
     font-size: 0.9em;
     letter-spacing: 0px;
 }
-span.checkbox1 {
-    float: left;
-}
 a.forgot {
     float: right;
 	color:#ce451b;
 	text-decoration:none;
 	font-size: 0.875em;
 }
-.signin-rit .chk {
-    padding: 0em 0em 0em 1.1em;
-}
-label.chk {
-    margin: 0;
-}
-.chk input[type="checkbox"]{
-    margin-left: 0px;
-}
-.signin-rit .chk {
-    position: relative;
-    font-size: 0.91em;
-    font-weight: normal;
-    color: #999;
-    padding: 0em 0.5em 0em 1.1em;
-    margin: 0;
-}
+
 h5.or {
     text-align: center;
     margin: 20px 0;

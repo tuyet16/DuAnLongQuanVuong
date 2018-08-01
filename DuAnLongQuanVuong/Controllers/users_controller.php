@@ -23,9 +23,9 @@ include_once('../Libs/messagebox_lib.php');
         break;
         case 'dangnhap':
             
-            if(isset($_POST['email']) && isset($_POST['password']))
+            if(isset($_POST['email1']) && isset($_POST['password']))
             {
-                $email = $_POST['email'];
+                $email = $_POST['email1'];
                 $pass = $_POST['password'];
                 $user = new Users();
                 $login = $user->login($email,$pass);
@@ -50,6 +50,12 @@ include_once('../Libs/messagebox_lib.php');
                             exit(); 
                      }                  
                }
+			   else
+			 {
+				 header('Location: home_controller.php');
+					exit(); 
+			 }
+			   
             }
                    
         break;

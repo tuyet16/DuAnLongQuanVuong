@@ -1,26 +1,40 @@
 <?php
-	include_once('../Config/bootload.php');
+	include_once('../Config/bootload.php');	
     $action = filter_input(INPUT_GET,'action');
     if($action==NULL)
     {
         $action =filter_input(INPUT_POST,'action');
         if($action==NULL)
         {
-            $action ='index';
+            	$action ='index';
         }
     }
-	$services = new Services();
-	$advance = new Advance();
-	$surcharges = new Surcharge();
+	
 	switch($action){
 		case 'index':
+			$services = new Services();
+			$advance = new Advance();
+			$surcharges = new Surcharge();
 			$dsSV = $services->getServices();
 			$dsAdvance = $advance->getAdvance();
 			$dsSurcharges = $surcharges->getSurcharge();
 			$view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
-            $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
-            $GLOBALS['template']['content'] = include_once $view;
+			if(isset($_SESSION['role']))
+			{	if($_SESSION['role']=='0')
+				{
+					$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+				}
+				else
+				{
+					$GLOBALS['template']['leftmenu'] = include_once'../template/shopleftmenu.php';		
+				}
+			}
+			else
+			{	
+				$GLOBALS['template']['leftmenu'] = include_once'../template/leftmenu.php';
+			}
+            $GLOBALS['template']['content'] = /*print_r($_SESSION['role']);*/ include_once $view;
             include_once('../template/index.php');
 		break;	
 	}
