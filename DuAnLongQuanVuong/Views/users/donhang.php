@@ -1,5 +1,11 @@
 <?php
 	ob_start();
+    if(count($DSdonhang) <= 0)
+    {
+        echo '<div class="text-center" style="font-size:140%;padding-top:10%;">Chưa có đơn hàng nào</div>';
+    }
+    else
+    {
 ?>
 
     <table class="table table-bordered table-striped">
@@ -13,7 +19,7 @@
         <td>&nbsp; Chi Tiết</td>
       </tr>
       <div id="accordion">
-      <?php //foreach($DSdonhang as $date=>$billIDs) {
+      <?php  //foreach($DSdonhang as $date=>$billIDs) {
             $tong =0;
             $thongke = array();
         ?>    
@@ -23,10 +29,11 @@
         <h4><?php $dt=date_create($date); 
                     echo date_format($dt,'d-m-Y'); ?></h4></td>
       </tr>
-        <?php foreach($DSdonhang as $billID=>$db) { 
+        <?php $j=1; foreach($DSdonhang[$date] as $billID=>$db){ 
+                
             ?>
           <tr>
-            <td>&nbsp;1</td>
+            <td>&nbsp;<?php echo $j++;?></td>
             <td>&nbsp;<?php echo $db[1][0]; ?></td>
             <td>&nbsp;<?php echo $db[0][2]; ?></td>
             <td>&nbsp;Chưa ship</td>
@@ -64,20 +71,21 @@
                                 <td>Giảm giá</td>
                                 <td>Thành tiền</td>
                             </tr>
-                            <?php foreach($db[2] as $detail_item){ 
+                            
+                            <?php $a=1; foreach($db[2] as $detail_item){ 
                                 if($detail_item != null){?>
                             <tr>
-                                <td>1</td>
+                                <td><?php echo $a++; ?></td>
                                 <td><?php echo $detail_item[4]; 
                                     if(isset($thongke[$detail_item[4]]))
                                     {
                                         $thongke[$detail_item[4]] += $detail_item[2]; 
-                                        $thongke[$detail_item[4]].=' '.$detail_item[5];
+                                        //$thongke[$detail_item[4]].=' '.$detail_item[5];
                                     }
                                     else
                                     {
                                         $thongke[$detail_item[4]] = $detail_item[2];
-                                        $thongke[$detail_item[4]].=' '.$detail_item[5];
+                                        //$thongke[$detail_item[4]].=' '.$detail_item[5];
                                     }
                                     ?></td>
                                 <td><input type="text" name="<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[2];  ?>" /></td>
@@ -106,7 +114,14 @@
                         </table>
                         <div class="text-right">
                             <button type="submit" name="submit" class="btn btn-success">Cập nhật</button>
-                            <a href="" class="btn btn-success">Gửi đơn hàng</a>
+                            <?php  if($db[0][5]==0){?>
+                            <a href="users_controller.php?action=guidonhang&id=<?php echo $billID; ?>" class="btn btn-success">Gửi đơn hàng</a>
+                        <?php }
+                            else
+                            {
+                                echo '<a href="users_controller.php?action=guidonhang&id=<?php echo $billID; ?>" class="btn btn-danger">Đa gửi hàng</a>';
+                            }
+                        ?>
                         </div>
                          </form>
                     </div>
@@ -117,8 +132,7 @@
               </div>
             </td>
         </tr>
-        <?php } ?> 
-        <?php // } ?>
+        <?php }  ?> 
        <tr style="margin-top: 20px;">
             <td colspan="4" style="color: red; text-align: center;font-weight: bolder;font-size: 130%;">Tổng tiền</td>
             <td style="color: blue;background-color: #FDE1FD;"><b><?php echo number_format($tong); ?></b></td>
@@ -134,9 +148,9 @@
             <td colspan="3">Tên sản phẩm</td>
             <td colspan="2">Tổng số lượng</td>
         </tr>
-        <?php foreach($thongke as $tk=>$sl){ ?>
+        <?php $i=1; foreach($thongke as $tk=>$sl){ ?>
         <tr>
-            <td>1</td>
+            <td><?php echo $i++; ?></td>
             <td colspan="3"><?php echo $tk; ?></td>
             <td colspan="2"><?php echo $sl; ?></td>
         </tr>
@@ -148,15 +162,17 @@
 </table>
 <ul class="pagination">    
     <?php $i=0;
-         foreach($DSdonhang1 as $date1=>$dt){
+         foreach($DSdonhang1 as $date1=>$dt1){
             if($date1==$date)
             {   ?>
-        <li class="page-item active"><a class="page-link" href="?action=donhang&ngay=<?php echo $date1; ?>"><?php echo ++$i; ?></a></li>
+        <li class="page-item active"><a class="page-link" href="?action=donhang&ngay=<?php echo $date1; ?>">
+                                        <?php $dtam = date_create($date1); echo date_format($dtam,'d-m-y'); ?></a></li>
     <?php        
     }
     else
     {?>
-        <li class="page-item"><a class="page-link" href="?action=donhang&ngay=<?php echo $date1; ?>"><?php echo ++$i; ?></a></li>
+        <li class="page-item"><a class="page-link" href="?action=donhang&ngay=<?php echo $date1; ?>">
+                            <?php $dtam = date_create($date1); echo date_format($dtam,'d-m-y'); ?></a></li>
     <?php 
     }
     } ?>
@@ -165,5 +181,6 @@
   
   
 <?php
+}
 	return ob_get_clean();
 ?>

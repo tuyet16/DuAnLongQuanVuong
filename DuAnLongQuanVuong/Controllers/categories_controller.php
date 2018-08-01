@@ -14,7 +14,7 @@
 		case 'index':
 			$tableDB = new Database();
             $tables = $tableDB->getTables();
-			$dsCategories=$model->getCategories();            
+			$dsCategories= $model->getCategories();            
 			$view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
             $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
@@ -23,7 +23,7 @@
 		break;	
 		case 'add_category':
 		{
-			 $name = filter_input(INPUT_POST, 'category_name');
+            $name = filter_input(INPUT_POST, 'category_name');
 			if($name == NULL)
 			{
 				try{

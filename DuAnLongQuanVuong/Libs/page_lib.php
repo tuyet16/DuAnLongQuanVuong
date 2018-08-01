@@ -8,10 +8,10 @@ class Page{
      * 
      * 
      */
-    public static function createPagination($rs, $limit=5)
+    public static function createPagination($rs, $limit=1)
     {
         //Kiểm tra URL có tham số hay không, nếu chưa thì dùng dấu ? , nếu có thì dùng dấu &
-        if(!isset($_SERVER['QUERY_STRING']))
+        if(isset($_SERVER['QUERY_STRING']))
             $mark = '&';
         else
             $mark = '?';
@@ -21,15 +21,24 @@ class Page{
         if(isset($_GET['start']))
         {
             $active_page = $_GET['start'];
+            //tach chuoi thanh 1 cai mảng dựa vào dấu &
+            $param = explode('&', $_SERVER['QUERY_STRING']);
+            //xoa 1 phần tử cuối trong mang
+            unset($param[count($param)-1]);
+            //biến mảng thành chuỗi mới phân tách bởi dấu &
+            $query_string = implode('&', $param);   
+        }
+        else{
+            $query_string = $_SERVER['QUERY_STRING'];
         }
         $num_page = ceil($number/$limit);
         if($num_page > 1){
             for($i = 0; $i < $num_page; $i++){
                 $start = $i * $limit;
                 if($start != $active_page)
-                    $pages .= "<li class='page-item'><a class='page-link' href='" . $_SERVER['PHP_SELF'] . $mark. "start=" . ($start) . "'>" . ($i+1) . "</a></li>";
+                    $pages .= "<li class='page-item'><a class='page-link' href='". $_SERVER['PHP_SELF'].'?'. $query_string . $mark. "start=" . ($start) . "'>" . ($i+1) . "</a></li>";
                 else
-                    $pages .= "<li class='page-item active'><a class='page-link' href='" . $_SERVER['PHP_SELF'] . $mark . "start=" . ($start) . "'>" . ($i+1) . "</a></li>";
+                    $pages .= "<li class='page-item active'><a class='page-link' href='" . $_SERVER['PHP_SELF'] . '?' . $query_string . $mark . "start=" . ($start) . "'>" . ($i+1) . "</a></li>";
             }
         }
         $pages .= '</ul>';

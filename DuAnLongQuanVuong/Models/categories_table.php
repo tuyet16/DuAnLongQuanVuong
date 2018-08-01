@@ -23,6 +23,13 @@ class Categories extends Database{
         $rs = $this->doQuery($query);
         return $rs;
     }
+    public function getDScategory($id){
+        $query = 'SELECT distinct ct.* FROM categories ct, products pr, users us where ct.categoryID = pr.categoryID and pr.userid = us.userid and us.userid=?';
+        $param = array();
+        $param[] = $id;
+        $rs = $this->doQuery($query,$param);
+        return $rs;
+    }
     public function getCategoryByID($category_id){   
         $query = 'SELECT * FROM categories WHERE categoryID=?';
         $param = array();

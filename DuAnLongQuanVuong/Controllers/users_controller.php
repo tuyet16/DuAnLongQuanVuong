@@ -50,20 +50,19 @@ include_once('../Libs/messagebox_lib.php');
                             exit(); 
                      }                  
                }
-			   else
-			 {
-				 header('Location: home_controller.php');
-					exit(); 
-			 }
-			   
+			  else
+				 {
+					 header('Location: home_controller.php');
+						exit(); 
+				 }
+			                   
             }
                    
         break;
         case 'logout':
             session_destroy();
             header('Location: home_controller.php');
-        break;
-        
+        break;        
         case 'dangky':
             $hoten = $_POST['username'];
             $email = $_POST['email'];
@@ -76,20 +75,24 @@ include_once('../Libs/messagebox_lib.php');
            // print_r($_POST);
            header('Location:admin_controller.php');
         break;
-        case 'donhang':            
+        case 'donhang':
+            $product_model = new products();
+            $dsProducts = $product_model->getProduct();
             if(isset($_SESSION['userid']))
             {
                 $user = new Users();
-                $id = $_SESSION['userid'];               
+                $id = $_SESSION['userid'];
+                $category = new Categories(); 
+                $dsCategories = $category->getDScategory($id);    
                 $DSdonhang1 = $user->getHoadon($id);
                 if(isset($_GET['ngay']))
                 {
-                    $DSdonhang = $DSdonhang1[$_GET['ngay']];
+                    $DSdonhang = $DSdonhang1;
                     $date = $_GET['ngay'];
                 }
                 else
                 {
-                    $DSdonhang = $DSdonhang1[0];
+                    $DSdonhang = $DSdonhang1;
                     $date=key($DSdonhang);
                     
                 }
@@ -98,7 +101,11 @@ include_once('../Libs/messagebox_lib.php');
                 $GLOBALS['template']['leftmenu'] = include_once'../template/shopleftmenu.php';
                 $GLOBALS['template']['content'] = include_once $view;
                 include_once('../template/index.php');
-            }            
+            }
+            else
+            {
+                header('Location:home_controller.php');
+            }                    
         break;
         case 'shopedit':
             if(isset($_POST['submit']))
@@ -109,8 +116,7 @@ include_once('../Libs/messagebox_lib.php');
                 foreach($_POST as $detail_id=>$edit)
                 {
                     if($detail_id != 'submit')
-                    {
-                      
+                    {                      
                         if(strpos($detail_id,'giamgia') === false && strpos($detail_id,'gia') === false)
                         {
                             //  echo $detail_id.'<br>';
@@ -129,7 +135,21 @@ include_once('../Libs/messagebox_lib.php');
                 
             }
         break;
-        
+        case 'guidonhang':
+            $guidonhang =0;
+            if(isset($_GET['id']))
+            {
+                $id= $_GET['id'];
+                $user = new Users();
+                $guidonhang = $user->guidonhang($id);
+            }
+            header('Location:?action=donhang');
+        break;
     }
 
 ?>
+
+
+
+
+

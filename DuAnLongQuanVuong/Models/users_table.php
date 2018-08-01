@@ -67,7 +67,7 @@ class Users extends Database{
         foreach($rs as $bill)
         {
             $donhangarr[$bill->setDate][$bill->billID][0]= array($bill->customerID,$bill->billingAddress
-                                    ,$bill->delivery,$bill->totalPrice,$bill->tinhtrang);
+                                    ,$bill->delivery,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck);
             $tongtien += $bill->totalPrice;
             $sql = 'select * from customers cs, districts dt where cs.districtID = dt.districtID and customerID=?';
             $param =array();
@@ -108,6 +108,89 @@ class Users extends Database{
         $param[] = $billID;
         $this->doQuery($sql,$param);
     }
+    public function guidonhang($id)
+    {
+        $query = 'update bills set shopcheck =1 where billID=?';
+        $param = array();
+        $param[] = $id;
+        $rs = $this->doQuery1($query,$param);
+        return $rs->rowCount();
+    }
+    //Phần  này của admin
+    public function gethoadonAmin()
+    {
+        $tongtien =0;
+        $donhangarr = array();
+        $query ='select distinct bi.* from bills bi,products pr, detailsbills dt
+            where bi.billID = dt.billID and dt.productID = pr.productID and bi.shopcheck=1 order by bi.setDate desc';
+        $rs = $this->doQuery($query);
+        foreach($rs as $bill)
+        {
+            $donhangarr[$bill->setDate][$bill->billID][0]= array($bill->customerID,$bill->billingAddress
+                                    ,$bill->delivery,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck);
+            $tongtien += $bill->totalPrice;
+            $sql = 'select * from customers cs, districts dt where cs.districtID = dt.districtID and customerID=?';
+            $param =array();
+            $param[]=$bill->customerID;
+            $cs = $this->doQuery($sql,$param);
+            $donhangarr[$bill->setDate][$bill->billID][1] = array($cs[0]->customerName
+                                ,$cs[0]->address,$cs[0]->phone,$cs[0]->districtName);
+            
+            $sql1 = 'select dt.*,pr.productName, pr.unitID,un.unitName,pr.price as gia from detailsbills dt , products pr,units un             
+                                where dt.productID=pr.productID and pr.unitID=un.unitID and dt.billID=?';
+            $param = array();
+            $param[]= $bill->billID;
+            $dt = $this->doQuery($sql1,$param);
+            foreach($dt as $detail)
+            {
+                $donhangarr[$bill->setDate][$bill->billID][2][]=array($detail->detailID,$detail->productID,$detail->amount
+                                            ,$detail->price,$detail->productName,$detail->unitName,$detail->gia,$detail->discount);
+                
+            } 
+            $sqlnhanvien = 'select * from employees ';
+            $nv = $this->doQuery($sqlnhanvien);
+            foreach($nv as $employee)
+            {
+                $donhangarr[$bill->setDate][$bill->billID][3][]=array($employee->idEm,$employee->employeeID,$employee->employeeName);
+            }
+                                   
+        }
+        return $donhangarr;
+    } 
+    public function editnhanvien($idEm,$id)
+    {
+        $query = 'update bills set idEm=? where billID=?';
+        $param = array();
+        $param[] = $idEm;
+        $param[] = $id;
+        $rs = $this->doQuery($query,$param);
+        return $rs;
+    } 
+    public function edittinhtrang($tinhtrang,$ghichu,$id)
+    {
+        $query ='Update bills set tinhtrang =?, ghichu=?  where billID=?';
+        $param = array();
+        $param[] = $tinhtrang;
+        $param[] = $ghichu;
+        $param[] = $id;
+        $rs = $this->doQuery($query,$param);
+        return $rs;
+    }
+    public function getTinhtrang()
+    {
+        $tinhtrangArr = array();
+        $query ='select distinct bi.*, ep.*,cs.* from bills bi,employees ep,customers cs where bi.idEm = ep.idEm and bi.customerID = cs.customerID';
+        $rs = $this->doQuery($query);
+        foreach($rs as $bill)
+        {
+            $tinhtrangArr[$bill->setDate][$bill->billID][0]= array($bill->customerID,$bill->billingAddress,$bill->delivery,
+                $bill->totalPrice,$bill->tinhtrang,$bill->shopcheck,$bill->ghichu,$bill->employeeName,$bill->phone,
+                $bill->customerName,$bill->address);
+            
+        }
+        return $tinhtrangArr;        
+    }  
+    
 }
 
 
