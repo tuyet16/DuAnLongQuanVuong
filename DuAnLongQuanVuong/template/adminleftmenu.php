@@ -19,7 +19,10 @@
            Đơn Hàng
         </div>
         <div class="list-group-item list-group-item-action">
-            <a href="../Controllers/admin_controller.php?action=donhang">Đơn hàng</a>
+            <a href="../Controllers/admin_controller.php?action=donhang">Đơn Hàng</a>            
+        </div>
+        <div class="list-group-item list-group-item-action">
+            <a href="../Controllers/admin_controller.php?action=tinhtrang">Tình Trạng Giao Hàng</a>            
         </div>
     </div>
      <div class="list-group" style="padding-top: 3%;">

@@ -11,8 +11,7 @@
             <td>&nbsp; Địa chỉ</td>
             <td>&nbsp; Số điện thoại </td>
             <td>&nbsp; Thao tác</td>
-          </tr>
-         
+          </tr>         
           <?php
 		  	$i=1;
 				foreach($dsCustomers as $row){

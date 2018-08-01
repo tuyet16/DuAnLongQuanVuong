@@ -84,14 +84,6 @@
             {
                 $thoigian = date("Y-m-d H:i:s");
                 $giaohang= $_POST['giaohang'];
-                if($giaohang =='thuong')
-                {
-                    $giaohang = 'Giao thường';
-                }
-                else
-                {
-                    $giaohang = 'Giao nhanh';
-                }
                 $address = $diachi.' '.$dsWards[0]->wardName.' '.$DSdistrict[0]->districtName;
                 $bills_id = $shopping_ml->addBills($customer_id,$address,$thoigian,$giaohang,$tongtien);
                 if($bills_id !=null)
@@ -110,11 +102,9 @@
             else
             {
                 MessageBox::Show("Hệ thống đang bảo trì,bạn vui lòng đặt hàng sau");
-            }
-            
-                
-            
+            } 
         break;
+        
     }
 
 ?>

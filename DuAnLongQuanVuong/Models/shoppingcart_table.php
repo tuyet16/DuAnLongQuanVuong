@@ -112,6 +112,7 @@
             $param[] = $billID;
             $this->doQuery($query,$param);
         }
+      
     }
     
 ?>

@@ -31,8 +31,8 @@
              <div class="row">
                 <label class="control-label">Phương thức giao hàng</label>
                 <select name="giaohang" class="form-control">
-                    <option value="thuong">Giao thường</option>
-                    <option value="nhanh">Giao nhanh</option>
+                    <option value="0">Giao thường</option>
+                    <option value="1">Giao nhanh</option>
                 </select>
             </div>
             <div class="row" style="margin-top: 2%;">

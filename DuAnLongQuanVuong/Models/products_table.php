@@ -5,8 +5,24 @@
 		}
 		public function getProduct()
         {
-            $query = 'select * from products pr, users us where pr.userid= us.userid';
+            $query = 'select * from products';
             $rs = $this->doQuery($query);
+            return $rs;
+        }
+        public function getProductBycategoryID($id)
+        {
+            $query= 'select * from products where categoryID =?';
+            $param = array();
+            $param[] = $id;
+            $rs= $this->doQuery($query,$param);
+            return $rs;
+        }
+        public function getProductByuserid($id)
+        {
+            $query= 'select * from products where userid =?';
+            $param = array();
+            $param[] = $id;
+            $rs= $this->doQuery($query,$param);
             return $rs;
         }
         public function getByIDProduct($id)
@@ -14,6 +30,22 @@
             $query ='select * from products where productID=?';
             $param= array();
             $param[]=$id;
+            $rs = $this->doQuery($query,$param);
+            return $rs;
+        }
+        public function phantrang($id,$userid,$start=-1,$limit=1)
+        {
+            if($start==-1)
+            {
+                $query = 'select *from products where categoryID = ? and userid =?';                    
+            }
+            else
+            {
+                $query = 'select * from products where categoryID=? and userid=? LIMIT '.$start.','.$limit;
+            }
+            $param = array();
+            $param[] = $id;   
+            $param[] = $userid;
             $rs = $this->doQuery($query,$param);
             return $rs;
         }

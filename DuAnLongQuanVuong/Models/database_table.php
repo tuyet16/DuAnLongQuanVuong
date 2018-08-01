@@ -42,6 +42,20 @@ class Database{
         }
         return $rs->fetchAll(PDO::FETCH_OBJ);
     }
+     public function doQuery1($strQuery, $param = null){
+        if($param == null){
+            $rs = $this->conn->prepare($strQuery);
+            $rs->execute();
+        }
+        else{
+            $rs = $this->conn->prepare($strQuery);
+            for($i = 0; $i < count($param); $i++){
+                $rs->bindParam($i+1, $param[$i]);
+            }
+            $rs->execute();
+        }
+        return $rs;
+    }
     public function getTables()
     {
         $strQuery = 'SHOW TABLES';

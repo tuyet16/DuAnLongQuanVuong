@@ -16,6 +16,15 @@
             $tables = $tableDB->getTables();
             $product_model = new products();
             $dsProducts = $product_model->getProduct();
+            $category = new Categories();
+            $dsCategories = $category->getCategories();
+            if(isset($_SESSION['userid']))
+            {
+                $id = $_SESSION['userid'];
+                $category = new Categories();
+                $dsCategories = $category->getDScategory($id);
+            }
+            
             $view = Page::View();
             $GLOBALS['template']['menu'] = include_once '../template/menu.php';
             $GLOBALS['template']['leftmenu'] = include_once '../template/leftmenu.php';
