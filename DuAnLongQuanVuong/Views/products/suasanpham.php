@@ -63,11 +63,13 @@
                         <input type="file" name="hinhanh" class="form-control" value="<?php echo $rsProducts[0]->image; ?>"/>                        
                     </div>
                 </div>
+                <input type="hidden" name="hinhcu" value="<?php echo $rsProducts[0]->image; ?>" />
                 <div class="row" style="margin-top:3px;margin-left:52%"> 
                 	<button type="submit" name="submit" class="btn" style="background-color:darkblue;color:#FFF"> Lưu </button> 
                	</div>        
             </div>
             <div class="col-md-2">
+                
                 <img src="../Views/img/<?php echo $rsProducts[0]->image; ?>" width="100%"/>
             </div>
         </div>

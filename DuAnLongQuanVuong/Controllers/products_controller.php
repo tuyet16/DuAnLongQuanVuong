@@ -18,6 +18,7 @@
             $dsUnits = $unit->getUnits();
             $product_model = new products();
             $dsProducts = $product_model->getProduct();
+            //$pt = $product_model->phantrang();
 			$view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
             $GLOBALS['template']['leftmenu'] = include_once'../template/shopleftmenu.php';
@@ -63,8 +64,16 @@
                     $donvi = $_POST['unitID'];
                     $gia = $_POST['gia'];
                     $userid = $_SESSION['userid'];
-                    $hinhanh = $_FILES['hinhanh'];
-                    $img = Image::GetFile($hinhanh);
+                    if(is_uploaded_file($_FILES['hinhanh']['tmp_name']))
+                    {
+                        $hinhanh = $_FILES['hinhanh'];
+                        $img = Image::GetFile($hinhanh);
+                    }
+                    else
+                    {
+                        $img = $_POST['hinhcu'];
+                    }
+                    
                     $product_model = new products();
                     $product_model->editProduct($tensp,$loaisp,$donvi,$gia,$img,$id);
                     header('Location:shop_controller.php');

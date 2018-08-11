@@ -4,7 +4,7 @@
        <?php foreach($dsCategories as $row){ 
             ?>
         <div class="list-group-item list-group-item-action">
-            <a href="../Controllers/home_controller.php?action=mypham"><?php echo $row->categoryName; ?></a>
+            <a href="../Controllers/home_controller.php?action=xemsanpham&id=<?php echo $row->categoryID; ?>"><?php echo $row->categoryName; ?></a>
         </div>
         <?php }?>  
     </div>
@@ -13,7 +13,7 @@
             Bảng Giá Dịch Vụ
         </div>
         <div class="list-group-item list-group-item-action">
-            <a href="../Controllers/home_controller.php?action=services">Xem chi tiết >> ></a>
+            <a href="../Controllers/services_controller.php?action=index">Xem chi tiết >> ></a>
         </div>  
     </div>
      

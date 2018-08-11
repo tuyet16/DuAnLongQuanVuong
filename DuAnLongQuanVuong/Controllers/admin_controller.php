@@ -1,6 +1,5 @@
 <?php 
 include_once('../config/bootload.php');
-include_once('../Libs/messagebox_lib.php');
     $action = filter_input(INPUT_POST,'action');
     if($action == Null)
     {
@@ -15,16 +14,6 @@ include_once('../Libs/messagebox_lib.php');
         case 'index':
     	   header('Location: ?action=donhang');
         break;
-        case 'doanhthungay':
-            $tableDB = new Database();
-            $tables = $tableDB->getTables();
-            $view = Page::View();
-            $GLOBALS['template']['menu'] = include_once'../template/menu.php';
-            $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
-            $GLOBALS['template']['content'] = include_once $view;
-            $GLOBALS['template']['footer'] = include_once'../template/footer.php';
-            include_once('../template/index.php');
-            break;
         case 'dsshop':
             $user = new Users();
             $dsUsers = $user->getUser();
@@ -73,14 +62,20 @@ include_once('../Libs/messagebox_lib.php');
             {
                 $user = new Users();
                 $id = $_SESSION['userid'];   
-                $DSdonhang1 = $user->gethoadonAmin();
-                if(isset($_GET['ngay']))
+                
+                if(isset($_POST['chonngay']))
                 {
+                    
+                    $ngay = $_POST['chonngay'];
+                    $dt=date_create($ngay);
+                    $ngay = date_format($dt,'Y-m-d');
+                    $DSdonhang1 = $user->gethoadonAmin($ngay);
                     $DSdonhang = $DSdonhang1;
-                    $date = $_GET['ngay'];
+                    $date = $ngay;
                 }
                 else
                 {
+                    $DSdonhang1 = $user->gethoadonAmin();
                     $DSdonhang = $DSdonhang1;
                     $date=key($DSdonhang);
                     
@@ -109,21 +104,26 @@ include_once('../Libs/messagebox_lib.php');
             //header('Location:?action=donhang');
         break;
         case 'tinhtrang':
+            $idnv=0;
             $user = new Users();
             $edittinhtrang = $user->getTinhtrang();
             if(isset($_POST['submit']))
             {
-                print_r($_POST);
-                if(isset($_POST['billID']) && isset($_POST['rd']) &&isset($_POST['ghichu']))
+                 if(isset($_GET['idnv']))
+                 {
+                    $idnv = $_GET['idnv'];                     
+                 } 
+                 if(isset($_POST['billID']) && isset($_POST['rd']) &&isset($_POST['ghichu'])&&isset($_POST['phiship']))
                 {
                     $id = $_POST['billID'];
                     $tinhtrang = $_POST['rd'];
                     $ghichu = $_POST['ghichu'];
+                    $phiship = $_POST['phiship'];
+                    $luongnv = $phiship*0.8;
                     $user = new Users();
-                    $edithoadon = $user->edittinhtrang($tinhtrang,$ghichu,$id);
-                    header('Location:?action=tinhtrang');
-                    
-                }
+                    $edithoadon = $user->edittinhtrang($tinhtrang,$ghichu,$phiship,$luongnv,$id);
+                    header('Location:?action=tinhtrang&idnv='.$idnv);                    
+                }           
             }
             else
             {
@@ -138,7 +138,7 @@ include_once('../Libs/messagebox_lib.php');
                     $date=key($DSdonhang);
                     
                 } 
-                 $view = Page::View();
+                $view = Page::View();
                 $GLOBALS['template']['menu'] = include_once'../template/menu.php';
                 $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
                 $GLOBALS['template']['content'] = include_once $view;
@@ -146,8 +146,108 @@ include_once('../Libs/messagebox_lib.php');
             }       
            
         break;
-        
-        
+        case 'doanhthungay':
+            $user = new Users();
+            $DSdonhang = $user->getthongkengay();
+            
+            if(isset($_POST['chonngay']))
+            {
+                $doanhthu = $DSdonhang;
+                $date1 =  date_create($_POST['chonngay']);
+                $date = date_format($date1,'Y-m-d');
+            }
+            else
+            {
+                $doanhthu = $DSdonhang;
+                $date=key($doanhthu);                
+            } 
+            $view = Page::View();
+            $GLOBALS['template']['menu'] = include_once'../template/menu.php';
+            $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+            $GLOBALS['template']['content'] = include_once $view;
+            include_once('../template/index.php');
+        break;
+        case 'doanhthuthang':
+            $user = new Users();
+                        
+            if(isset($_POST['chonthang']))
+            {
+                $chon= explode(' ',$_POST['chonthang']);                
+                $thang = $chon[0];
+                $nam = $chon[1]; 
+                $DSdonhang = $user->getthongkethang($thang,$nam);
+                $doanhthu = $DSdonhang;
+                $date1 =  date_create($_POST['chonthang']);
+                $date = $thang.'-'.$nam;
+            }
+            else
+            {
+                $time = $user->getThangNew();
+                $DSdonhang = $user->getthongkethang($time['thang'],$time['nam']);
+                $doanhthu = $DSdonhang;
+                $date= $time['thang'].'-'.$time['nam'];                
+            }
+            $view = Page::View();
+            $GLOBALS['template']['menu'] = include_once'../template/menu.php';
+            $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+            $GLOBALS['template']['content'] = include_once $view;
+            include_once('../template/index.php');
+        break;
+        case 'doanhthunam':
+            $user = new Users();
+                                  
+            if(isset($_POST['chonnam']))
+            { 
+                $nam = $_POST['chonnam'];                  
+                $DSdonhang = $user->getThongkeNam($nam);
+                $doanhthu = $DSdonhang;
+                $date = $nam;
+            }
+            else
+            {
+                $time = $user->getNamNew();
+                $DSdonhang = $user->getThongkeNam($time['nam']);
+                $doanhthu = $DSdonhang;
+                $date=$time['nam'];                
+            }
+            $view = Page::View();
+            $GLOBALS['template']['menu'] = include_once'../template/menu.php';
+            $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+            $GLOBALS['template']['content'] = include_once $view;
+            include_once('../template/index.php');
+        break;
+        case 'inhoadon':
+            if(isset($_GET['billID']))
+            {
+                $id = $_GET['billID'];
+                $user = new Users();                   
+                $thongtin = $user->getHDAdminByID($id) ;
+                $ar = array('STT','Tên Hàng','Đơn Vị','Số lượng','Đơn Giá','Thành Tiền');
+                //print_r($thongtin);             
+                foreach($thongtin as $in )
+                {
+                    $flag = false;
+                    foreach($in as $billID=>$dt)
+                    {
+                        print_r($billID);
+                        print_r($dt);
+                        $time = $billID[0][3];
+                        $chon = explode('-',$time);
+                        $nam = $chon[0];
+                        $thang = $chon[1];
+                        $ngay = $chon[2];
+                        $filename = "D:/donhang/".$nam.'/'.'Thang_'.$thang.'/'.$ngay.'/'.$ngay.'_'.$billID.".xls";
+                        header("Content-Disposition: attachment; filename=\"$filename\"");
+                        header("Content-Type: application/vnd.ms-excel");
+                        if($flag == false)
+                        {       
+                            echo implode("\t",$ar)."\r\n";
+                            $flag=true;
+                        } 
+                     }
+                }  
+            }
+        break;
     }
 ?>
 

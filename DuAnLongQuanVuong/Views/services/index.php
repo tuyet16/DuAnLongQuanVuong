@@ -16,7 +16,6 @@
 					<a href="">
 					<button type="button" class="btn btn-success">Thêm mới</button></a></p>';
 				}
-			
 			?>
                 <table class="table table-bordered table-striped">
                   <tr style="background-color:darkblue;color:#FFF">

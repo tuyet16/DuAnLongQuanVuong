@@ -55,7 +55,7 @@ ob_start(); //Bien luu = chuoi
     <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: darkblue;color: yellow;border: 1px solid darkblue;">
       <div class="container">
         <div class="navbar-header">
-           <a class="navbar-brand" href="../Controllers/home_controller.php" style="color: white;">Logo</a>
+           <a class="navbar-brand" href="home_controller.php" style="color: white;">Logo</a>
            
         </div>
         <ul class="nav navbar-nav">

@@ -21,8 +21,7 @@ include_once('../Libs/messagebox_lib.php');
         $GLOBALS['template']['content'] = include_once $view;
         include_once('../template/index.php');
         break;
-        case 'dangnhap':
-            
+        case 'dangnhap':            
             if(isset($_POST['email']) && isset($_POST['password']))
             {
                 $email = $_POST['email'];
@@ -79,10 +78,11 @@ include_once('../Libs/messagebox_lib.php');
                 $category = new Categories(); 
                 $dsCategories = $category->getDScategory($id);    
                 $DSdonhang1 = $user->getHoadon($id);
-                if(isset($_GET['ngay']))
+                if(isset($_POST['chonngay']))
                 {
                     $DSdonhang = $DSdonhang1;
-                    $date = $_GET['ngay'];
+                    $date1 =  date_create($_POST['chonngay']);
+                    $date = date_format($date1,'Y-m-d');
                 }
                 else
                 {

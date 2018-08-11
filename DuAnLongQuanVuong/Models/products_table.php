@@ -49,6 +49,21 @@
             $rs = $this->doQuery($query,$param);
             return $rs;
         }
+        public function phantrangHome($id,$start=-1,$limit=1)
+        {
+            if($start==-1)
+            {
+                $query = 'select *from products where categoryID = ?';                    
+            }
+            else
+            {
+                $query = 'select * from products where categoryID=? LIMIT '.$start.','.$limit;
+            }
+            $param = array();
+            $param[] = $id;   
+            $rs = $this->doQuery($query,$param);
+            return $rs;
+        }
         public function addProduct($name,$categoryID,$userid,$unit,$price,$hinhanh)
         {
             $query = 'insert into products(productName,categoryID,userid,unitID,price,image) values(?,?,?,?,?,?)';

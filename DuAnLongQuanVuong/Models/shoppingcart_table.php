@@ -89,15 +89,16 @@
             $con = $this->getconnect();
             return $con->lastInsertId('customerID');
         }
-        public function addBills($customerID,$billing,$date,$loaiship,$tongtien)
+        public function addBills($customerID,$billing,$date,$loaiship,$tongtien,$ship)
         {
-            $query = 'insert into bills(customerID,billingAddress,setDate,delivery,totalPrice) values(?,?,?,?,?)';
+            $query = 'insert into bills(customerID,billingAddress,setDate,delivery,totalPrice,phiship) values(?,?,?,?,?,?)';
             $param = array();
             $param[]=$customerID;
 			$param[]=$billing;
 			$param[]=$date;
 			$param[]=$loaiship;
             $param[]=$tongtien;
+            $param[] =$ship;
             $this->doQuery($query,$param);
             $con = $this->getconnect();
             return $con->lastInsertId('billID');
@@ -111,6 +112,23 @@
             $param[] = $price;
             $param[] = $billID;
             $this->doQuery($query,$param);
+        }
+        public function tinhphidichvu($quan,$giaohang)
+        {
+            if($giaohang == 0)
+            {
+               $sql ='select distinct ar.often as phiship from customers cs, districts ds ,areas ar where cs.districtID=ds.districtID
+                     and ar.areasID =ds.areasID and ds.districtID=?';           
+            }
+            else
+            {
+                $sql ='select distinct ar.fast as phiship from customers cs, districts ds ,areas ar where cs.districtID = ds.districtID
+                     and ar.areasID =ds.areasID and ds.districtID=?';                
+            }
+            $param = array();
+            $param[] = $quan;
+            $rs = $this->doQuery($sql,$param);
+            return $rs[0]->phiship;
         }
       
     }

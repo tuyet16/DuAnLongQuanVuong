@@ -1,14 +1,18 @@
 <?php
 	ob_start();
 ?>
-    
-
+    <form method="post" action="?action=donhang">
+        <div class="col-md-12">
+            Chọn ngày xem:                 
+            <input type="text" name="chonngay" id="datepicker"/>
+            <input type="submit" name="submit" value="Xem" />
+        </div>
+    </form>
     <table class="table table-bordered table-striped">
       <tr style="background-color:darkblue;color:#FFF">
         <td>&nbsp; STT</td>
         <td>&nbsp; Tên Khách hàng</td>
         <td>&nbsp; Loại ship </td>
-        <td>&nbsp; Tinh trạng</td>
         <td>&nbsp; Đơn giá </td>
         <td>&nbsp; Thời gian đặt hàng</td>
         <td>&nbsp; Chi Tiết</td>
@@ -17,23 +21,29 @@
       <?php $tong =0;
             $thongke = array(); ?>
       <tr>
-        <td colspan="7" style="color: red;"><h4><?php $dt=date_create($date); echo date_format($dt,'d-m-y');  ?>
+      <form method="post" action="?action=inhoadon">
+        <td colspan="7" style="color: red;"><h4><?php $dt=date_create($date); echo $ngay = date_format($dt,'d-m-y');  ?>
+        <input type="hidden" name="ngay" value="<?php echo $date; ?>" />     
         <input type="submit" name="in" value="In đơn hàng" class="btn btn-danger"/></h4></td>
+      </form>
       </tr>
             <?php $i=1; foreach($DSdonhang[$date] as $billID=>$db){ ?>
           <tr>
             <td>&nbsp;<?php echo $i++; ?></td>
-            <td>&nbsp;<?php echo $db[1][0]; ?></td>
-            <td>&nbsp;<?php echo $db[0][2]; ?></td>
-            <td>&nbsp;Chưa ship</td>
+            <td>&nbsp;<?php  echo $db[1][0];?></td>
+            <td>&nbsp;<?php if($db[0][2]==0) 
+                                {
+                                    echo 'Giao Thường';
+                                }
+                                else
+                                {echo 'Giao Nhanh';}?></td>
             <td>&nbsp;<?php echo number_format($db[0][3]); $tong += $db[0][3];?></td>
             <td>&nbsp;<?php echo date_format($dt,'d-m-Y'); ?></td>
             <td>             
                 <a class="collapsed card-link" data-toggle="collapse" href="#collapse<?php echo $billID; ?>">
                     Xem
                 </a>
-            </td>
-            
+            </td>            
         </tr>
         
         <tr>
@@ -105,7 +115,7 @@
                             </div>
                             <div class="col-md-3 text-right">
                                 <button type="submit" name="submit" class="btn btn-success">Cập nhật</button>
-                                <a href="admin_controller.php?action=editnhanvien&id=<?php echo $billID; ?>" class="btn btn-success">Gửi đơn hàng</a>
+                                <a href="?action=inhoadon&billID=<?php echo $billID; ?>" class="btn btn-danger">In Hóa Đơn</a>
                             </div>
                         </div>
                     </div>

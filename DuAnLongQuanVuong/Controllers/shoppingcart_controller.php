@@ -60,8 +60,6 @@
             $view = Page::View();
             $dt_model = new districts();
             $DSdistrict = $dt_model->getDistrict();
-            $model = new Wards();
-            $dsWards = $model->getWards();
             $shoppingcart = new ShoppingCart();
             $rsCart = $shoppingcart->ViewCart();
             $tongtien = $shoppingcart->getTotal();
@@ -84,8 +82,10 @@
             {
                 $thoigian = date("Y-m-d H:i:s");
                 $giaohang= $_POST['giaohang'];
-                $address = $diachi.' '.$dsWards[0]->wardName.' '.$DSdistrict[0]->districtName;
-                $bills_id = $shopping_ml->addBills($customer_id,$address,$thoigian,$giaohang,$tongtien);
+                $address = $diachi.' '.$DSdistrict[0]->districtName;
+                $ship = $shopping_ml->tinhphidichvu($quan,$giaohang);
+               // echo $ship;
+                $bills_id = $shopping_ml->addBills($customer_id,$address,$thoigian,$giaohang,$tongtien,$ship);                 
                 if($bills_id !=null)
                 {
                     foreach($_SESSION['cart'] as $masp=>$amount)
