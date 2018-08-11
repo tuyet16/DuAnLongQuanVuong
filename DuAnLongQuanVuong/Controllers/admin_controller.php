@@ -56,6 +56,23 @@ include_once('../config/bootload.php');
             
         }
             
+        break; 
+		case 'delete_user':
+		if(!isset($_GET['confirm'])){
+				if(isset($_GET['id'])){
+					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);
+				}
+        	}
+			else
+			{
+				if($_GET['confirm'] == true){
+					$user_id = $_GET['id'];
+					 $user = new Users();
+                	$user->deleteUsers($user_id);
+					header('Location:admin_controller.php?action=dsshop');
+				}
+			}
+			break; 
         break;
         case 'donhang':
             if(isset($_SESSION['userid']))
@@ -146,6 +163,7 @@ include_once('../config/bootload.php');
             }       
            
         break;
+<<<<<<< HEAD
         case 'doanhthungay':
             $user = new Users();
             $DSdonhang = $user->getthongkengay();
@@ -248,6 +266,9 @@ include_once('../config/bootload.php');
                 }  
             }
         break;
+=======
+        
+>>>>>>> d75a3fc0d4a82a1f2b3595fcb4c862dd0c232ced
     }
 ?>
 

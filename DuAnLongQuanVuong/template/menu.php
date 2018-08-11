@@ -1,21 +1,6 @@
  <?php
 ob_start(); //Bien luu = chuoi
 ?>
- <script type="text/javascript">
-	window.onload = function () {
-		document.getElementById("password1").onchange = validatePassword;
-		document.getElementById("password2").onchange = validatePassword;
-	}
-	function validatePassword(){
-	var pass2=document.getElementById("password2").value;
-	var pass1=document.getElementById("password1").value;
-	if(pass1!=pass2)
-		document.getElementById("password2").setCustomValidity("Passwords Don't Match");
-	else
-		document.getElementById("password2").setCustomValidity('');
-	//empty string means no validation error
-	}
-</script>
 <div class="row" style="background-color:#AAD5FF ;">
    
     <div class="col-md-12">
@@ -117,6 +102,40 @@ ob_start(); //Bien luu = chuoi
       </div>
     </nav>
     <!-- Modal -->
+    <script>
+    	/*$().ready(function() {
+			var validator = $("#signin").validate({
+				errorPlacement: function(error, element) {
+			// Append error within linked label
+			$( element )
+				.closest( "form" )
+					.find( "label[for='" + element.attr( "id" ) + "_error']" )
+						.append( error );
+		},
+		errorElement: "span",
+		messages: {
+					email1: {
+						required: "Vui lòng không để trống",
+						//email: "Ví dụ: mail@example.com"
+					},
+					password:{
+						required: "Vui lòng không để trống"	,
+						//minlength:"Mật khẩu phải có từ 8 kí tự <br> Chứa cả chữ và số",
+					},
+				},
+		rules:{
+				email:{
+					required: true,
+					//email: true
+				},	
+				password:{
+					required:true,
+					//minlength:8
+				}
+  			}	
+		});*/
+	//});
+    </script>
    		<!--Login-->
     <div class="modal fade" id="myLogin" role="dialog">
         <div class="modal-dialog" style="width:28%">
@@ -130,35 +149,88 @@ ob_start(); //Bien luu = chuoi
             <div class="modal-body" style="padding: 30px 35px 35px;">
                 <div class="login-form">
                     <form action="../Controllers/users_controller.php?action=dangnhap" method="post" id="signin">
-                        <input type="text" class="email" name="email" placeholder="Email" required=""/>
-                        <input type="password" class="lock" name="password" placeholder="Mật khẩu" required="" value=""/>
+                        <input type="text" class="email" id="email1" name="email1" placeholder="Email" required=""/>
+                        <label for="email1_error" class="form-error"></label>
+                        <input type="password" id="password" class="lock" name="password" placeholder="Mật khẩu" required="" value=""/>
+                        <label for="password_error" class="form-error"></label>
                         <div class="signin-rit">
                             <span class="checkbox1">
                                  <label class="chk"><input type="checkbox" name="checkbox" checked=""/>Ghi nhớ</label>
                             </span>
                                 <a class="close_modal" data-dismiss="modal" href="#" data-toggle="modal" data-target="#myGetpass">Quên mật khẩu?</a>
-                            <div class="clear"> </div>
+                            <div class="clear"></div>
                         </div>
                         <label style="color: red;">
                             <?php if(isset($_SESSION['erro'])) echo $_SESSION['erro']; ?>
                             </label>
                        <input type="submit" name="dangnhap" class="btn btn-primary" value="Đăng nhập"/>
                     </form>
-                    
-                  <!--<h5 class="or">(or)</h5>
-                    <div class="social-icons">
-                        <ul>
-                            <li><a href="#"class="facebook"><img src="../Views/images/fb.png" title="facebook" alt="facebook" /></a></li>
-                            <li><a href="#"class="twitter"><img src="../Views/images/tw.png" width="80%" title="Tiwtter" alt="Tiwtter" /></a></a></li>
-                            <li><a href="#"class="googleplus"><img src="../Views/images/gp.png" width="10%" title="Google Plus" alt="Google Plus" /></a></a></li>
-                        </ul>
-                    </div>-->
+                   
                 </div>
             </div>
           </div>
           </div>
         </div>
-        
+        <script>
+$().ready(function() {
+	// validate the form when it is submitted
+	var validator = $("#signup").validate({
+		errorPlacement: function(error, element) {
+			// Append error within linked label
+			$( element )
+				.closest( "form" )
+					.find( "label[for='" + element.attr( "id" ) + "_error']" )
+						.append( error );
+		},
+		errorElement: "span",
+		messages: {
+					username:{
+						required: "Vui lòng không để trống"
+					},
+					email:{
+						required: "Vui lòng không để trống",
+						email: "Ví dụ: mail@example.com"
+					},
+					tenshop:{
+						required: "Vui lòng không để trống"
+					},
+					address:{
+						required: "Vui lòng không để trống"
+					},
+					tel:{
+						required: "Vui lòng không để trống",
+						phoneUK:"Chỉ được nhập 10 đến 11 số"
+					},
+					password1:{
+						required: "Vui lòng không để trống",
+						minlength:"Mật khẩu phải có từ 8 kí tự <br> Chứa cả chữ và số"
+					},
+					password2:{
+						required: "Vui lòng không để trống",
+						minlength:"Mật khẩu phải có từ 8 kí tự <br> Chứa cả chữ và số",
+						equalTo: "Mật khẩu chưa khớp"
+					}	
+				},
+		rules:{
+			email:{
+				required: true,
+      			email: true
+			},	
+			tel:{
+				required:true,
+				phoneUK:true
+			},
+			password1:{
+				minlength:8
+			},
+			password2:{
+				minlength : 8,
+                equalTo : '[name="password1"]'
+			}
+  		}	
+	});
+});
+</script>
         <!--Sign up-->
         <div class="modal fade" id="mySignup" role="dialog">
         <div class="modal-dialog" style="width:28%">
@@ -175,41 +247,35 @@ ob_start(); //Bien luu = chuoi
                         <ol>
                             <li>
                                 <input type="text" id="username" name="username" placeholder="Họ và tên" title="Vui lòng nhập tên của bạn" required="">
+                                <label for="username_error" class="form-error"></label>
                             </li>
                             <li>
                                 <input type="email" id="email" name="email" placeholder="mail@example.com" title="Vui lòng nhập email" required="">
-                                <p class="validation01">
-                                    <span class="invalid">Ví dụ: ryan@example.com</span>
-                                </p>
+                                <label for="email_error" class="form-error"></label>
                             </li>
                             <li>
-                                <input type="text" id="tenshop" name="tenshop" placeholder="Tên Shop" title="Vui lòng nhập email" required=""/>
+                                <input type="text" id="tenshop" name="tenshop" placeholder="Tên Shop" title="Vui lòng nhập tên shop" required=""/>
+                                <label for="tenshop_error" class="form-error"></label>
                             </li>
                              <li>
-                                <input type="text" id="address" name="address" placeholder=" Địa chỉ" title="Vui lòng nhập email" required=""/>
+                                <input type="text" id="address" name="address" placeholder=" Địa chỉ" title="Vui lòng nhập địa chỉ shop" required=""/>
+                                <label for="address_error" class="form-error"></label>
                             </li>
                             <li>
-                                <input type="tel" id="tel" name="tel" placeholder="Vui lòng nhập số điện thoại" required="">
-                                <p class="validation01">
-                                    <span class="invalid">Ví dụ: 09612345678</span>
-                                </p>
+                                <input type="text" id="tel" name="tel" placeholder="Vui lòng nhập số điện thoại" required="" >
+                               <label id="tel_error" for="tel_error" class="form-error"></label>
                             </li>
                             <li>
-                            	<input type="password" class="lock" name="password" placeholder="Mật khẩu" id="password1" required="">
+                            	<input type="password" class="lock" name="password1" placeholder="Mật khẩu" id="password1" required="">
+                                <label for="password1_error" class="form-error"></label>
                             </li>
                             <li>
-                       			 <input type="password" class="lock" name="password1" placeholder="Mật khẩu nhập lại" id="password2" required="">
+                       			 <input type="password" class="lock" name="password2" placeholder="Mật khẩu nhập lại" id="password2" required="">
+                                 <label for="password2_error" class="form-error"></label>
                         	</li>
                         </ol>
-                        <div class="signin-rit">
-                            <span class="checkbox1">
-                                 <label class="chk"><input type="checkbox" name="checkbox" checked="">Tôi đồng ý với<a class="pp" target="_blank" href="#"> Điều khoản bảo mật</a></label>
-                            </span>
-                            <div class="clear"> </div>
-                        </div>
                          <input type="submit" value="Đăng kí"/>
                     </form>
-                    <p>Bạn đã có tài khoản? <a href="#" class="close_modal" data-dismiss="modal" data-toggle="modal" data-target="#myLogin">Đăng nhập ngay</a></p>
                 </div>
                 </div>
               </div>

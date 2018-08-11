@@ -15,32 +15,30 @@ $().ready(function() {
 		errorElement: "span",
 		messages: {
 					manv: {
-						required: " (Không được để trống)",
+						required: "Vui lòng không để trống",
 						minlength: " (Độ dài từ 3 ký tự trở lên)",
-						maxLength:"Mã nhân viên chỉ có 11 ký tự"
+						maxLength:"Mã nhân viên chỉ có 15 ký tự"
 					},
 					tennv:{
-						required: " (Không được để trống)",
+						required: "Vui lòng không để trống",
 						minlength: " (Độ dài từ 6 ký tự trở lên)",
 						maxLength: "(Độ dài nhỏ hơn 50 ký tự)"
 					},
 					diachi:{
-						required: " (Không được để trống)",
+						required:"Vui lòng không để trống",
 						minlength: " (Độ dài từ 10 ký tự trở lên)",
 						maxLength: "(Độ dài nhỏ hơn 255 ký tự)"	
 					},
 					sdt:{
-						required:"(Không được để trống)",
-						minLength:"(Điện thoại phải có ít nhất 10 số)",
-				  		maxLength: "(Điện thoại chỉ có 10-11 số",
-						number:"(Không được nhập chữ)"
+						required: "Vui lòng không để trống",
+						phoneUK:"Chỉ được nhập 10 đến 11 số"
 						
 					}
 				},
 		rules:{
 			sdt: {
 			  required:true,
-			  number:true,
+			  phoneUK:true,
 			}
   		}	
 	});
@@ -56,7 +54,7 @@ $().ready(function() {
             <div class="row">
                 <div class="col-md-2">Mã nhân viên</div> 
                 <div class="col-md-8"><input type="text" id="manv" name="manv" class="form-control"  
-                	required minLength='3' maxlength="11" value="<?php if(isset($EmployeeByID)){ echo $EmployeeByID[0]->employeeID;}?>"/>
+                	required minLength='3' maxlength="15" value="<?php if(isset($EmployeeByID)){ echo $EmployeeByID[0]->employeeID;}?>"/>
                     <label for="manv_error" class="form-error"></label>
                 </div>
             </div>
@@ -74,7 +72,7 @@ $().ready(function() {
             </div>
             <div class="row" style="margin-top:2px">
                 <div class="col-md-2">Số điện thoại</div> 
-                <div class="col-md-8"> <input id="sdt" name="sdt" type="text" class="form-control" required minLength='10' maxlength="11"
+                <div class="col-md-8"> <input id="sdt" name="sdt" type="text" class="form-control" required
                  value="<?php if(isset($EmployeeByID)){ echo $EmployeeByID[0]->phone;}?>"/>
                 <label for="sdt_error" class="form-error"></label></div>
             </div>	

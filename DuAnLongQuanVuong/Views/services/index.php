@@ -1,6 +1,10 @@
 <?php
 	ob_start();
 ?> 
+<h4 style="color: red;"><b>* Lưu ý:</h4> </b>
+<h4 style="margin-left: 10%;">Thời Gian nhận hàng cho quý khách hàng: Từ 8 giờ đến 21 giờ mỗi ngày</h4>
+<h4><b style="margin-left: 17%;">(Từ 16 giờ đến 21 giờ phụ thu thêm 5.000đ/đơn tháng)</b></h4>
+<h4 style="margin-left: 20%;">Thời gian giao nhanh từ 16h - 21h là 120 phút </h4>
 
 <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#menu1"> <b>Bảng giá dịch vụ</b></a></li>
@@ -11,11 +15,20 @@
      <div id="menu1" class="tab-pane fade in active">   
         <div class="row" style="margin:2%">
         	<?php
+<<<<<<< HEAD
 				if($_SESSION['role']=='0')
         		{	echo '<p  style="text-align:right">
 					<a href="">
 					<button type="button" class="btn btn-success">Thêm mới</button></a></p>';
 				}
+=======
+				//if($_SESSION['role']=='0')
+//        		{	echo '<p  style="text-align:right">
+//					<a href="">
+//					<button type="button" class="btn btn-success">Thêm mới</button></a></p>';
+//				}
+//			
+>>>>>>> d75a3fc0d4a82a1f2b3595fcb4c862dd0c232ced
 			?>
                 <table class="table table-bordered table-striped">
                   <tr style="background-color:darkblue;color:#FFF">
@@ -33,25 +46,25 @@
 								echo $strDistrict;
 							echo "</td>
 								<td>&nbsp;".$areas."</td>
-								<td>&nbsp;".$districts[1][0]."</td>
-								<td>&nbsp;".$districts[1][1]."</td>
-								<td>&nbsp;".$districts[1][2]."</td>
+								<td>&nbsp;".$districts[1][0]." km</td>
+								<td>&nbsp;".$districts[1][1]." VNĐ</td>
+								<td>&nbsp;".$districts[1][2]." VNĐ</td>
 							  </tr>";
                   }?>
                 </table>	
           </div>
       </div>
         <div id="menu2" class="tab-pane fade">
-             <div class="row" style="padding:3%">
+             <div class="row"  style="margin:2%">
 				<?php
-				if($_SESSION['role']=='0')
-        		{	echo '<p  style="text-align:right"><a href="../Controllers/advance_controller.php?action=add_advance">
-					<button type="button" class="btn btn-success">Thêm mới</button></a></p>';
+				if(isset($_SESSION['role']))
+        		{	if($_SESSION['role']=='0')
+						echo '<p  style="text-align:right"><a href="../Controllers/advance_controller.php?action=add_advance">
+								<button type="button" class="btn btn-success">Thêm mới</button></a></p>';
 				}
 			
 				?>
-                <table class="table table-bordered table-striped" >
-             <div class="row" style="margin-top:3%">
+             <div class="row">
                 <table class="table table-bordered table-striped" style="width:98%">
                   <tr style="background-color:darkblue;color:#FFF">
                         <td>&nbsp; Số tiền</td>
@@ -67,17 +80,23 @@
 				  ?>
                 </table>
             </div>
+            </div>
         </div> 
          <div id="menu3" class="tab-pane fade">
-             <div class="row" style="padding:3%">
+             <div class="row" style="margin:2%">
             <?php
-				if($_SESSION['role']=='0')
-        		{	echo '<p  style="text-align:right"><a href="../Controllers/surcharge_controller.php?action=add_surcharge">
-					<button type="button" class="btn btn-success">Thêm mới</button></a></p>';
+				if(isset($_SESSION['role']))
+        		{	if($_SESSION['role']=='0')	
+						echo '<p  style="text-align:right"><a href="../Controllers/surcharge_controller.php?action=add_surcharge">
+						<button type="button" class="btn btn-success">Thêm mới</button></a></p>';
 				}
 			
 			?>
                 <table class="table table-bordered table-striped">
+                	<tr style="background-color:darkblue;color:#FFF">
+                        <td>&nbsp; Loại phí</td>
+                        <td>&nbsp; Nội dung</td>
+                  </tr>
                   <?php	foreach($dsSurcharges as $row){
 				  		echo  "<tr>
 								<td>&nbsp;".$row->surchargeName."</td>
@@ -85,20 +104,6 @@
 							</tr>";
 				  }
 				  ?>
-             <div class="row" style="margin-top:3%">    
-                <table class="table table-bordered table-striped" style="width:98%">
-                  <tr style="background-color:darkblue;color:#FFF">
-                        <td>&nbsp; Khối lượng hàng không vượt qá</td>
-                        <td>&nbsp; 10kg(Trên 10kg, phụ thu 1k/kg)</td>
-                        <td>&nbsp; Thao tác</td>
-                  </tr>
-                  <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td><a href="#"><span class="glyphicon glyphicon-pencil"></span></a> &nbsp; <a href="#"><span class="glyphicon glyphicon-remove"></span></a></td>
-                  </tr>
-                </table>
-            </div>
         </div>
  </div>
 <?php

@@ -32,7 +32,7 @@ $().ready(function() {
     <legend style="80%">Phí ship phụ thu</legend>
             <form id="formAddSurcharge" method="post" action="?action=add_surcharge">
                 <div class="row">
-                    <div class="col-md-2">Tên phí</div> 
+                    <div class="col-md-2">Loại phí</div> 
                     <div class="col-md-4"> 
                     	<input type="text" id="txtname" name="txtname" class="form-control" width="80%" required/>
                      	<label for="txtname_error" class="form-error"></label>
@@ -53,6 +53,12 @@ $().ready(function() {
 <fieldset style="margin-top:2%">
     <legend>Danh sách phí ship phụ thu</legend>
         <table class="table table-bordered table-striped" width="80%">
+        <tr style="background-color:darkblue;color:#FFF">
+            <td>STT</td>
+            <td>&nbsp; Loại phí</td>
+            <td>&nbsp; Nội dung</td>
+            <td>Thao tác</td>
+      </tr>
 		 <?php  
             $i=1;
              foreach($dsSurcharge as $row){    

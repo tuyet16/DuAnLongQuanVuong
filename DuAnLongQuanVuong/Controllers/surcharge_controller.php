@@ -10,9 +10,9 @@
         }
 	}
 	
-	$surcharge = new Surcharge();
 	switch($action){
 		case 'add_surcharge':
+			$surcharge = new Surcharge();
 			$name = filter_input(INPUT_POST, 'txtname');
 			if($name == NULL)
 			{
@@ -43,6 +43,7 @@
 			break;
 			
 		case 'edit_surcharge':
+			$surcharge = new Surcharge();
 			if(isset($_GET['id']))
             {$id = $_GET['id'];
               try{
@@ -54,7 +55,7 @@
 						$tablesDB = new Database();
 						$tables = $tablesDB->getTables();
 						$dsSurcharge = $surcharge->getSurcharge();
-						$AdByID = $surcharge->getSurchargeByID($id);
+						$SurByID = $surcharge->getSurchargeByID($id);
 						$GLOBALS['template']['menu'] = include_once '../template/menu.php';
 						$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
 						$GLOBALS['template']['content'] = include_once $view;
@@ -66,14 +67,15 @@
             }
             else
             {
-                    $id = $_POST['adID'];
-                    $money= $_POST['txtname'];
-                  	$name=$_POST['surcharge'];
-                    $surcharge->editAdvance($money,$name,$id);
+                    $id = $_POST['surID'];
+                    $ten= $_POST['txtname'];
+                  	$nd=$_POST['surcharge'];
+                    $surcharge->editSurcharge($ten,$nd,$id);
                    	header('Location: surcharge_controller.php?action=add_surcharge');
             }
 			break;
 		case 'delete_surcharge':
+			$surcharge = new Surcharge();
 			if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){
 					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);

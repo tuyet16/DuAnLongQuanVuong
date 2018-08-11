@@ -65,7 +65,7 @@ $().ready(function() {
              echo'<tr>
 			 	<td>&nbsp; '.$i++.'</td>
                 <td>&nbsp; '.$row->money.'</td>
-                <td>&nbsp; '.$row->advanceName.'</td>
+                <td>&nbsp; '.$row->advanceName.' VNĐ</td>
                 <td><a href="../Controllers/advance_controller.php?action=edit_advance&id='.$row->advanceID.'"><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="Sửa"></span></a> 
                     &nbsp; <a href="../Controllers/advance_controller.php?action=delete_advance&id='.$row->advanceID.'"><span class="glyphicon glyphicon-remove" title="Xóa"></span></a></td>
               </tr>';
