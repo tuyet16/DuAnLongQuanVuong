@@ -31,7 +31,6 @@
             include_once('../template/index.php');             
         break;
         case 'services':
-<<<<<<< HEAD
             $category = new Categories(); 
             $dsCategories = $category->getCategories();
 			$tableDB = new Database();
@@ -42,10 +41,8 @@
             $GLOBALS['template']['content'] = include_once $view;
             $GLOBALS['template']['footer'] = include_once'../template/footer.php';
             include_once('../template/index.php');
-=======
 				header("Location: services_controller.php");
 			break;
->>>>>>> d75a3fc0d4a82a1f2b3595fcb4c862dd0c232ced
         break;
          case 'chitiet':
 		 	$tableDB = new Database();

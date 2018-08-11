@@ -16,15 +16,9 @@
     <link type="text/css" rel="stylesheet" href="../views/css/jquery-ui.min.css"/>
     <link type="text/css" rel="stylesheet" href="../views/css/jquery-ui.theme.min.css"/>
      <script src="../Views/js/jquery.min.js"> </script>
-<<<<<<< HEAD
     <script src="../Views/js/bootstrap.min.js"></script>  
     <script src="../Views/js/jquery.validate.min.js"></script>     
     <script src="../Views/js/jquery-ui.min.js"></script>
-=======
-    <script src="../Views/js/bootstrap.min.js"></script>       
-    <script src="../Views/js/jquery.validate.min.js"></script>
-    <script src="../Views/js/additional-methods.min.js"></script>
->>>>>>> d75a3fc0d4a82a1f2b3595fcb4c862dd0c232ced
     <link type="text/css" rel="stylesheet" href="../views/css/pgwslideshow.min.css"/>
     <script src="../Views/js/pgwslideshow.min.js"></script>
     <script src="../views/js/script.js"></script>

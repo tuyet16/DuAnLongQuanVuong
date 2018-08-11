@@ -163,7 +163,6 @@ include_once('../config/bootload.php');
             }       
            
         break;
-<<<<<<< HEAD
         case 'doanhthungay':
             $user = new Users();
             $DSdonhang = $user->getthongkengay();
@@ -247,28 +246,31 @@ include_once('../config/bootload.php');
                     $flag = false;
                     foreach($in as $billID=>$dt)
                     {
-                        print_r($billID);
-                        print_r($dt);
-                        $time = $billID[0][3];
-                        $chon = explode('-',$time);
+                        //print_r($billID);
+                        //print_r($in);
+                        $ngay =$in[0][3];
+                        //echo $time;
+                        $chon = explode('-',$ngay);
                         $nam = $chon[0];
                         $thang = $chon[1];
-                        $ngay = $chon[2];
-                        $filename = "D:/donhang/".$nam.'/'.'Thang_'.$thang.'/'.$ngay.'/'.$ngay.'_'.$billID.".xls";
+                        $filename = "D:/donhang/".$nam.'/'.'Thang_'.$thang.'/'.$ngay.'/'.$ngay.'_'.$id.".xls";
                         header("Content-Disposition: attachment; filename=\"$filename\"");
                         header("Content-Type: application/vnd.ms-excel");
                         if($flag == false)
-                        {       
-                            echo implode("\t",$ar)."\r\n";
+                        {   
+                            echo "Chủ Hàng: \t". $in[0][0]."\n";
+                            echo "Địa Chỉ: \t". $in[0][1]."\n";
+                            echo "Shipper: \t". $in[0][4]."\t"."ĐT: \t".$in[0][5]."\n";
+                            echo "Tên Khách Hàng: \t". $in[0][6]."\n";
+                            echo "Địa Chỉ: \t". $in[0][2]."\t \t"."ĐT: \t".$in[0][7];
+                            echo implode("\t",chr(255).chr(254).iconv("UTF-8","UTF-16LE//IGNORE",$ar))."\r\n";
                             $flag=true;
                         } 
                      }
                 }  
             }
         break;
-=======
-        
->>>>>>> d75a3fc0d4a82a1f2b3595fcb4c862dd0c232ced
+
     }
 ?>
 

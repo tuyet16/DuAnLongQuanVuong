@@ -24,7 +24,6 @@
       <form method="post" action="?action=inhoadon">
         <td colspan="7" style="color: red;"><h4><?php $dt=date_create($date); echo $ngay = date_format($dt,'d-m-y');  ?>
         <input type="hidden" name="ngay" value="<?php echo $date; ?>" />     
-        <input type="submit" name="in" value="In đơn hàng" class="btn btn-danger"/></h4></td>
       </form>
       </tr>
             <?php $i=1; foreach($DSdonhang[$date] as $billID=>$db){ ?>

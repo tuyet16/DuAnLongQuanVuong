@@ -21,14 +21,8 @@ include_once('../Libs/messagebox_lib.php');
         $GLOBALS['template']['content'] = include_once $view;
         include_once('../template/index.php');
         break;
-<<<<<<< HEAD
         case 'dangnhap':            
-            if(isset($_POST['email']) && isset($_POST['password']))
-=======
-        case 'dangnhap':
-            
             if(isset($_POST['email1']) && isset($_POST['password']))
->>>>>>> d75a3fc0d4a82a1f2b3595fcb4c862dd0c232ced
             {
                 $email = $_POST['email1'];
                 $pass = $_POST['password'];
