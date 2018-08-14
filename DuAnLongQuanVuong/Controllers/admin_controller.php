@@ -244,12 +244,10 @@ include_once('../config/bootload.php');
                 //$data = "Some utf-8 characters d?a ch?";          
                 foreach($thongtin as $in )
                 {
-                    
+                      print_r($in);
                     $flag = false;
                     foreach($in as $billID=>$dt)
-                    { 
-                        print_r($dt);
-                        
+                    {                      
                         //echo chr(255).chr(254).mb_convert_encoding($data,"UTF-16LE","UTF-8")."\r\n"; 
                         //print_r($in);
                         //print_r($in[1][6]);
@@ -281,15 +279,15 @@ include_once('../config/bootload.php');
                                     <td>Ðơn Giá</td>
                                     <td>Thành Tiền</td>
                                 </tr>";
-                                foreach($dt[1] as $dh){
-                                    print_r($dt[1]);
-                                    echo "<tr>
+                                foreach($in[1] as $dh){
+                                    //print_r($dt[1]);
+                                echo "<tr>
                                     <td>".$i++."</td>
                                     <td>".$dh[4]."</td>
                                     <td>".$dh[5]."</td>
                                     <td>".$dh[2]."</td>
+                                    <td>".$dh[6]."</td>
                                     <td>".$dh[3]."</td>
-                                    <td>".$in[0][9]."</td>
                                 </tr>" ;   
                                 }
                            echo " </table>";
