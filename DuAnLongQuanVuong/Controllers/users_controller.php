@@ -94,7 +94,6 @@ include_once('../Libs/messagebox_lib.php');
                 {
                     $DSdonhang = $DSdonhang1;
                     $date=key($DSdonhang);
-                    
                 }
                	$view = Page::View();
                 $GLOBALS['template']['menu'] = include_once'../template/menu.php';

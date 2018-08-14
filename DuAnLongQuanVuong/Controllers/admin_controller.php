@@ -240,30 +240,59 @@ include_once('../config/bootload.php');
                 $user = new Users();                   
                 $thongtin = $user->getHDAdminByID($id) ;
                 $ar = array('STT','Tên Hàng','Đơn Vị','Số lượng','Đơn Giá','Thành Tiền');
-                //print_r($thongtin);             
+                //print_r($thongtin);   
+                //$data = "Some utf-8 characters d?a ch?";          
                 foreach($thongtin as $in )
                 {
+                    
                     $flag = false;
                     foreach($in as $billID=>$dt)
-                    {
-                        //print_r($billID);
+                    { 
+                        print_r($dt);
+                        
+                        //echo chr(255).chr(254).mb_convert_encoding($data,"UTF-16LE","UTF-8")."\r\n"; 
                         //print_r($in);
+                        //print_r($in[1][6]);
                         $ngay =$in[0][3];
-                        //echo $time;
                         $chon = explode('-',$ngay);
                         $nam = $chon[0];
                         $thang = $chon[1];
-                        $filename = "D:/donhang/".$nam.'/'.'Thang_'.$thang.'/'.$ngay.'/'.$ngay.'_'.$id.".xls";
-                        header("Content-Disposition: attachment; filename=\"$filename\"");
-                        header("Content-Type: application/vnd.ms-excel");
+                        //$filename = "D:/donhang/".$nam.'/'.'Thang_'.$thang.'/'.$ngay.'/'.$ngay.'_'.$id.".xls";
+//                        header("Content-Disposition: attachment; filename=\"$filename\"");
+//                        header("Content-Type: application/vnd.ms-excel");
+//                        header("Contet-Encoding:UTF-8");
                         if($flag == false)
                         {   
-                            echo "Chủ Hàng: \t". $in[0][0]."\n";
-                            echo "Địa Chỉ: \t". $in[0][1]."\n";
-                            echo "Shipper: \t". $in[0][4]."\t"."ĐT: \t".$in[0][5]."\n";
-                            echo "Tên Khách Hàng: \t". $in[0][6]."\n";
-                            echo "Địa Chỉ: \t". $in[0][2]."\t \t"."ĐT: \t".$in[0][7];
-                            echo implode("\t",chr(255).chr(254).iconv("UTF-8","UTF-16LE//IGNORE",$ar))."\r\n";
+                            echo "Chủ Hàng: \t \t". chr(255).chr(254).mb_convert_encoding($dt[0],"UTF-8")."\n";
+                            echo "Ðịa Chỉ: \t ". $dt[1]."\n";
+                            echo "Ðon Vận Chuyển: \t \t"."SEVEN SHIPPER \t \t \t". "Ngày \n";
+                            echo "Shipper: \t". $dt[4]."\t"."ÐT: \t".$dt[5]."\t \t".$dt[3]."\n";
+                            echo "Tên Khách Hàng: \t \t". $dt[6]."\n";
+                            echo "Ðịa Chỉ: \t". $dt[2]."\t \t"."ÐT: \t".$dt[7]."\n";
+                           // echo implode("\t",chr(255).chr(254).iconv("UTF-8","UTF-16LEIGNORE",$ar))
+                           
+                            $i=1;
+                            echo "<table>
+                                <tr>
+                                    <td>STT</td>
+                                    <td>Tên Hàng</td>
+                                    <td>ÐVT</td>
+                                    <td>Số Lượng</td>
+                                    <td>Ðơn Giá</td>
+                                    <td>Thành Tiền</td>
+                                </tr>";
+                                foreach($dt[1] as $dh){
+                                    print_r($dt[1]);
+                                    echo "<tr>
+                                    <td>".$i++."</td>
+                                    <td>".$dh[4]."</td>
+                                    <td>".$dh[5]."</td>
+                                    <td>".$dh[2]."</td>
+                                    <td>".$dh[3]."</td>
+                                    <td>".$in[0][9]."</td>
+                                </tr>" ;   
+                                }
+                           echo " </table>";
                             $flag=true;
                         } 
                      }

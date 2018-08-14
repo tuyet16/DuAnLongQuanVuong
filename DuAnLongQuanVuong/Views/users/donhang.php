@@ -1,6 +1,6 @@
 <?php
 	ob_start();
-    if(count($DSdonhang) <= 0)
+    if(count($DSdonhang[$date]) <= 0)
     {
         echo '<div class="text-center" style="font-size:140%;padding-top:10%;">Chưa có đơn hàng nào</div>';
     }

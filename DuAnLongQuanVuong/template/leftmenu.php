@@ -1,6 +1,6 @@
 <?php ob_start(); ?>
     <div class="list-group" style="background-color: #F3F3F3;">
-        <div class="list-title ">Danh Sách Các Shop</div>       
+        <div class="list-title ">DANH SÁCH CÁC SẢN PHẨM</div>       
        <?php foreach($dsCategories as $row){ 
             ?>
         <div class="list-group-item list-group-item-action">
@@ -10,7 +10,7 @@
     </div>
     <div class="list-group" style="padding-top: 3%;">
         <div class="list-title">
-            Bảng Giá Dịch Vụ
+            BẢNG GIÁ DỊCH VỤ
         </div>
         <div class="list-group-item list-group-item-action">
             <a href="../Controllers/services_controller.php?action=index">Xem chi tiết >> ></a>
