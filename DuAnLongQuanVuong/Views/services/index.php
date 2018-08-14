@@ -15,6 +15,7 @@
      <div id="menu1" class="tab-pane fade in active">   
         <div class="row" style="margin:2%">
         	<?php
+<<<<<<< HEAD
 				if($_SESSION['role']=='0')
         		{	echo '<p  style="text-align:right">
 					<a href="">
@@ -26,6 +27,15 @@
 //					<button type="button" class="btn btn-success">Thêm mới</button></a></p>';
 //				}
 //			
+=======
+				/*if(isset($_SESSION['role'])){
+					if($_SESSION['role']=='0')
+					{	echo '<p  style="text-align:right">
+						<a href="">
+						<button type="button" class="btn btn-success">Thêm mới</button></a></p>';
+					}
+				}	*/	
+>>>>>>> cdfbabf397fd8a68d05229aad7b0381d647e91de
 			?>
                 <table class="table table-bordered table-striped">
                   <tr style="background-color:darkblue;color:#FFF">
