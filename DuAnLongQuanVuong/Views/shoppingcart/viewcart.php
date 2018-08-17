@@ -1,7 +1,7 @@
 <?php ob_start();
 ?>
     <fieldset>
-        <legend><img src="../Views/img.cart2.jpg"/>GIỎ HÀNG</legend>
+        <legend><img src="../Views/img/cart.png" width="12%"/><b style="color: red;">GIỎ HÀNG</b></legend>
         <h5>Bán từ Shop: Long Quân</h5>
         <form method="post" action="?action=updatecart">
         <table class="table table-hover">

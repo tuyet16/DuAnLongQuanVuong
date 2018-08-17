@@ -27,6 +27,8 @@
             $shoppingcart = new ShoppingCart();
             $rsCart = $shoppingcart->ViewCart();
             $tongtien = $shoppingcart->getTotal();
+            $category = new Categories();
+            $dsCategories = $category->getCategories();
             $_SESSION['sosl'] = $shoppingcart->getTongsl();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
             $GLOBALS['template']['leftmenu'] = include_once'../template/leftmenu.php';

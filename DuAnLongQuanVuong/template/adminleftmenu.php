@@ -1,17 +1,16 @@
 <?php ob_start(); ?>
     <div class="list-group" style="background-color: #F3F3F3;">
         <div class="list-title text-center">Quản Lý</div>
-        <div class="list-group-item "><a href="admin_controller.php?action=dsshop">Shop</a></div>
+        <div class="list-group-item "><a href="admin_controller.php?action=dsshop">SHOP</a></div>
         <div class="list-group-item list-group-item-action">
-            <a href="../Controllers/customers_controller.php">Khách Hàng</a>
+            <a href="../Controllers/customers_controller.php">KHÁCH HÀNG</a>
         </div>
-        <div class="list-group-item list-group-item-action"><a href="../Controllers/employees_controller.php">nhân viên</a></div>
-        <div class="list-group-item list-group-item-action"><a href="../Controllers/districts_controller.php">Khu Vực</a></div>        
-        <div class="list-group-item list-group-item-action"><a href="../Controllers/categories_controller.php">Mặt Hàng</div>
-        <div class="list-group-item list-group-item-action"><a href="../Controllers/services_controller.php">Dịch Vụ</a></div>
-        <div class="list-group-item list-group-item-action"><a href="../Controllers/districts_controller.php">Quận</a></div> 
-        <div class="list-group-item list-group-item-action"><a href="../Controllers/wards_controller.php">Phường</a></div>
-        <div class="list-group-item list-group-item-action"><a href="../Controllers/areas_controller.php">Khu vực</a></div>     
+        <div class="list-group-item list-group-item-action"><a href="../Controllers/employees_controller.php">NHÂN VIÊN</a></div>
+    <!--<div class="list-group-item list-group-item-action"><a href="../Controllers/districts_controller.php">KHU VỰC</a></div> -->       
+        <div class="list-group-item list-group-item-action"><a href="../Controllers/categories_controller.php">MẶT HÀNG</div>
+        <div class="list-group-item list-group-item-action"><a href="../Controllers/services_controller.php">DỊCH VỤ</a></div>
+        <div class="list-group-item list-group-item-action"><a href="../Controllers/districts_controller.php">QUẬN</a></div>
+        <div class="list-group-item list-group-item-action"><a href="../Controllers/areas_controller.php">KHU VỰC</a></div>     
 
     </div>
     <div class="list-group" style="padding-top: 3%;">

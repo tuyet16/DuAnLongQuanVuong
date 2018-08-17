@@ -244,7 +244,7 @@ include_once('../config/bootload.php');
                 //$data = "Some utf-8 characters d?a ch?";          
                 foreach($thongtin as $in )
                 {
-                      print_r($in);
+                      //print_r($in);
                     $flag = false;
                     foreach($in as $billID=>$dt)
                     {                      
@@ -255,10 +255,10 @@ include_once('../config/bootload.php');
                         $chon = explode('-',$ngay);
                         $nam = $chon[0];
                         $thang = $chon[1];
-                        //$filename = "D:/donhang/".$nam.'/'.'Thang_'.$thang.'/'.$ngay.'/'.$ngay.'_'.$id.".xls";
-//                        header("Content-Disposition: attachment; filename=\"$filename\"");
-//                        header("Content-Type: application/vnd.ms-excel");
-//                        header("Contet-Encoding:UTF-8");
+                        $filename = "D:/donhang/".$nam.'/'.'Thang_'.$thang.'/'.$ngay.'/'.$ngay.'_'.$id.".xls";
+                        header("Content-Disposition: attachment; filename=\"$filename\"");
+                        header("Content-Type: application/vnd.ms-excel");
+                        header("Contet-Encoding:UTF-8");
                         if($flag == false)
                         {   
                             echo "Chủ Hàng: \t \t". chr(255).chr(254).mb_convert_encoding($dt[0],"UTF-8")."\n";
@@ -270,7 +270,7 @@ include_once('../config/bootload.php');
                            // echo implode("\t",chr(255).chr(254).iconv("UTF-8","UTF-16LEIGNORE",$ar))
                            
                             $i=1;
-                            echo "<table>
+                            echo "<table class='table table-bordered table-hover' style='border:1px solid black'>
                                 <tr>
                                     <td>STT</td>
                                     <td>Tên Hàng</td>
@@ -286,10 +286,10 @@ include_once('../config/bootload.php');
                                     <td>".$dh[4]."</td>
                                     <td>".$dh[5]."</td>
                                     <td>".$dh[2]."</td>
-                                    <td>".$dh[6]."</td>
-                                    <td>".$dh[3]."</td>
+                                    <td>".number_format($dh[6])."</td>
+                                    <td>".number_format($dh[3])."</td>
                                 </tr>" ;   
-                                }
+                                } 
                            echo " </table>";
                             $flag=true;
                         } 

@@ -17,8 +17,7 @@
         	<?php
 				if($_SESSION['role']=='0')
         		{	echo '<p  style="text-align:right">
-					<a href="">
-					<button type="button" class="btn btn-success">Thêm mới</button></a></p>';
+					</p>';
 				}
 				//if($_SESSION['role']=='0')
 //        		{	echo '<p  style="text-align:right">

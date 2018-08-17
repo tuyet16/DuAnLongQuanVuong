@@ -1,5 +1,6 @@
 <?php
 	ob_start();
+    
 ?>
     <form method="post" action="?action=donhang">
         <div class="col-md-12">
@@ -8,6 +9,14 @@
             <input type="submit" name="submit" value="Xem" />
         </div>
     </form>
+    <?php 
+    if($DSdonhang == null)
+    {
+        echo '<div class="text-center" style="font-size:140%;padding-top:10%;">Chưa có đơn hàng nào</div>';
+    }
+    else
+    {
+    ?>
     <table class="table table-bordered table-striped">
       <tr style="background-color:darkblue;color:#FFF">
         <td>&nbsp; STT</td>
@@ -132,5 +141,6 @@
 </table>
 
 <?php
+}
 	return ob_get_clean();
 ?>

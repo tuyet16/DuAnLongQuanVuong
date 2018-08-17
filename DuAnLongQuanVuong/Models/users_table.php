@@ -373,7 +373,7 @@ class Users extends Database{
     }
     public function getThangNew()
     {
-        $query ='select Month(setDate) as thang Year(setDate) as nam from bills order by setDate desc Limit 0,1';
+        $query ='select Month(setDate) as thang, Year(setDate) as nam from bills order by setDate desc Limit 0,1';
         $rs = $this->doQuery($query);
         $param = array();
         $param['thang'] = $rs[0]->thang;
