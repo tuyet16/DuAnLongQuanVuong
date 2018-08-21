@@ -15,10 +15,12 @@
             if(isset($_SESSION['userid']))
             {
                 $id = $_SESSION['userid'];
+                
                 $category = new Categories(); 
                 $dsCategories = $category->getDScategory($id);
                 $product_model = new products();
                 $dsProducts = $product_model->getProductByuserid($id);
+                $pagination = Page::createPagination($dsProducts);
             }
             else
             {
@@ -71,8 +73,12 @@
             include_once('../template/index.php');
         break;
         case 'suasanpham':
-         $tableDB = new Database();
-            $tables = $tableDB->getTables();
+            if(isset($_SESSION['userid']))
+            {
+                $userid = $_SESSION['userid'];
+                $category = new Categories(); 
+                $dsCategories = $category->getDScategory($userid);
+            }
             $view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
             $GLOBALS['template']['leftmenu'] = include_once'../template/shopleftmenu.php';

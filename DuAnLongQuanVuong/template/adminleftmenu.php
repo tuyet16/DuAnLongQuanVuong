@@ -5,12 +5,10 @@
         <div class="list-group-item list-group-item-action">
             <a href="../Controllers/customers_controller.php">Khách Hàng</a>
         </div>
-        <div class="list-group-item list-group-item-action"><a href="../Controllers/employees_controller.php">nhân viên</a></div>
-        <div class="list-group-item list-group-item-action"><a href="../Controllers/districts_controller.php">Khu Vực</a></div>        
+        <div class="list-group-item list-group-item-action"><a href="../Controllers/employees_controller.php">Nhân viên</a></div>    
         <div class="list-group-item list-group-item-action"><a href="../Controllers/categories_controller.php">Mặt Hàng</div>
         <div class="list-group-item list-group-item-action"><a href="../Controllers/services_controller.php">Dịch Vụ</a></div>
         <div class="list-group-item list-group-item-action"><a href="../Controllers/districts_controller.php">Quận</a></div> 
-        <div class="list-group-item list-group-item-action"><a href="../Controllers/wards_controller.php">Phường</a></div>
         <div class="list-group-item list-group-item-action"><a href="../Controllers/areas_controller.php">Khu vực</a></div>     
 
     </div>

@@ -12,8 +12,7 @@
     switch($action)
     {
         case 'index':
-			$tableDB = new Database();
-            $tables = $tableDB->getTables();
+			
             $product_model = new products();
             $dsProducts = $product_model->getProduct();
             $category = new Categories();
@@ -45,8 +44,13 @@
 			break;
         break;
          case 'chitiet':
-		 	$tableDB = new Database();
-            $tables = $tableDB->getTables();
+		 	$category = new Categories(); 
+            $dsCategories = $category->getCategories();
+            if(isset($_GET['id'])){
+                $id = $_GET['id'];
+                $productsObj = new products();
+                $rs_chi_tiet_san_pham = $productsObj->getByIDProduct($id);
+            }
             $view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
             $GLOBALS['template']['leftmenu'] = include_once'../template/leftmenu.php';

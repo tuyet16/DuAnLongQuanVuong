@@ -83,17 +83,30 @@ include_once('../Libs/messagebox_lib.php');
                 $id = $_SESSION['userid'];
                 $category = new Categories(); 
                 $dsCategories = $category->getDScategory($id);    
-                $DSdonhang1 = $user->getHoadon($id);
+                
                 if(isset($_POST['chonngay']))
                 {
-                    $DSdonhang = $DSdonhang1;
+                    
+                    
                     $date1 =  date_create($_POST['chonngay']);
                     $date = date_format($date1,'Y-m-d');
+                    $DSdonhang1 = $user->getHoadon($id, $date);
+                    $DSdonhang = $DSdonhang1;
                 }
                 else
                 {
-                    $DSdonhang = $DSdonhang1;
-                    $date=key($DSdonhang);
+                    if(!isset($_GET['date'])){
+                        $date1 =  date_create('');
+                        $date = date_format($date1,'Y-m-d');
+                        $DSdonhang1 = $user->getHoadon($id, $date);
+                        $DSdonhang = $DSdonhang1;
+                    }
+                    else
+                    {
+                        $date =  $_GET['date'];
+                        $DSdonhang1 = $user->getHoadon($id, $date);
+                        $DSdonhang = $DSdonhang1;
+                    }
                     
                 }
                	$view = Page::View();
@@ -110,7 +123,7 @@ include_once('../Libs/messagebox_lib.php');
         case 'shopedit':
             if(isset($_POST['submit']))
             {
-                //print_r($_POST);
+                print_r($_POST);
                 $tong = 1;
                 $tongtien =0;
                 foreach($_POST as $detail_id=>$edit)
@@ -119,31 +132,45 @@ include_once('../Libs/messagebox_lib.php');
                     {                      
                         if(strpos($detail_id,'giamgia') === false && strpos($detail_id,'gia') === false)
                         {
-                            //  echo $detail_id.'<br>';
+                            if(is_numeric($detail_id)){
+                              //echo $detail_id.'<br>';              
                             $tong *= $_POST[$detail_id] * $_POST['gia' . $detail_id] * ((100 - $_POST['giamgia' . $detail_id])/100);
+                            
                             $user = new Users();
                             $user->editDetailPriceByID($_POST[$detail_id],$tong,$_POST['giamgia'.$detail_id],$detail_id);
                             $tongtien += $tong;
-                            $tong=1;                           
+                            $tong=1;                   
+                            }        
                         }
                     }
                 }
+                
                 $billID = $_POST['billID'];
                 $user = new Users();
                 $user->editBillByID($tongtien,$billID);
-                header('Location:?action=donhang&ngay='.$_GET['ngay']);
+                header('Location: ?action=donhang&id=' . $billID.'&date='.$_GET['ngay']);
                 
             }
         break;
         case 'guidonhang':
             $guidonhang =0;
-            if(isset($_GET['id']))
+            if(isset($_GET['detail_id']))
             {
-                $id= $_GET['id'];
+                $id= $_GET['detail_id'];
                 $user = new Users();
                 $guidonhang = $user->guidonhang($id);
             }
             header('Location:?action=donhang');
+        break;
+        case 'xoasanpham':
+            if(isset($_GET['detailID'])){
+                $user = new Users();
+                $user->deleteDetailID($_GET['detailID']);
+                $dt = date_create($_GET['date']);
+                $date = date_format($dt, 'Y-m-d');
+                header('Location: ?action=donhang&date=' . $date);
+            }
+            
         break;
     }
 

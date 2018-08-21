@@ -2,10 +2,12 @@
 	ob_start();
 ?>
     <form method="post" action="?action=donhang">
-        <div class="col-md-12">
+        <div class="col-md-12 text-center">
+            <p>
             Chọn ngày xem:                 
             <input type="text" name="chonngay" id="datepicker"/>
             <input type="submit" name="submit" value="Xem" />
+            </p>
         </div>
     </form>
     <table class="table table-bordered table-striped">
@@ -21,13 +23,16 @@
       <?php $tong =0;
             $thongke = array(); ?>
       <tr>
+      <p>
       <form method="post" action="?action=inhoadon">
-        <td colspan="7" style="color: red;"><h4><?php $dt=date_create($date); echo $ngay = date_format($dt,'d-m-y');  ?>
-        <input type="hidden" name="ngay" value="<?php echo $date; ?>" />     
+        <td colspan="7" style="color: red;"><h4><?php if(isset($date)){ $dt=date_create($date); echo $ngay = date_format($dt,'d-m-y'); } ?>
+        <input type="hidden" name="ngay" value="<?php if(isset($date)) echo $date; ?>" />     
       </form>
+      
       </tr>
-            <?php $i=1; foreach($DSdonhang[$date] as $billID=>$db){ ?>
-          <tr>
+            <?php $i=1; if($DSdonhang != null && $date != ""){ 
+                foreach($DSdonhang[$date] as $billID=>$db){ ?>
+          <tr style="background-color: #000; color: #FFF;">
             <td>&nbsp;<?php echo $i++; ?></td>
             <td>&nbsp;<?php  echo $db[1][0];?></td>
             <td>&nbsp;<?php if($db[0][2]==0) 
@@ -39,7 +44,8 @@
             <td>&nbsp;<?php echo number_format($db[0][3]); $tong += $db[0][3];?></td>
             <td>&nbsp;<?php echo date_format($dt,'d-m-Y'); ?></td>
             <td>             
-                <a class="collapsed card-link" data-toggle="collapse" href="#collapse<?php echo $billID; ?>">
+                <a class="collapsed card-link" data-toggle="collapse" style="color: #fff;" 
+                            href="#collapse<?php echo $billID; ?>">
                     Xem
                 </a>
             </td>            
@@ -48,7 +54,25 @@
         <tr>
             <td colspan="7">
              <div class="card">
-                <div id="collapse<?php echo $billID; ?>" class="collapse" data-parent="#accordion">
+             <?php
+             if(isset($_GET['BillID'])){
+                if($_GET['BillID']==$billID){
+             ?>
+                <div id="collapse<?php echo $billID; ?>" class="collapse in" data-parent="#accordion">
+             <?php
+                }
+                else{
+             ?>
+                    <div id="collapse<?php echo $billID; ?>" class="collapse" data-parent="#accordion">
+             <?php 
+                }
+             }
+             else{
+             ?>
+             <div id="collapse<?php echo $billID; ?>" class="collapse in" data-parent="#accordion">
+             <?php
+             }
+             ?>
                   <div class="card-body">
                     <div class="container-fluid">
                     <div class="row">
@@ -62,6 +86,7 @@
                          <form method="post" action="?action=editnhanvien">
                         <table class="table table-bordered table-striped text-center">
                          <input type="hidden" name="billID" value="<?php echo $billID; ?>"/>
+                         <input type="hidden" name="ngay" value="<?php echo $date; ?>"/>
                             <tr style="background-color:green; color: white; ">
                                 <td>STT</td>
                                 <td>Tên sản phẩm</td>
@@ -101,18 +126,45 @@
                             </tr>
                            <?php } ?> 
                         </table>
+                        <?php 
+                        $shipper = '';
+                        ?>
                         <div class="row">
                             <div class="col-md-3 text-right">
                                 <div class="row">
                                 Chọn nhân viên:                             
                                     <select name="nhanvien">
-                                    <?php foreach($db[3] as $employee){ ?>
-                                        <option value="<?php echo $employee[0]; ?>"><?php echo $employee[2]; ?></option>
-                                    <?php } ?>
+                                    <?php foreach($db[3] as $employee){ 
+                                        if($db[0][6] == $employee[0]){
+                                            $shipper = $employee[2];  
+                                        ?>
+                                        <option value="<?php echo $employee[0]; ?>" selected><?php echo $employee[2]; ?></option>
+                                    <?php }
+                                        else{
+                                     ?>
+                                     <option value="<?php echo $employee[0]; ?>"><?php echo $employee[2]; ?></option>
+                                     <?php
+                                        }
+                                     }
+                                     ?>
                                     </select>                            
                                 </div>
                             </div>
-                            <div class="col-md-3 text-right">
+                            <div class="col-md-5 text-right">
+                                <?php
+                                if(empty($shipper)== true){
+                                ?>
+                                Chưa có shipper nào được phân công
+                                <?php
+                                }
+                                else{
+                                ?>
+                                Shipper đã được phân công :<b style="font-size: 120%; font-weight: bold;color: red;"><?php echo $shipper;?></b>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                            <div class="col-md-4 text-right">
                                 <button type="submit" name="submit" class="btn btn-success">Cập nhật</button>
                                 <a href="?action=inhoadon&billID=<?php echo $billID; ?>" class="btn btn-danger">In Hóa Đơn</a>
                             </div>
@@ -125,7 +177,9 @@
               </div>
             </td>
         </tr>
-      <?php } ?>  
+      <?php }
+      }
+       ?>  
    </div>
         
 

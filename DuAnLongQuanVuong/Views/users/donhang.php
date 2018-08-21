@@ -1,19 +1,24 @@
 <?php
 	ob_start();
-    if(count($DSdonhang) <= 0)
-    {
-        echo '<div class="text-center" style="font-size:140%;padding-top:10%;">Chưa có đơn hàng nào</div>';
-    }
-    else
-    {
+    
+    
 ?>
-        <form method="post" action="?action=donhang">
+    <form method="post" action="?action=donhang">
             <div class="col-md-12">
                 Chọn ngày xem:                 
                 <input type="text" name="chonngay" id="datepicker"/>
                 <input type="submit" name="submit" value="Xem" />
             </div>
         </form>
+    <?php
+    
+    if(count($DSdonhang) <= 0)
+    {
+        echo '<div class="text-center" style="font-size:140%;padding-top:10%;">Chưa có đơn hàng nào</div>';
+    }
+    else
+    {
+    ?>    
     <table class="table table-bordered table-striped">
       <tr style="background-color:darkblue;color:#FFF">
         <td>&nbsp; STT</td>
@@ -45,7 +50,20 @@
                         {
                             echo 'Giao Thường';
                         }else echo 'Giao Nhanh' ?></td>
-            <td>&nbsp;Chưa ship</td>
+            <td>
+                <?php 
+                    
+                    if($db[0][4] == 0){
+                        echo 'Hủy';
+                    }
+                    else if($db[0][4] == 1){
+                        echo 'Chưa Giao';
+                    }
+                    else{
+                        echo 'Đã Giao';
+                    }
+                ?>
+            </td>
             <td>&nbsp;<?php echo number_format($db[0][3]); $tong += $db[0][3];?></td>
             <td>&nbsp;<?php echo date_format($dt,'d-m-Y'); ?></td>
             <td>             
@@ -57,7 +75,25 @@
         <tr>
         <td colspan="7">
          <div class="card">
+         <?php
+            if(isset($_GET['id'])){
+                if($_GET['id'] == $billID){
+         ?>
+            <div id="collapse<?php echo $billID; ?>" class="collapse in" data-parent="#accordion">
+         <?php
+                }
+                else{
+         ?>
+                <div id="collapse<?php echo $billID; ?>" class="collapse" data-parent="#accordion">
+         <?php
+                }
+            }
+            else{
+         ?>
             <div id="collapse<?php echo $billID; ?>" class="collapse" data-parent="#accordion">
+         <?php
+         }
+         ?>
               <div class="card-body">
                 <div class="container-fluid">
                 <div class="row">                       
@@ -80,34 +116,40 @@
                             <td>Giảm Giá</td>
                             <td>Thành Tiền</td>
                             <td>Tình Trạng</td>
+                            <td>Hủy SP</td>
                         </tr>
                         
                         <?php $a=1; 
-                        if($db[0][5] == 0)
-                        {
-                        foreach($db[2] as $detail_item){ 
-                            if($detail_item != null){?>
+                        $detail_id_arr = array();
+                        $check_product_acceptance = false;
+                        foreach($db[2] as $detail_item){
+                            if($detail_item != null){
+                                if($detail_item[7] > 0){
+                                    $check_product_acceptance = true;
+                                }
+                                ?>
                         <tr>
                             <td><?php echo $a++; ?></td>
-                            <td><?php echo $detail_item[4]; 
-                                if(isset($thongke[$detail_item[4]]))
+                            <td><?php echo $detail_item[3]; 
+                                if(isset($thongke[$detail_item[3]]))
                                 {
-                                    $thongke[$detail_item[4]] += $detail_item[2]; 
+                                    $thongke[$detail_item[3]] += $detail_item[1]; 
                                     //$thongke[$detail_item[4]].=' '.$detail_item[5];
                                 }
                                 else
                                 {
-                                    $thongke[$detail_item[4]] = $detail_item[2];
+                                    $thongke[$detail_item[3]] = $detail_item[1];
                                     //$thongke[$detail_item[4]].=' '.$detail_item[5];
                                 }
                                 ?></td>
-                            <td><input type="text" name="<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[2];  ?>" /></td>
-                            <td><?php echo $detail_item[5]; ?></td>
-                            <td><?php echo number_format($detail_item[6]); ?></td>
+                            <td><input type="text" name="<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[1];  ?>" 
+                                                     style="width: 50px;" /></td>
+                            <td><?php echo $detail_item[4]; ?></td>
+                            <td><?php echo number_format($detail_item[5]); ?></td>
                             <td>
                                 <select name="giamgia<?php echo $detail_item[0]; ?>">
-                                <?php for($i =0; $i<=20;$i+=5){ 
-                                    if($i == $detail_item[7])
+                                <?php for($i=0; $i<=20;$i+=5){ 
+                                    if($i == $detail_item[6])
                                     {
                                     ?>
                                     <option value="<?php echo $i ?>" selected="selected"><?php echo $i; ?>%</option>
@@ -120,8 +162,8 @@
                                 <?php } } ?>
                                 </select>
                             </td>
-                            <input type="hidden" name="gia<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[6]; ?>" />
-                            <td><?php echo number_format($detail_item[3]); ?></td>
+                            <input type="hidden" name="gia<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[5]; ?>" />
+                            <td><?php echo number_format($detail_item[2]); ?></td>
                             <td><?php if($db[0][4]==2){
                                         echo 'Đã Giao';
                                     }
@@ -136,59 +178,31 @@
                                             echo 'Bị Hủy';
                                         }
                                     } ?></td>
+                            <td>
+                                <a href="?action=xoasanpham&detailID=<?php echo $detail_item[0]?>&date=<?php echo $date;?>">
+                                    Xóa
+                                </a>
+                            </td>
                         </tr>
-                        <?php } ?>
+                        <?php 
+                            $detail_id_arr[] = $detail_item[0];
+                        } ?>
                     </table>
                     <div class="text-right">
+                        <?php if($check_product_acceptance == false){?>
                         <button type="submit" name="submit" class="btn btn-success">Cập nhật</button>
                         
-                        <a href="users_controller.php?action=guidonhang&id=<?php echo $billID; ?>" class="btn btn-success">Gửi đơn hàng</a>
-                    <?php } 
-                        else
-                        {
-                            foreach($db[2] as $detail_item){ 
-                            if($detail_item != null){?>
-                        <tr>
-                            <td><?php echo $a++; ?></td>
-                            <td><?php echo $detail_item[4]; 
-                                if(isset($thongke[$detail_item[4]]))
-                                {
-                                    $thongke[$detail_item[4]] += $detail_item[2]; 
-                                    //$thongke[$detail_item[4]].=' '.$detail_item[5];
-                                }
-                                else
-                                {
-                                    $thongke[$detail_item[4]] = $detail_item[2];
-                                    //$thongke[$detail_item[4]].=' '.$detail_item[5];
-                                }
-                                ?></td>
-                            <td><?php echo $detail_item[2];  ?></td>
-                            <td><?php echo $detail_item[5]; ?></td>
-                            <td><?php echo number_format($detail_item[6]); ?></td>
-                            <td><?php echo $detail_item[7]; ?> </td>
-                            <input type="hidden" name="gia<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[6]; ?>" />
-                            <td><?php echo number_format($detail_item[3]); ?></td>
-                            <td><?php if($db[0][4]==2){
-                                        echo 'Đã Giao';
-                                    }
-                                    else
-                                    {
-                                        if($db[0][4]==1)
-                                        {
-                                            echo 'Chưa Giao';
-                                        }
-                                        else
-                                        {
-                                            echo 'Bị Hủy';
-                                        }
-                                    } ?></td>
-                        </tr>
-                        <?php } } ?>
-                    </table><?php
-                            echo '<div class="text-right">
-                                    <a href="users_controller.php?action=guidonhang&id=<?php echo $billID; ?>" class="btn btn-danger">Đa gửi hàng</a>
-                                  </div>';
+                        <a href="users_controller.php?action=guidonhang&detail_id=<?php echo implode('_',$detail_id_arr);?>" 
+                        class="btn btn-success">Gửi đơn hàng</a>
+                        <?php
                         }
+                        else{
+                        ?>
+                        <div class="text-right">
+                                    <input type="button" class="btn btn-danger" value="Đã gửi hàng" />
+                                  </div>
+                        
+                    <?php } 
                     ?>
                     </div>
                      </form>

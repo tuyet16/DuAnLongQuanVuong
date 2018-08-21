@@ -16,13 +16,20 @@
             {
                 $masp = $_GET['id'];
                 $shoppingcart = new ShoppingCart();
-                $_SESSION['sosl'] = $shoppingcart->getTongsl();
                 $shoppingcart->cart($masp);
+                $_SESSION['sosl'] = $shoppingcart->getTongsl();
                 //MessageBox::Show('Giỏ hàng có sản phẩm');
                 header('Location: home_controller.php');
             }
         break;
         case 'viewcart':
+            $category = new Categories();
+            $dsCategories = $category->getCategories();
+            if(isset($_SESSION['userid']))
+            {
+                $id = $_SESSION['userid'];
+                $rsCategories = $category->getDScategory($id);                  
+            }  
             $view = Page::View();
             $shoppingcart = new ShoppingCart();
             $rsCart = $shoppingcart->ViewCart();

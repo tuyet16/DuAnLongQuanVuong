@@ -13,6 +13,7 @@ class Database{
             $this->username = $config['database']['username'];
             $this->password = $config['database']['password'];
             $this->conn = new PDO($this->dsn, $this->username, $this->password);
+            $this->doQuery("SET NAMES 'utf8_general_ci';");
             
         } catch (PDOException $ex) {
             $message = $ex->getMessage();

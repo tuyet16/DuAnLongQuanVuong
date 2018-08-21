@@ -40,6 +40,12 @@
                     	<div class="col-md-2">Hình ảnh</div> 
                        	<div class="col-md-5"><input type="file" name="hinhanh" class="form-control"/></div>
                     </div>
+                    <div class="row" style="margin-top:2px">
+                    	<div class="col-md-2">Mô tả</div> 
+                       	<div class="col-md-8">
+                           <textarea name="description" rows="25" cols="55" class="mota" class="form-control"></textarea>
+                        </div>
+                    </div>
                     <div class="row" style="margin-top:3px;margin-left:52%"> 
                     	<button type="submit" class="btn" style="background-color:darkblue;color:#FFF"> Lưu </button> 
                    	</div>
@@ -64,9 +70,9 @@
 					echo '<tr>
 					<td>&nbsp;'.$i++.'</td>
 					<td>&nbsp;'.ucfirst($row->productName).'</td>
-					<td>&nbsp;'.$row->categoryID.'</td>
-					<td>&nbsp;'.$row->unitID.'</td>
-                    <td>&nbsp;'.$row->price.'</td>
+					<td>&nbsp;'.$row->categoryName.'</td>
+					<td>&nbsp;'.$row->unitName.'</td>
+                    <td>&nbsp;'.number_format($row->price).'</td>
                     <td><img src="../Views/img/'.$row->image.'" width="30%"/></td>
 					<td><a href="../Controllers/products_controller.php?action=suasanpham&id='.$row->productID.'"><span class="glyphicon glyphicon-pencil"></span></a> &nbsp; 
 						<a href="../Controllers/products_controller.php?action=xoasanpham&id='.$row->productID.'"><span class="glyphicon glyphicon-remove"></span></a></td>
@@ -75,6 +81,7 @@
 		  ?>
                 </table>
         </fieldset>
+
 <?php
 	return ob_get_clean();
 ?>

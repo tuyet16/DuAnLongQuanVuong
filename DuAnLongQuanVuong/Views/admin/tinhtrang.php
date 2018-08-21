@@ -1,7 +1,15 @@
 <?php
 	ob_start();
 ?>
-
+    <form method="post" action="?action=tinhtrang">
+        <div class="col-md-12 text-center">
+            <p>
+            Chọn ngày xem:                 
+            <input type="text" name="chonngay" id="check_delivery_date"/>
+            <input type="submit" name="submit" value="Xem" />
+            </p>
+        </div>
+    </form>
     <table class="table table-bordered table-striped">
       <tr style="background-color:darkblue;color:#FFF">
         <td>&nbsp; STT</td>
@@ -11,17 +19,22 @@
       </tr>
       <div id="accordion">  
       <tr>
-        <td colspan="7" style="color: red;"><h4><?php $dt=date_create($date); echo date_format($dt,'d-m-y');  ?></h4></td>
+        <td colspan="7" style="color: red; text-align: center;"><h3><b>
+            <?php $dt=date_create($date); 
+                echo 'Tình Trạng Đơn Hàng ngày ' . date_format($dt,'d-m-Y');  ?>
+                </b></h3>
+        </td>
       </tr>  
         
       <?php 
+        if($DSdonhang != null){
       $i=1; foreach($DSdonhang[$date] as $nv){  
                 $tongtienhang =0;
                $tongship =0;
                $luongnv =0 ?>        
-      <tr>         
+      <tr style="background-color: #000;color: #fff;">         
             <td>&nbsp;<?php echo $i++; ?></td>
-            <td style="color: blue;font-weight: bold;">&nbsp;<?php echo $nv[0][0]; ?></td>
+            <td style="font-weight: bold;">&nbsp;<?php echo $nv[0][0]; ?></td>
             <td>&nbsp;<?php echo $nv[0][1]; ?></td>           
             <td>             
                 <a class="collapsed card-link" data-toggle="collapse" href="#collapse<?php echo $nv[0][2]; ?>">
@@ -32,16 +45,25 @@
         <tr>
             <td colspan="7">
              <div class="card">
-                <div id="collapse<?php echo $nv[0][2]; ?>" class="collapse<?php if(isset($_GET['idnv'])) {
-                                                                        if($nv[0][2]==$_GET['idnv'])
-                                                                        {
-                                                                            echo ' show';
-                                                                        }
-                                                                         else
-                                                                        {echo '';}
-                                                                        }
-                                                                       
-                                                                      ?>" data-parent="#accordion">
+                <?php
+                if(isset($_GET['idnv'])){
+                    if($_GET['idnv']==$nv[0][2]){
+                ?>
+                    <div id="collapse<?php echo $_GET['idnv']; ?>" class="collapse in" data-parent="#accordion">
+                <?php
+                    }
+                    else{
+                ?>
+                    <div id="collapse<?php echo $nv[0][2]; ?>" class="collapse" data-parent="#accordion">
+                <?php
+                    }
+                }
+                else{
+                ?>
+                <div id="collapse<?php echo $nv[0][2]; ?>" class="collapse" data-parent="#accordion">
+                <?php
+                }
+                ?>
                   <div class="card-body">
                     <div class="container-fluid">                  
                     <div class="row">
@@ -57,7 +79,7 @@
                          <?php $a=1;                       
                          foreach($nv[1] as $hd){
                              ?>
-                          <form method="post" action="?action=tinhtrang&idnv=<?php echo $nv[0][2]; ?>">
+                          <form method="post" action="?action=tinhtrang&idnv=<?php echo $nv[0][2]; ?>&ngay=<?php echo $date;?>">
                             <input type="hidden" name="billID" value="<?php echo $hd[8]; ?>" />
                             <tr>
                                 <td><?php echo $a++; ?></td>
@@ -130,7 +152,8 @@
             </td>
         </tr>
         
-        <?php } ?>
+        <?php } 
+        }?>
         
         </div>
     </table>
