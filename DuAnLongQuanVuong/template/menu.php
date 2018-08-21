@@ -39,10 +39,20 @@ ob_start(); //Bien luu = chuoi
 </div>
     <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: darkblue;color: yellow;border: 1px solid darkblue;">
       <div class="container">
+<<<<<<< HEAD
         
         <ul class="nav navbar-nav">
           <li><a href="home_controller.php">Trang Chủ</a></li>
           <li class="dropdown">
+=======
+        <div class="navbar-header">
+           <a class="navbar-brand" href="home_controller.php" style="color: white;">Trang Chủ</a>
+           
+        </div>
+        <ul class="nav navbar-nav">
+           <!--<li><a href="#">Trang Chủ</a></li>-->
+         <li class="dropdown">
+>>>>>>> d70eff797468b314366b279a18e7c68909909ceb
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sản Phẩm
             <span class="caret"></span></a>
             <ul class="dropdown-menu">

@@ -18,6 +18,8 @@
 			$advance = new Advance();
 			$surcharges = new Surcharge();
 			$dsSV = $services->getServices();
+            $category = new Categories();
+            $dsCategories = $category->getCategories();
 			$dsAdvance = $advance->getAdvance();
 			$dsSurcharges = $surcharges->getSurcharge();
 			$view = Page::View();

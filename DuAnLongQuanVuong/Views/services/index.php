@@ -15,13 +15,32 @@
      <div id="menu1" class="tab-pane fade in active">   
         <div class="row" style="margin:2%">
         	<?php
+<<<<<<< HEAD
             if(isset($_SESSION['role'])){
+=======
+>>>>>>> d70eff797468b314366b279a18e7c68909909ceb
 				if($_SESSION['role']=='0')
         		{	echo '<p  style="text-align:right">
-					<a href="">
-					<button type="button" class="btn btn-success">Thêm mới</button></a></p>';
+					</p>';
 				}
+<<<<<<< HEAD
             }
+=======
+				//if($_SESSION['role']=='0')
+//        		{	echo '<p  style="text-align:right">
+//					<a href="">
+//					<button type="button" class="btn btn-success">Thêm mới</button></a></p>';
+//				}
+//			
+
+				/*if(isset($_SESSION['role'])){
+					if($_SESSION['role']=='0')
+					{	echo '<p  style="text-align:right">
+						<a href="">
+						<button type="button" class="btn btn-success">Thêm mới</button></a></p>';
+					}
+				}	*/	
+>>>>>>> d70eff797468b314366b279a18e7c68909909ceb
 			?>
                 <table class="table table-bordered table-striped">
                   <tr style="background-color:darkblue;color:#FFF">

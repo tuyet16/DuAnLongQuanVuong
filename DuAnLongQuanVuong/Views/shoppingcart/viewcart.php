@@ -1,8 +1,13 @@
 <?php ob_start();
 ?>
     <fieldset>
+<<<<<<< HEAD
         <legend><img src="../Views/img/cart3.png"/>GIỎ HÀNG</legend>
 
+=======
+        <legend><img src="../Views/img/cart.png" width="12%"/><b style="color: red;">GIỎ HÀNG</b></legend>
+        <h5>Bán từ Shop: Long Quân</h5>
+>>>>>>> d70eff797468b314366b279a18e7c68909909ceb
         <form method="post" action="?action=updatecart">
         <table class="table table-hover">
             <tr>
