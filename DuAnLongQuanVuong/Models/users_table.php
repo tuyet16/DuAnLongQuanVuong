@@ -168,7 +168,7 @@ class Users extends Database{
         foreach($rs as $bill)
         {
             $donhangarr[$bill->setDate][$bill->billID][0]= array($bill->customerID,$bill->billingAddress
-                                    ,$bill->delivery,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck);
+                                    ,$bill->delivery,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck,$bill->idEm);
             $tongtien += $bill->totalPrice;
             $sql = 'select * from customers cs, districts dt where cs.districtID = dt.districtID and customerID=?';
             $param =array();

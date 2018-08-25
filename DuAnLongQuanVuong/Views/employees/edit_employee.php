@@ -49,38 +49,36 @@ $().ready(function() {
         <form id="formEditEmployee" method="post" action="?action=edit_employee" enctype="multipart/form-data">
         	<input type="hidden" name="idem" value="<?php if(isset($EmployeeByID)){ echo $EmployeeByID[0]->idEm;}?>"/>
             <div class="row">
-                <div class="col-md-9">               
-               
-            <div class="row">
-                <div class="col-md-2">Mã nhân viên</div> 
-                <div class="col-md-8"><input type="text" id="manv" name="manv" class="form-control"  
-                	required minLength='3' maxlength="15" value="<?php if(isset($EmployeeByID)){ echo $EmployeeByID[0]->employeeID;}?>"/>
-                    <label for="manv_error" class="form-error"></label>
+                <div class="col-md-8">     
+                <div class="row">
+                    <div class="col-md-2">Mã nhân viên</div> 
+                    <div class="col-md-8"><input type="text" id="manv" name="manv" class="form-control"  
+                    	required minLength='3' maxlength="15" value="<?php if(isset($EmployeeByID)){ echo $EmployeeByID[0]->employeeID;}?>"/>
+                        <label for="manv_error" class="form-error"></label>
+                    </div>
                 </div>
-            </div>
-             <div class="row" style="margin-top:2px">
-                <div class="col-md-2">Tên nhân viên</div> 
-                <div class="col-md-8"> <input type="text" id="tennv" name="tennv" class="form-control" required minLength='6' maxlength="50"
-                value="<?php if(isset($EmployeeByID)){ echo $EmployeeByID[0]->employeeName;}?>"/>
-                <label for="tennv_error" class="form-error"></label></div>
-            </div>
-             <div class="row" style="margin-top:2px">
-                <div class="col-md-2">Địa chỉ</div> 
-                <div class="col-md-8"> <textarea rows="4" cols="50" name="diachi" id="diachi" class="form-control" required 
-                minLength='10' maxlength="255"><?php if(isset($EmployeeByID)){ echo $EmployeeByID[0]->address;}?></textarea>
-                <label for="diachi_error" class="form-error"></label></div>
-            </div>
-            <div class="row" style="margin-top:2px">
-                <div class="col-md-2">Số điện thoại</div> 
-                <div class="col-md-8"> <input id="sdt" name="sdt" type="text" class="form-control" required
-                 value="<?php if(isset($EmployeeByID)){ echo $EmployeeByID[0]->phone;}?>"/>
-                <label for="sdt_error" class="form-error"></label></div>
-            </div>	
+                 <div class="row" style="margin-top:2px">
+                    <div class="col-md-2">Tên nhân viên</div> 
+                    <div class="col-md-8"> <input type="text" id="tennv" name="tennv" class="form-control" required minLength='6' maxlength="50"
+                    value="<?php if(isset($EmployeeByID)){ echo $EmployeeByID[0]->employeeName;}?>"/>
+                    <label for="tennv_error" class="form-error"></label></div>
+                </div>
+                 <div class="row" style="margin-top:2px">
+                    <div class="col-md-2">Địa chỉ</div> 
+                    <div class="col-md-8"> <textarea rows="4" cols="50" name="diachi" id="diachi" class="form-control" required 
+                    minLength='10' maxlength="255"><?php if(isset($EmployeeByID)){ echo $EmployeeByID[0]->address;}?></textarea>
+                    <label for="diachi_error" class="form-error"></label></div>
+                </div>
+                <div class="row" style="margin-top:2px">
+                    <div class="col-md-2">Số điện thoại</div> 
+                    <div class="col-md-8">
+                     <input id="sdt" name="sdt" type="text" class="form-control" required value="<?php if(isset($EmployeeByID)){ echo $EmployeeByID[0]->phone;}?>"/>
+                    <label for="sdt_error" class="form-error"></label></div>
+                </div>	
              <div class="row" style="margin-top:2px">
                 <div class="col-md-2">Hình ảnh</div> 
                 <div class="col-md-8"> 
                     <input  id="hinhanh" name="hinhanh" type="file" class="form-control" />
-                   
                 </div>
                 <div class="col-md-4"> 
                     <button type="submit" name="submit" class="btn" style="background-color:darkblue;color:#FFF"> Lưu 

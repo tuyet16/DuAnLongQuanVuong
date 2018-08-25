@@ -58,7 +58,7 @@
 							$tablesDB = new Database();
 							$tables = $tablesDB->getTables();
 							$dsEmployees=$model->getEmployees();
-							$EmployeeByID = $model->getEmployeeByID( $_GET['id']);
+							$EmployeeByID = $model->getEmployeeByID($_GET['id']);
 							$GLOBALS['template']['menu'] = include_once '../template/menu.php';
 							$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
 							$GLOBALS['template']['content'] = include_once $view;

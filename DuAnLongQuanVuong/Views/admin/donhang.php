@@ -67,6 +67,9 @@
                      <div class="row"> 
                       <label>Địa chỉ:  <?php echo $db[1][1].', '. $db[1][3]; ?></label>
                     </div>
+                    <?php if(isset($_POST['nhanvien'])){
+                        $select = $_POST['nhanvien'];
+                    } ?>
                     <div class="row">
                          <form method="post" action="?action=editnhanvien">
                         <table class="table table-bordered table-striped text-center">
@@ -108,16 +111,21 @@
                                 <input type="hidden" name="gia<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[6]; ?>" />
                                 <td><?php echo number_format($detail_item[3]); ?></td>
                             </tr>
-                           <?php } ?> 
+                           <?php }?> 
                         </table>
                         <div class="row">
                             <div class="col-md-3 text-right">
                                 <div class="row">
                                 Chọn nhân viên:                             
-                                    <select name="nhanvien">
-                                    <?php foreach($db[3] as $employee){ ?>
+                                    <select name="nhanvien">    
+                                    <?php  foreach($db[3] as $employee){ 
+                                            if($select!= $employee[0]){?>
                                         <option value="<?php echo $employee[0]; ?>"><?php echo $employee[2]; ?></option>
-                                    <?php } ?>
+                                    <?php } else
+                                        {?>
+                                            <option value="<?php echo $employee[0]; ?>" selected><?php echo $employee[2]; ?></option>
+                                    <?php
+                                    }} ?>
                                     </select>                            
                                 </div>
                             </div>

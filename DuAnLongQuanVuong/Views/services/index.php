@@ -15,10 +15,7 @@
      <div id="menu1" class="tab-pane fade in active">   
         <div class="row" style="margin:2%">
         	<?php
-				if($_SESSION['role']=='0')
-        		{	echo '<p  style="text-align:right">
-					</p>';
-				}
+				
 				//if($_SESSION['role']=='0')
 //        		{	echo '<p  style="text-align:right">
 //					<a href="">
