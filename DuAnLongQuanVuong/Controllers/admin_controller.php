@@ -270,7 +270,6 @@ include_once('../config/bootload.php');
                 $id = $_GET['billID'];
                 $user = new Users();                   
                 $thongtin = $user->getHDAdminByID($id) ;
-<<<<<<< HEAD
                 $header = array('STT','Tên Hàng','ĐVT','SL','Đơn Giá','Thành Tiền');
                 //print_r($thongtin);             
                 $in = $thongtin;
@@ -376,7 +375,6 @@ include_once('../config/bootload.php');
 //                            echo "Địa Chỉ: \t". $in[0][2]."\t \t"."ĐT: \t".$in[0][7];
 //                            $temp = implode("\t", $ar);
 //                            echo chr(255).chr(254).mb_convert_encoding($temp ,'UTF-16BE','UTF-8' )."\r\n";
-=======
                 $ar = array('STT','Tên Hàng','Đơn Vị','Số lượng','Đơn Giá','Thành Tiền');
                 //print_r($thongtin);   
                 //$data = "Some utf-8 characters d?a ch?";          
@@ -429,21 +427,14 @@ include_once('../config/bootload.php');
                                 </tr>" ;   
                                 } 
                            echo " </table>";
->>>>>>> d70eff797468b314366b279a18e7c68909909ceb
                             $flag=true;
                         } 
                         
-                 
+					}
+				}
+						}
             }
         break;
 
     }
 ?>
-
-
-
-
-
-
-
-

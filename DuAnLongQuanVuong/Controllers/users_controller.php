@@ -95,7 +95,6 @@ include_once('../Libs/messagebox_lib.php');
                 }
                 else
                 {
-<<<<<<< HEAD
                     if(!isset($_GET['date'])){
                         $date1 =  date_create('');
                         $date = date_format($date1,'Y-m-d');
@@ -109,10 +108,8 @@ include_once('../Libs/messagebox_lib.php');
                         $DSdonhang = $DSdonhang1;
                     }
                     
-=======
                     $DSdonhang = $DSdonhang1;
                     $date=key($DSdonhang);
->>>>>>> d70eff797468b314366b279a18e7c68909909ceb
                 }
                	$view = Page::View();
                 $GLOBALS['template']['menu'] = include_once'../template/menu.php';
