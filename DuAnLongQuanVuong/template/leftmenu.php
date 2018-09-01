@@ -1,6 +1,10 @@
 <?php ob_start(); ?>
     <div class="list-group" style="background-color: #F3F3F3;">
         <div class="list-title ">Danh Mục Thể Loại</div>       
+<<<<<<< HEAD
+=======
+        <div class="list-title ">DANH SÁCH CÁC SẢN PHẨM</div>              
+>>>>>>> 7f5699dc970c62f2edc0fbcd9025088f3bf9ad2b
        <?php foreach($dsCategories as $row){ 
             ?>
         <div class="list-group-item list-group-item-action">
