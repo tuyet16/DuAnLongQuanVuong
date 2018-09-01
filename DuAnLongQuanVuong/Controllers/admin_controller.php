@@ -271,9 +271,12 @@ include_once('../config/bootload.php');
                 $id = $_GET['billID'];
                 $user = new Users();                   
                 $thongtin = $user->getHDAdminByID($id) ;
+<<<<<<< HEAD
                 $header = array('STT','Tên Hàng','ĐVT','SL','Đơn Giá','Thành Tiền');
                 //print_r($thongtin);             
                 $in = $thongtin;
+=======
+>>>>>>> ffdaddfe9c46bbf0240bb60b008339356d3de549
                 $header = array('STT','Tên Hàng','ĐVT','SL','Đơn Giá','Thành Tiền');
                 //print_r($thongtin);             
                 $in = $thongtin;
@@ -379,21 +382,74 @@ include_once('../config/bootload.php');
 //                            echo "Địa Chỉ: \t". $in[0][2]."\t \t"."ĐT: \t".$in[0][7];
 //                            $temp = implode("\t", $ar);
 //                            echo chr(255).chr(254).mb_convert_encoding($temp ,'UTF-16BE','UTF-8' )."\r\n";
+<<<<<<< HEAD
                // $ar = array('STT','Tên Hàng','Đơn Vị','Số lượng','Đơn Giá','Thành Tiền');
                 //print_r($thongtin);   
                 //$data = "Some utf-8 characters d?a ch?";          
                         
              }    
+=======
+                $ar = array('STT','Tên Hàng','Đơn Vị','Số lượng','Đơn Giá','Thành Tiền');
+                //print_r($thongtin);   
+                //$data = "Some utf-8 characters d?a ch?";          
+                foreach($thongtin as $in )
+                {
+                      //print_r($in);
+                    $flag = false;
+                    foreach($in as $billID=>$dt)
+                    {                      
+                        //echo chr(255).chr(254).mb_convert_encoding($data,"UTF-16LE","UTF-8")."\r\n"; 
+                        //print_r($in);
+                        //print_r($in[1][6]);
+                        $ngay =$in[0][3];
+                        $chon = explode('-',$ngay);
+                        $nam = $chon[0];
+                        $thang = $chon[1];
+                        $filename = "D:/donhang/".$nam.'/'.'Thang_'.$thang.'/'.$ngay.'/'.$ngay.'_'.$id.".xls";
+                        header("Content-Disposition: attachment; filename=\"$filename\"");
+                        header("Content-Type: application/vnd.ms-excel");
+                        header("Contet-Encoding:UTF-8");
+                        if($flag == false)
+                        {   
+                            echo "Chủ Hàng: \t \t". chr(255).chr(254).mb_convert_encoding($dt[0],"UTF-8")."\n";
+                            echo "Ðịa Chỉ: \t ". $dt[1]."\n";
+                            echo "Ðon Vận Chuyển: \t \t"."SEVEN SHIPPER \t \t \t". "Ngày \n";
+                            echo "Shipper: \t". $dt[4]."\t"."ÐT: \t".$dt[5]."\t \t".$dt[3]."\n";
+                            echo "Tên Khách Hàng: \t \t". $dt[6]."\n";
+                            echo "Ðịa Chỉ: \t". $dt[2]."\t \t"."ÐT: \t".$dt[7]."\n";
+                           // echo implode("\t",chr(255).chr(254).iconv("UTF-8","UTF-16LEIGNORE",$ar))
+                           
+                            $i=1;
+                            echo "<table class='table table-bordered table-hover' style='border:1px solid black'>
+                                <tr>
+                                    <td>STT</td>
+                                    <td>Tên Hàng</td>
+                                    <td>ÐVT</td>
+                                    <td>Số Lượng</td>
+                                    <td>Ðơn Giá</td>
+                                    <td>Thành Tiền</td>
+                                </tr>";
+                                foreach($in[1] as $dh){
+                                    //print_r($dt[1]);
+                                echo "<tr>
+                                    <td>".$i++."</td>
+                                    <td>".$dh[4]."</td>
+                                    <td>".$dh[5]."</td>
+                                    <td>".$dh[2]."</td>
+                                    <td>".number_format($dh[6])."</td>
+                                    <td>".number_format($dh[3])."</td>
+                                </tr>" ;   
+                                } 
+                           echo " </table>";
+                            $flag=true;
+                        } 
+                        
+					}
+				}
+						}
+>>>>>>> ffdaddfe9c46bbf0240bb60b008339356d3de549
             }
         break;
 
     }
 ?>
-
-
-
-
-
-
-
-
