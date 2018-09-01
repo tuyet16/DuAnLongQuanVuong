@@ -91,7 +91,7 @@
         }
         public function addBills($customerID,$billing,$date,$loaiship,$tongtien,$ship)
         {
-            $query = 'insert into bills(customerID,billingAddress,setDate,delivery,totalPrice,phiship) values(?,?,?,?,?,?)';
+            $query = 'insert into bills(customerID,billingAddress,PurchaseDate,delivery,totalPrice,phiship) values(?,?,?,?,?,?)';
             $param = array();
             $param[]=$customerID;
 			$param[]=$billing;

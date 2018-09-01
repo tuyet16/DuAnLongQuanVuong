@@ -18,7 +18,7 @@
 					echo '<tr>
 					<td>&nbsp;'.$i++.'</td>
 					<td>&nbsp;'.ucfirst($row->customerName).'</td>
-					<td>&nbsp;'.$row->address.','.$row->districtID.'</td>
+					<td>&nbsp;'.$row->address.','.$row->districtName.'</td>
 					<td>&nbsp;'.$row->phone.'</td>
 					<td><a href="../Controllers/customers_controller.php?action=edit_customer&id='.$row->customerID.'"><span class="glyphicon glyphicon-pencil"></span></a> &nbsp; 
 						<a href="../Controllers/customers_controller.php?action=delete_customer&id='.$row->customerID.'"><span class="glyphicon glyphicon-remove"></span></a></td>

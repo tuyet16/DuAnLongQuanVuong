@@ -11,20 +11,27 @@
     ?>
     </title>
     <link type="text/css" rel="stylesheet" href="../views/css/designer.css"/>
-   	<link type="text/css" rel="stylesheet" href="../views/css/bootstrap.min.css"/> 
+   	<link type="text/css" rel="stylesheet" href="../views/css/bootstrap.min.css"/>
    	<link type="text/css" rel="stylesheet" href="../views/css/font-awesome.css"/>
     <link type="text/css" rel="stylesheet" href="../views/css/jquery-ui.min.css"/>
     <link type="text/css" rel="stylesheet" href="../views/css/jquery-ui.theme.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../views/css/froala_editor.min.css"/>
+    <link type="text/css" rel="stylesheet" href="../views/css/froala_style.min.css"/>
      <script src="../Views/js/jquery.min.js"> </script>
     <script src="../Views/js/bootstrap.min.js"></script>  
     <script src="../Views/js/jquery.validate.min.js"></script>     
     <script src="../Views/js/jquery-ui.min.js"></script>
     <link type="text/css" rel="stylesheet" href="../views/css/pgwslideshow.min.css"/>
     <script src="../Views/js/pgwslideshow.min.js"></script>
+    <script src="../views/js/froala_editor.min.js"></script>
     <script src="../views/js/script.js"></script>
     <script>
       $( function() {
+        
         $( "#datepicker" ).datepicker({
+          dateFormat: "dd-mm-yy"
+        });
+        $( "#check_delivery_date" ).datepicker({
           dateFormat: "dd-mm-yy"
         });
         $('.date-month').datepicker( {
@@ -60,6 +67,9 @@
                     of: $(this)
                 });
             });
+        $('.collapse').on('show.bs.collapse', function (e) {
+            $('.collapse').collapse("hide")
+            });    
      });
     </script>
 </head>
@@ -114,5 +124,15 @@
     </div>     
    
   </div>
+<script type="text/javascript">
+    $(function() { $('textarea').froalaEditor({
+        heightMin: 250,
+        heightMax: 500,
+        toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'help', 'html', '|', 'undo', 'redo'],
+        toolbarSticky: false
+        
+    }) 
+    });
+</script>
 </body>
 </html>

@@ -39,6 +39,8 @@ ob_start(); //Bien luu = chuoi
 </div>
     <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: darkblue;color: yellow;border: 1px solid darkblue;">
       <div class="container">
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
         <div class="navbar-header">
            <a class="navbar-brand" href="home_controller.php" style="color: white;">Trang Chủ</a>
            
@@ -189,7 +191,7 @@ $().ready(function() {
 					},
 					email:{
 						required: "Vui lòng không để trống",
-						email: "Ví dụ: mail@example.com"
+						email: "Ví dụ: mail@gmail.com"
 					},
 					tenshop:{
 						required: "Vui lòng không để trống"
@@ -250,7 +252,7 @@ $().ready(function() {
                                 <label for="username_error" class="form-error"></label>
                             </li>
                             <li>
-                                <input type="email" id="email" name="email" placeholder="mail@example.com" title="Vui lòng nhập email" required="">
+                                <input type="email" id="email" name="email" placeholder="mail@gmail.com" title="Vui lòng nhập email" required="">
                                 <label for="email_error" class="form-error"></label>
                             </li>
                             <li>

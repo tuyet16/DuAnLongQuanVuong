@@ -12,6 +12,8 @@
 	
 	switch($action){
 		case 'index':
+            $category = new Categories();
+            $dsCategories = $category->getCategories();
 			$services = new Services();
 			$advance = new Advance();
 			$surcharges = new Surcharge();

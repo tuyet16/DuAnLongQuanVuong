@@ -1,5 +1,5 @@
 <?php ob_start(); ?>
-    <div class="list-group" style="background-color: #F3F3F3;">
+    <div class="list-group" style="background-color: #F3F3F3;">     
         <div class="list-title ">DANH SÁCH CÁC SẢN PHẨM</div>              
        <?php foreach($dsCategories as $row){ 
             ?>

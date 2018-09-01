@@ -53,12 +53,12 @@ $().ready(function() {
             </div>
              <div class="row" style="margin-top:2px">
                 <div class="col-md-2">Địa chỉ</div> 
-                <div class="col-md-3">Quận&nbsp;&nbsp; <select id="maquan" name="maquan" class="form-control">
-                								<option>--Chọn--</option>
+                <div class="col-md-5">&nbsp;&nbsp; <select id="maquan" name="maquan" class="form-control">
+                                        <?php foreach($dsCustomers as $row){
+                                            ?>
+                								<option value="<?php echo $row->districtID; ?>"><?php echo $row->districtName; ?></option>
+                                        <?php } ?>
                     					   </select></div>
-                <div class="col-md-3">Phường&nbsp;&nbsp; <select id="maphuong" name="maphuong" class="form-control">
-                								<option>--Chọn--</option>
-                                            </select></div>
             </div>
              <div class="row" style="margin-top:4px">
              	<div class="col-md-2"></div> 

@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set("Asia/Ho_Chi_Minh");
 include_once '../Errors/mvcexception.php';
 /**
  * Hàm này tự động tìm các tập tin có cùng tên với class và nạp vào file đang thiếu class đó 

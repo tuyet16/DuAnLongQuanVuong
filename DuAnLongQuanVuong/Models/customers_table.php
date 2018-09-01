@@ -10,6 +10,12 @@ class Customers extends Database {
             $rs = $this->doQuery($query);
             return $rs;
         }
+        public function getCustomersDistrict()
+        {
+            $query = 'select * from customers cs, districts dt where cs.districtID = dt.districtID';
+            $rs = $this->doQuery($query);
+            return $rs;
+        }
         public function getByIDCustomer($id)
         {
             $query ='select * from customers where customerID=?';
@@ -18,9 +24,9 @@ class Customers extends Database {
             $rs = $this->doQuery($query,$param);
             return $rs;
         }
-        public function addCustomer($name,$dc,$dt,$quan,$phuong)
+        public function addCustomer($name,$dc,$dt,$quan)
         {
-            $query = 'insert into customers(customerName,address,phone,districtID,wardID) values(?,?,?,?,?)';
+            $query = 'insert into customers(customerName,address,phone,districtID) values(?,?,?,?)';
             $param = array();
             $param[]=$name;
 			$param[]=$dc;
@@ -29,15 +35,14 @@ class Customers extends Database {
 			$param[]=$phuong;
             $this->doQuery($query,$param);
         }
-        public function editCustomer($name,$dc,$dt,$quan,$phuong,$id)
+        public function editCustomer($name,$dc,$dt,$quan,$id)
         {
-            $query = 'update customers set customerName=?, address=?, phone=?, districtID=?, wardID=?  where customerID=?';
+            $query = 'update customers set customerName=?, address=?, phone=?, districtID=? where customerID=?';
             $param = array();
            	$param[]=$name;
 			$param[]=$dc;
 			$param[]=$dt;
 			$param[]=$quan;
-			$param[]=$phuong;
 			$param[]=$id;
             $this->doQuery($query,$param);
         }

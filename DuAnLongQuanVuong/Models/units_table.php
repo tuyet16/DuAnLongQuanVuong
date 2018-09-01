@@ -18,19 +18,19 @@ class Units extends Database{
         $rs = $this->doQuery($query, $param);
         return $rs;
     }
-    public function insertNewCategory($unitName){
+    public function insertUnit($unitName){
         $query = 'INSERT INTO units(unitName) VALUES(?)';
         $param = array();
         $param[] = $unitName;
         $this->doQuery($query, $param);
     }
-    public function deleteCategory($unitID){
+    public function deleteUnit($unitID){
         $query = 'DELETE FROM units WHERE unitID=?';
         $param = array();
         $param[]= $unitID;
         $this->doQuery($query, $param);
     }
-    public function editCategory($unitName, $unitID){
+    public function editUnit($unitName, $unitID){
         $query = 'UPDATE units SET unitName=? WHERE unitID=?';
         $param = array();
         $param[] = $unitName;

@@ -63,6 +63,13 @@
                         <input type="file" name="hinhanh" class="form-control" value="<?php echo $rsProducts[0]->image; ?>"/>                        
                     </div>
                 </div>
+                <div class="row" style="margin-top:2px">
+                	<div class="col-md-2">Mô tả</div> 
+                   	<div class="col-md-8">
+                        <textarea name="description" class="form-control" rows="15" class="mota">
+                        <?php echo $rsProducts[0]->description; ?> </textarea>                        
+                    </div>
+                </div>
                 <input type="hidden" name="hinhcu" value="<?php echo $rsProducts[0]->image; ?>" />
                 <div class="row" style="margin-top:3px;margin-left:52%"> 
                 	<button type="submit" name="submit" class="btn" style="background-color:darkblue;color:#FFF"> Lưu </button> 
@@ -94,9 +101,9 @@
 					echo '<tr>
 					<td>&nbsp;'.$i++.'</td>
 					<td>&nbsp;'.ucfirst($row->productName).'</td>
-					<td>&nbsp;'.$row->categoryID.'</td>
-					<td>&nbsp;'.$row->unitID.'</td>
-                    <td>&nbsp;'.$row->price.'</td>
+					<td>&nbsp;'.$row->categoryName.'</td>
+					<td>&nbsp;'.$row->unitName.'</td>
+                    <td>&nbsp;'.number_format($row->price).'</td>
                     <td><img src="../Views/img/'.$row->image.'" width="30%"/></td>
 					<td><a href="../Controllers/products_controller.php?action=suasanpham&id='.$row->productID.'"><span class="glyphicon glyphicon-pencil"></span></a> &nbsp; 
 						<a href="../Controllers/products_controller.php?action=xoasanpham&id='.$row->productID.'"><span class="glyphicon glyphicon-remove"></span></a></td>
@@ -105,6 +112,7 @@
 		  ?>
                 </table>
         </fieldset>
+   
 <?php
 	return ob_get_clean();
 ?>

@@ -1,6 +1,7 @@
 <?php ob_start();
 ?>
     <fieldset>
+        <legend><img src="../Views/img/cart3.png"/>GIỎ HÀNG</legend>
         <legend><img src="../Views/img/cart.png" width="12%"/><b style="color: red;">GIỎ HÀNG</b></legend>
         <h5>Bán từ Shop: Long Quân</h5>
         <form method="post" action="?action=updatecart">
@@ -27,17 +28,36 @@
             </tr>
             <?php }?>
             <tr>
+                <?php
+                if($tongtien == 0){
+                ?>
                 <td colspan="2" class="text-right">
-                <input type="submit" name="submit" class="btn btn-primary" value="Cập Nhật" />
+                <input type="submit" name="submit" class="btn btn-primary" value="Cập Nhật" disabled="true" />
                 </td>
+                <?php
+                }
+                else{
+                ?>
+                <td colspan="2" class="text-right">
+                <input type="submit" name="submit" class="btn btn-primary" value="Cập Nhật"/>
+                </td>
+                <?php
+                }
+                ?>
                 <td class="text-right" style="color: red; font-weight: bold;">Tổng tiền</td>
                 <td colspan="2" style="color: blue; font-weight: bold;"><?php echo number_format($tongtien);?></td>
             </tr>       
                 
         </table>
+        <?php
+                if($tongtien > 0){
+                ?>
         <div class="text-center">
             <a class="btn btn-danger" href="../Controllers/shoppingcart_controller.php?action=muahang">ĐẶT HÀNG</a>
         </div>
+        <?php
+        }
+        ?>
         </form>
     </fieldset>
 

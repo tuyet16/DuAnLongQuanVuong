@@ -18,7 +18,7 @@
                   <div class="card-header text-center" style="padding: 10px;font-weight: bold;">THỐNG KÊ HÓA ĐƠN ĐÃ GIAO</div>
                   </div>
                   <div class="card-body" style="padding-left: 30px;">
-                    <?php print_r($doanhthu); if(isset($doanhthu)){ 
+                    <?php if(isset($doanhthu)){ 
                         ?>
                       <div class="row">
                           <div class="col-md-12"  style="font-weight: bold;font-size: 17px; color: #0080FF;">
