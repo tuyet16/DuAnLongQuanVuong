@@ -18,11 +18,7 @@ class Units extends Database{
         $rs = $this->doQuery($query, $param);
         return $rs;
     }
-<<<<<<< HEAD
     public function insertUnit($unitName){
-=======
-    public function insertNewUnit($unitName){
->>>>>>> ffdaddfe9c46bbf0240bb60b008339356d3de549
         $query = 'INSERT INTO units(unitName) VALUES(?)';
         $param = array();
         $param[] = $unitName;

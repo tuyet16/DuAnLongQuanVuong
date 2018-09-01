@@ -66,11 +66,6 @@ $().ready(function() {
                         <?php }}?>
    				   </select>
                 </div>
-                <div class="col-md-5">Địa Chỉ
-                    <textarea rows="4" cols="50" name="diachi" id="diachi" class="form-control" width="60%" required minLength='10' maxlength="255" >
-                        <?php if(isset($CustomerID)){ echo $CustomerID[0]->address;} ?>
-                    </textarea>
-                <label for="diachi_error" class="form-error"></label></div>
             </div>
              <div class="row" style="margin-top:4px">
              	<div class="col-md-2"></div> 
