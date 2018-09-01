@@ -1,6 +1,6 @@
 <?php ob_start(); ?>
     <div class="list-group" style="background-color: #F3F3F3;">
-        <div class="list-title ">Danh Mục Sản Phẩm</div>
+        <div class="list-title ">DANH MUC SẢN PHẨM</div>
         <?php foreach($dsCategories as $row){ ?>
             <div class="list-group-item list-group-item-action">
             <a href="../Controllers/shop_controller.php?action=xemsanpham&id=<?php echo $row->categoryID; ?>"><?php echo $row->categoryName; ?></a>
@@ -9,7 +9,7 @@
     </div>
     <div class="list-group" style="padding-top: 3%;">
         <div class="list-title">
-           Danh Mục Đơn Hàng
+           DANH MỤC ĐƠN HÀNG
         </div>
         <div class="list-group-item list-group-item-action">
             <a href="../Controllers/users_controller.php?action=donhang">Đơn hàng</a>
@@ -17,7 +17,7 @@
     </div>
      <div class="list-group" style="padding-top: 3%;">
         <div class="list-title">
-           Chức Năng
+           CHỨC NĂNG
         </div>
         <div class="list-group-item list-group-item-action">
             <a href="../Controllers/products_controller.php?action=index"><i class="fa fa-plus-circle"></i> Thêm Sản Phẩm</a>
