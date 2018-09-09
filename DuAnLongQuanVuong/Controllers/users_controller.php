@@ -74,6 +74,35 @@ include_once('../Libs/messagebox_lib.php');
            // print_r($_POST);
            header('Location:admin_controller.php');
         break;
+		case 'changepass':
+			//$_SESSION['error']=NULL;
+			if(isset($_SESSION['userid']))
+            {
+				$id = $_SESSION['userid'];
+				$category = new Categories(); 
+            	$dsCategories = $category->getDScategory($id);
+				$model = new Users();
+				$user = $model->getUserByID($id);
+				$passold = $user[0]->password;
+				 $old = filter_input(INPUT_POST, 'passOld');
+				 if($old!=NULL){
+					 $new = $_POST['passNew'];
+					if($old==$passold)
+					{
+						$model->changePassword($new,$id);
+						$_SESSION['error']='Đổi mật khẩu thành công';
+						 header('Location:users_controller.php?action=changepass');
+					}
+					else{$_SESSION['error']='Kiểm tra lại mật khẩu hiện tại';}
+				 }
+			}
+			$view = Page::View();
+			$GLOBALS['template']['menu'] = include_once'../template/menu.php';
+			$GLOBALS['template']['leftmenu'] = include_once'../template/shopleftmenu.php';
+			$GLOBALS['template']['content'] = include_once $view;
+			include_once('../template/index.php');
+			
+		break;
         case 'donhang':
             $product_model = new products();
             $dsProducts = $product_model->getProduct();
@@ -107,10 +136,6 @@ include_once('../Libs/messagebox_lib.php');
                         $DSdonhang1 = $user->getHoadon($id, $date);
                         $DSdonhang = $DSdonhang1;
                     }
-<<<<<<< HEAD
-=======
-                    
->>>>>>> ffdaddfe9c46bbf0240bb60b008339356d3de549
                     $DSdonhang = $DSdonhang1;
                     $date=key($DSdonhang);
                 }

@@ -18,6 +18,15 @@ class Users extends Database{
         $rs = $this->doQuery($query, $param);
         return $rs;
     }
+	public function changePassword($pass,$id){   
+        $query = 'UPDATE users SET password=? WHERE userid=?';
+        $param = array();
+		$param[] = $pass;
+        $param[] = $id;
+        $rs = $this->doQuery($query, $param);
+        return $rs;
+    }
+	
     public function login($email, $pass)
     {
         $query = 'select * from users where email=? and password=?';
