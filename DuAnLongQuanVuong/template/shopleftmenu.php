@@ -20,7 +20,8 @@
            CHỨC NĂNG
         </div>
         <div class="list-group-item list-group-item-action">
-            <a href="../Controllers/products_controller.php?action=index"><i class="fa fa-plus-circle"></i> Thêm Sản Phẩm</a>
+            <a href="../Controllers/products_controller.php?action=index"><i class="fa fa-plus-circle"></i> Thêm Sản Phẩm</a><br />
+            <a href="../Controllers/users_controller.php?action=changepass"><i class="fa fa-key" aria-hidden="true"></i> Đổi mật khẩu</a>
         </div>  
     </div>
 <?php return ob_get_clean(); ?>
