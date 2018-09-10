@@ -145,17 +145,8 @@
                             <div class="col-md-3 text-right">
                                 <div class="row">
                                 Chọn nhân viên:                             
-                                    <select name="nhanvien">    
-                                    <?php  foreach($db[3] as $employee){ 
-                                            if($select!= $employee[0]){?>
-                                        <option value="<?php echo $employee[0]; ?>"><?php echo $employee[2]; ?></option>
-                                    <?php } else
-                                        {?>
-                                            <option value="<?php echo $employee[0]; ?>" selected><?php echo $employee[2]; ?></option>
-                                    <?php
-                                    }} ?>
                                     <select name="nhanvien">
-                                    <?php foreach($db[3] as $employee){ 
+                                    <?php foreach($db[3] as $employee){     
                                         if($db[0][6] == $employee[0]){
                                             $shipper = $employee[2];  
                                         ?>

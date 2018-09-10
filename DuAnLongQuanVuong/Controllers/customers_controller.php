@@ -21,39 +21,6 @@
             $GLOBALS['template']['content'] = include_once $view;
             include_once('../template/index.php');
 		break;	
-	//	case 'add_customer':
-//		{
-//			 $name = filter_input(INPUT_POST, 'tenkh');
-//			if($name == NULL)
-//			{
-//				try{
-//					$view = Page::View();
-//					if(file_exists($view) == false)
-//						throw new MVCException('Tập tin không tồn tại' . $view);
-//					else
-//					{
-//						$tablesDB = new Database();
-//						$tables = $tablesDB->getTables();
-//						$dsCustomers=$model->getCustomers();
-//						$GLOBALS['template']['menu'] = include_once '../template/menu.php';
-//						$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
-//						$GLOBALS['template']['content'] = include_once $view;
-//						$GLOBALS['template']['title'] = 'Thêm mới loại sản phẩm';
-//						include_once '../template/index.php';
-//					}
-//				}
-//				catch(MVCException $e){}
-//			}
-//			else
-//			{
-//				$dc = $_POST['diachi'];
-//				$dt = $_POST['sdt'];
-//				$quan=$_POST['maquan'];
-//				$model->addCustomer($name);
-//				header('Location: customers_controller.php');
-//			}
-//			break;
-//		}
 		case 'edit_customer':
 		{
 				$name = filter_input(INPUT_POST, 'tenkh');

@@ -83,15 +83,13 @@ include_once('../Libs/messagebox_lib.php');
                 $id = $_SESSION['userid'];
                 $category = new Categories(); 
                 $dsCategories = $category->getDScategory($id);    
-                
                 if(isset($_POST['chonngay']))
                 {
-                    
-                    
                     $date1 =  date_create($_POST['chonngay']);
                     $date = date_format($date1,'Y-m-d');
                     $DSdonhang1 = $user->getHoadon($id, $date);
                     $DSdonhang = $DSdonhang1;
+                    print_r($DSdonhang);
                 }
                 else
                 {
@@ -107,10 +105,6 @@ include_once('../Libs/messagebox_lib.php');
                         $DSdonhang1 = $user->getHoadon($id, $date);
                         $DSdonhang = $DSdonhang1;
                     }
-<<<<<<< HEAD
-=======
-                    
->>>>>>> ffdaddfe9c46bbf0240bb60b008339356d3de549
                     $DSdonhang = $DSdonhang1;
                     $date=key($DSdonhang);
                 }

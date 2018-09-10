@@ -114,39 +114,39 @@
                    	header('Location: units_controller.php?action=index');
             }
 			break;
-		case 'delete_unit':
-		{
-				$name = filter_input(INPUT_POST, 'unit_name');
-				if($name == NULL)
-				{
-					try{
-						$view = Page::View();
-						if(file_exists($view) == false)
-							throw new MVCException('Tập tin không tồn tại' . $view);
-						else
-						{
-							$tablesDB = new Database();
-							$tables = $tablesDB->getTables();
-							$dsCategories=$model->getCategories();
-							$UnitByID = $units->getUnitByID( $_GET['id']);
-							 $dsUnit = $units->getUnits();
-							$GLOBALS['template']['menu'] = include_once '../template/menu.php';
-							$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
-							$GLOBALS['template']['content'] = include_once $view;
-							$GLOBALS['template']['title'] = 'Sửa đơn vị tính';
-							include_once '../template/index.php';
-						}
-					}
-					catch(MVCException $e){	}
-				}
-				else
-				{
-					$id = $_POST['unitID'];
-					$units->editUnit($name,$id);
-					header('Location: units_controller.php');
-				}
-				break;
-		}
+		//case 'delete_unit':
+//		{
+//				$name = filter_input(INPUT_POST, 'unit_name');
+//				if($name == NULL)
+//				{
+//					try{
+//						$view = Page::View();
+//						if(file_exists($view) == false)
+//							throw new MVCException('Tập tin không tồn tại' . $view);
+//						else
+//						{
+//							$tablesDB = new Database();
+//							$tables = $tablesDB->getTables();
+//							$dsCategories=$model->getCategories();
+//							$UnitByID = $units->getUnitByID( $_GET['id']);
+//							 $dsUnit = $units->getUnits();
+//							$GLOBALS['template']['menu'] = include_once '../template/menu.php';
+//							$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+//							$GLOBALS['template']['content'] = include_once $view;
+//							$GLOBALS['template']['title'] = 'Sửa đơn vị tính';
+//							include_once '../template/index.php';
+//						}
+//					}
+//					catch(MVCException $e){	}
+//				}
+//				else
+//				{
+//					$id = $_POST['unitID'];
+//					$units->editUnit($name,$id);
+//					header('Location: units_controller.php');
+//				}
+//				break;
+//		}
 		case "delete_unit":
 			if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){

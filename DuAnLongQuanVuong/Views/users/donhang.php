@@ -7,7 +7,7 @@
                 <input type="text" name="chonngay" id="datepicker"/>
                 <input type="submit" name="submit" value="Xem" />
             </div>
-        </form>
+    </form>
     <?php
     
     if(count($DSdonhang) <= 0)
@@ -17,22 +17,6 @@
     else
     {
     ?>    
-?>
-    <form method="post" action="?action=donhang">
-        <div class="col-md-12">
-            Chọn ngày xem:                 
-            <input type="text" name="chonngay" id="datepicker"/>
-            <input type="submit" name="submit" value="Xem" />
-        </div>
-    </form>
-    <?php
-        if($DSdonhang == null)
-        {
-            echo '<div class="text-center" style="font-size:140%;padding-top:10%;">Chưa có đơn hàng nào</div>';
-        }
-        else
-        {
-    ?>
     <table class="table table-bordered table-striped">
       <tr style="background-color:darkblue;color:#FFF">
         <td>&nbsp; STT</td>
@@ -135,7 +119,8 @@
                         
                         <?php $a=1; 
                         $detail_id_arr = array();
-                        $check_product_acceptance = false;
+                        $check_product_acceptance = false; 
+                        print_r($db[1]);   
                         foreach($db[2] as $detail_item){
                             if($detail_item != null){
                                 if($detail_item[7] > 0){
@@ -276,6 +261,6 @@
   
   
 <?php
-}}
+}
 	return ob_get_clean();
 ?>

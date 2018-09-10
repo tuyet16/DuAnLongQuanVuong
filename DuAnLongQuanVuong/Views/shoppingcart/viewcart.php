@@ -1,7 +1,6 @@
 <?php ob_start();
 ?>
     <fieldset>
-        <legend><img src="../Views/img/cart3.png"/>GIỎ HÀNG</legend>
         <legend><img src="../Views/img/cart.png" width="12%"/><b style="color: red;">GIỎ HÀNG</b></legend>
         <h5>Bán từ Shop: Long Quân</h5>
         <form method="post" action="?action=updatecart">
@@ -52,7 +51,7 @@
         <?php
                 if($tongtien > 0){
                 ?>
-        <div class="text-center">
+        <div class="text-center" style="margin-bottom: 40px;">
             <a class="btn btn-danger" href="../Controllers/shoppingcart_controller.php?action=muahang">ĐẶT HÀNG</a>
         </div>
         <?php

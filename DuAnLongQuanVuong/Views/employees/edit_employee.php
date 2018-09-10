@@ -79,6 +79,7 @@ $().ready(function() {
                 <div class="col-md-2">Hình ảnh</div> 
                 <div class="col-md-8"> 
                     <input  id="hinhanh" name="hinhanh" type="file" class="form-control" />
+                    <input name="img" type="hidden" value="<?php echo $EmployeeByID[0]->hinhanh; ?>" />
                 </div>
                 <div class="col-md-4"> 
                     <button type="submit" name="submit" class="btn" style="background-color:darkblue;color:#FFF"> Lưu 

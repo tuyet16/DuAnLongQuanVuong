@@ -75,9 +75,18 @@
 					$dc = $_POST['diachi'];
 					$dt = $_POST['sdt'];
 					$id = $_POST['idem'];
-                    $i = $_FILES['hinhanh'];
-                    $img = Image::GetFile($i);
-					$model->editEmployee($manv,$tennv,$dc,$dt,$img,$id);
+                    $i = $_FILES['hinhanh'];                    
+                    $img = $_POST['img'];
+                    if(is_uploaded_file($_FILES['hinhanh']['tmp_name']))
+                    {
+                        $img = Image::GetFile($i);
+                        $model->editEmployee($manv,$tennv,$dc,$dt,$img,$id);
+                    }
+                    else
+                    {
+                        $model->editEmployee($manv,$tennv,$dc,$dt,$img,$id);
+                    }
+					
 					header('Location: employees_controller.php');
 				}
 			break;

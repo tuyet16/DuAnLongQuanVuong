@@ -14,7 +14,9 @@ ob_start();
                 <div class="card-body" style="padding: 20px;text-align: center;">
                     <h4>'.$row->productName.'</h4>
                     <h4 style="color: #D52072;">Giá: '.number_format($row->price).' vnđ</h4>
+                     <a href="../Controllers/shoppingcart_controller.php?action=add&id='.$row->productID.'" class="btn btn-primary">Mua hàng</a>
                 </div>
+                
             </div>
         </div>            
         
