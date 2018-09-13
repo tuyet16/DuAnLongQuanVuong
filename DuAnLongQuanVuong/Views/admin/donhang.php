@@ -91,6 +91,15 @@
                      <div class="row"> 
                       <label>Địa chỉ:  <?php echo $db[1][1].', '. $db[1][3]; ?></label>
                     </div>
+                    <div class="row">                           
+                        <div class="col-md-10" style="color: red; font-weight: bold;">
+                            <?php if($db[0][7]==1)
+                                {
+                                    echo 'Người Thanh Toán Phí Ship: Khách Hàng ';
+                                }
+                                ?>
+                        </div>
+                        </div>
                     <?php if(isset($_POST['nhanvien'])){
                         $select = $_POST['nhanvien'];
                     } ?>
@@ -141,6 +150,7 @@
                         <?php 
                         $shipper = '';
                         ?>
+                        
                         <div class="row">
                             <div class="col-md-3 text-right">
                                 <div class="row">

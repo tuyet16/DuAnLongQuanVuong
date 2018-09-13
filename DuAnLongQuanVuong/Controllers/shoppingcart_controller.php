@@ -87,6 +87,7 @@
             $shopping_ml->ViewCart(); 
             $tongtien = $shopping_ml->getTotal();
             $customer_id = $shopping_ml->addCustomer($hoten,$diachi,$dienthoai,$quan);
+            $nguoitra = $_POST['nguoitraship'];
             if($customer_id !=Null)
             {
                 $thoigian = date("Y-m-d H:i:s");
@@ -94,7 +95,7 @@
                 $address = $diachi.' '.$DSdistrict[0]->districtName;
                 $ship = $shopping_ml->tinhphidichvu($quan,$giaohang);
                // echo $ship;
-                $bills_id = $shopping_ml->addBills($customer_id,$address,$thoigian,$giaohang,$tongtien,$ship);                 
+                $bills_id = $shopping_ml->addBills($customer_id,$address,$thoigian,$giaohang,$tongtien,$ship,$nguoitra);                 
                 if($bills_id !=null)
                 {
                     foreach($_SESSION['cart'] as $masp=>$amount)

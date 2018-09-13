@@ -38,7 +38,7 @@
             $rs = $this->doQuery($query,$param);
             return $rs;
         }
-        public function phantrang($id,$userid,$start=-1,$limit=1)
+        public function phantrang($id,$userid,$start=-1,$limit=12)
         {
             if($start==-1)
             {
@@ -54,7 +54,7 @@
             $rs = $this->doQuery($query,$param);
             return $rs;
         }
-        public function phantrangHome($id,$start=-1,$limit=1)
+        public function phantrangHome($id,$start=-1,$limit=12)
         {
             if($start==-1)
             {

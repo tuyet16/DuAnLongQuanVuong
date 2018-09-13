@@ -72,7 +72,7 @@ class Users extends Database{
             $donhangarr[$bill->PurchaseDate][$bill->billID][0]= array($bill->customerID,$bill->billingAddress
                                                                     ,$bill->delivery,$bill->totalPrice,
                                                                     $bill->tinhtrang,$bill->shopcheck, 
-                                                                    $bill->PurchaseDate);
+                                                                    $bill->PurchaseDate,$bill->nguoitraship);
             $tongtien += $bill->totalPrice;
             $sql = 'select * from customers cs, districts dt where cs.districtID = dt.districtID and customerID=?';
             $param =array();
@@ -116,15 +116,21 @@ class Users extends Database{
         $param[] =$id;
         $this->doQuery($sql,$param);
     }
-    public function editDetailPriceByID($soluong,$gia,$giamgia,$id)
+    public function editDetailPriceByID($soluong,$gia,$giamgia,$nguoitra,$detailID,$billID)
     {
         $sql ='update detailsbills set amount=?,price=?,discount=? where detailID =?';
         $param = array();
         $param[]=$soluong;
         $param[]= $gia;
-        $param[] = $giamgia;
-        $param[] =$id;
+        $param[] = $giamgia;        
+        $param[] =$detailID;
         $this->doQuery($sql,$param);
+        
+        $sql1 ="update bills set nguoitraship=? where billID=?";
+        $param = array();
+        $param[] = $nguoitra;
+        $param[] =$billID;
+        $this->doQuery($sql1,$param);
     }
     public function editBillByID($price,$billID)
     {
@@ -157,6 +163,7 @@ class Users extends Database{
                         bi.setDate,
                         bi.billingAddress,
                         bi.phiship,
+                        bi.nguoitraship,
                         bi.totalPrice,ep.employeeName,
                     ep.phone as sdtNV,cs.customerName,cs.phone as sdtkh,
                     dt.productID 
@@ -169,8 +176,8 @@ class Users extends Database{
         $rs = $this->doQuery($query,$param);
         foreach($rs as $bill)
         {
-            $donhangarr[$bill->billID][0]= array($bill->fullname,$bill->address,$bill->billingAddress,$bill->setDate
-                            ,$bill->employeeName,$bill->sdtNV,$bill->customerName,$bill->sdtkh,$bill->phiship,$bill->totalPrice);
+            $donhangarr[$bill->billID][0]= array($bill->fullname,$bill->address,$bill->billingAddress,$bill->setDate,$bill->employeeName
+                           ,$bill->sdtNV,$bill->customerName,$bill->sdtkh,$bill->phiship,$bill->totalPrice,$bill->nguoitraship);
             $sql1 = 'select dt.*,pr.productName, pr.unitID,un.unitName,pr.price as gia from detailsbills dt,products pr,units un             
                                 where dt.productID=pr.productID and pr.unitID=un.unitID and dt.billID=? and dt.ProductID=?';
             $param = array();
@@ -216,10 +223,10 @@ class Users extends Database{
         }
         foreach($rs as $bill)
         {
-            $donhangarr[$bill->setDate][$bill->billID][0]= array($bill->customerID,$bill->billingAddress
-                                    ,$bill->delivery,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck,$bill->idEm);
-            $donhangarr[$bill->PurchaseDate][$bill->billID][0]= array($bill->customerID,$bill->billingAddress
-                                    ,$bill->delivery,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck, $bill->idEm);
+            $donhangarr[$bill->setDate][$bill->billID][0]= array($bill->customerID,$bill->billingAddress,$bill->delivery
+                                    ,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck,$bill->idEm,$bill->nguoitraship);
+            $donhangarr[$bill->PurchaseDate][$bill->billID][0]= array($bill->customerID,$bill->billingAddress,$bill->delivery
+                                    ,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck, $bill->idEm,$bill->nguoitraship);
             $tongtien += $bill->totalPrice;
             $sql = 'select * from customers cs, districts dt where cs.districtID = dt.districtID and customerID=?';
             $param =array();

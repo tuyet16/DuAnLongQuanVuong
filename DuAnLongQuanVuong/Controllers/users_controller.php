@@ -89,7 +89,6 @@ include_once('../Libs/messagebox_lib.php');
                     $date = date_format($date1,'Y-m-d');
                     $DSdonhang1 = $user->getHoadon($id, $date);
                     $DSdonhang = $DSdonhang1;
-                    print_r($DSdonhang);
                 }
                 else
                 {
@@ -105,8 +104,8 @@ include_once('../Libs/messagebox_lib.php');
                         $DSdonhang1 = $user->getHoadon($id, $date);
                         $DSdonhang = $DSdonhang1;
                     }
-                    $DSdonhang = $DSdonhang1;
-                    $date=key($DSdonhang);
+                    //$DSdonhang = $DSdonhang1;
+                    //$date=key($DSdonhang);
                 }
                	$view = Page::View();
                 $GLOBALS['template']['menu'] = include_once'../template/menu.php';
@@ -125,6 +124,7 @@ include_once('../Libs/messagebox_lib.php');
                 print_r($_POST);
                 $tong = 1;
                 $tongtien =0;
+                $billID = $_POST['billID'];
                 foreach($_POST as $detail_id=>$edit)
                 {
                     if($detail_id != 'submit')
@@ -134,9 +134,8 @@ include_once('../Libs/messagebox_lib.php');
                             if(is_numeric($detail_id)){
                               //echo $detail_id.'<br>';              
                             $tong *= $_POST[$detail_id] * $_POST['gia' . $detail_id] * ((100 - $_POST['giamgia' . $detail_id])/100);
-                            
                             $user = new Users();
-                            $user->editDetailPriceByID($_POST[$detail_id],$tong,$_POST['giamgia'.$detail_id],$detail_id);
+                            $user->editDetailPriceByID($_POST[$detail_id],$tong,$_POST['giamgia'.$detail_id],$_POST['nguoitraship'],$detail_id,$billID);
                             $tongtien += $tong;
                             $tong=1;                   
                             }        

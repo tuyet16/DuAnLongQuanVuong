@@ -8,7 +8,7 @@ class Page{
      * 
      * 
      */
-    public static function createPagination($rs, $limit=1)
+    public static function createPagination($rs, $limit=12)
     {
         //Kiểm tra URL có tham số hay không, nếu chưa thì dùng dấu ? , nếu có thì dùng dấu &
         if(isset($_SERVER['QUERY_STRING']))

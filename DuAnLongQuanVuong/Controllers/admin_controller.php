@@ -271,21 +271,19 @@ include_once('../config/bootload.php');
                 $id = $_GET['billID'];
                 $user = new Users();                   
                 $thongtin = $user->getHDAdminByID($id) ;
+                
+                //$header = array('STT','Tên Hàng','ĐVT','SL','Đơn Giá','Thành Tiền');
+                //print_r($thongtin);             
+                //$in = $thongtin;
                 $header = array('STT','Tên Hàng','ĐVT','SL','Đơn Giá','Thành Tiền');
                 //print_r($thongtin);             
                 $in = $thongtin;
-                $header = array('STT','Tên Hàng','ĐVT','SL','Đơn Giá','Thành Tiền');
-                //print_r($thongtin);             
-                $in = $thongtin;
+                if(isset($in[$id][0][6]))
+                {
+                    if(strlen($in[$id][0][6]) >0)
+                    {
                     $flag = false;
-                        //print_r($billID);
-                        //print_r($in);
                         $ngay =$in[$id][0][3];
-                        //echo $time;
-                        //$chon = explode('-',$ngay);
-                        //$nam = $chon[0];
-                        //$thang = $chon[1];
-                        //$filename = "D:/donhang/".$nam.'/'.'Thang_'.$thang.'/'.$ngay.'/'.$ngay.'_'.$id.".xls";
                         $tem = date_create($ngay);
                         $ngay = date_format($tem, 'd-m-Y');
                         $filename = $ngay . '_' . $id . '.pdf';
@@ -333,6 +331,7 @@ include_once('../config/bootload.php');
                             //$pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
                             //$pdf->SetFont('DejaVu','B',12);
                             // Header
+                            //Chia độ rộng của một ô.
                             $w = array(5, 28, 10, 10, 17, 20);
                             for($i=0;$i<count($header);$i++)
                                 $pdf->Cell($w[$i],7,$header[$i],1,0,'C',true);
@@ -343,7 +342,7 @@ include_once('../config/bootload.php');
                             $i = 0;
                             $fill = false;
                             $tong = 0;
-                            foreach($in[$id][1] as $row){
+                            foreach($in[$id][1] as $row){                                
                                 $pdf->Cell($w[0], 6, ++$i, 'LR', 0, 'C',$fill);
                                 $pdf->Cell($w[1], 6, $row[4], 'LR', 0, 'L', $fill);
                                 $pdf->Cell($w[2], 6, $row[5], 'LR', 0, 'C', $fill);
@@ -354,6 +353,25 @@ include_once('../config/bootload.php');
                                 $pdf->Ln();
                                 $fill = !$fill;
                             }
+                            if($in[$id][0][10]==1)
+                            {                                
+                                $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
+                                $pdf->Cell($w[1], 6, 'Phí Ship', 'LR', 0, 'L', $fill);
+                                $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
+                                $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
+                                $pdf->Cell($w[4], 6, '', 'LR', 0, 'C', $fill);
+                                $pdf->Cell($w[5], 6,  number_format($in[$id][0][8]),'LR', 0, 'R', $fill);
+                                $pdf->Ln();
+                                $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
+                                $pdf->Cell($w[1], 6, '', 'LR', 0, 'L', $fill);
+                                $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
+                                $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
+                                $pdf->Cell($w[4], 6, 'TỔNG CỘNG', 'LR', 0, 'C', $fill);
+                                $pdf->Cell($w[5], 6, number_format($tong+$in[$id][0][8]), 'LR', 0, 'R', $fill);
+                                $pdf->Ln();
+                            }
+                            else
+                            {
                                 $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
                                 $pdf->Cell($w[1], 6, '', 'LR', 0, 'L', $fill);
                                 $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
@@ -361,6 +379,8 @@ include_once('../config/bootload.php');
                                 $pdf->Cell($w[4], 6, 'TỔNG CỘNG', 'LR', 0, 'C', $fill);
                                 $pdf->Cell($w[5], 6, number_format($tong), 'LR', 0, 'R', $fill);
                                 $pdf->Ln();
+                            }
+                            
                             // Closing line
                             $pdf->Cell(array_sum($w),0,'','T');
                            
@@ -383,7 +403,13 @@ include_once('../config/bootload.php');
                 //print_r($thongtin);   
                 //$data = "Some utf-8 characters d?a ch?";          
                         
-             }    
+             } }}
+             else
+             {
+                echo('Cần Phải Phân Công Shipper Trước Khi In');
+                //echo $_SERVER['PHP_SELF'];
+               // header('Location:admin_controller.php?');
+             }   
             }
         break;
 

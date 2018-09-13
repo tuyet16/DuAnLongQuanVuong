@@ -35,8 +35,11 @@
                     <option value="1">Giao nhanh</option>
                 </select>
             </div>
-            <div class="row" style="margin-top: 2%;">
-                <input type="text" name="email" class="form-control" placeholder="Email nhận thông báo(Không bắt buộc)" />
+            <div class="row">
+                <label class="control-label">Phí Giao Hàng</label><br />
+                <div class="col-md-3"><input type="radio" name="nguoitraship" value="0" checked="checked" /> Chủ Trả Phí</div>
+               <div class="col-md-3"><input type="radio" name="nguoitraship" value="1"/> Khách Trả Phí</div>
+               
             </div>
         </div>
         <div class="col-md-2"></div>
@@ -75,7 +78,8 @@
             <tr>
                 <td colspan="3" class="text-right" style="color: red; font-weight: bold;">Tổng tiền</td>
                 <td style="color: blue; font-weight: bold;"><?php echo number_format($tongtien);?></td>
-            </tr>       
+            </tr>   
+                
                 
         </table>
             <div class="col-md-2"></div>

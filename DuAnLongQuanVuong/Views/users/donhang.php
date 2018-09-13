@@ -28,7 +28,7 @@
         <td>&nbsp; Chi Tiết</td>
       </tr>
       <div id="accordion">
-      <?php  //foreach($DSdonhang as $date=>$billIDs) {
+      <?php //foreach($DSdonhang as $date=>$billIDs) {
             $tong =0;
             $thongke = array();
         ?>    
@@ -117,10 +117,9 @@
                             <td>Hủy SP</td>
                         </tr>
                         
-                        <?php $a=1; 
+                        <?php  $a=1; 
                         $detail_id_arr = array();
-                        $check_product_acceptance = false; 
-                        print_r($db[1]);   
+                        $check_product_acceptance = false;    
                         foreach($db[2] as $detail_item){
                             if($detail_item != null){
                                 if($detail_item[7] > 0){
@@ -141,11 +140,18 @@
                                     //$thongke[$detail_item[4]].=' '.$detail_item[5];
                                 }
                                 ?></td>
-                            <td><input type="text" name="<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[1];  ?>" 
-                                                     style="width: 50px;" /></td>
+                            <td>
+                            <?php if($check_product_acceptance == false){?>
+                                <input type="text" name="<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[1];  ?>" 
+                                                     style="width: 50px;" />
+                            <?php } else
+                                    echo $detail_item[1];
+                              ?>
+                            </td>
                             <td><?php echo $detail_item[4]; ?></td>
                             <td><?php echo number_format($detail_item[5]); ?></td>
                             <td>
+                            <?php if($check_product_acceptance == false){?>
                                 <select name="giamgia<?php echo $detail_item[0]; ?>">
                                 <?php for($i=0; $i<=20;$i+=5){ 
                                     if($i == $detail_item[6])
@@ -158,7 +164,10 @@
                                        echo '<option value="'.$i.'">'. $i.'%</option>'; 
                                     }
                                     ?>                                        
-                                <?php } } ?>
+                                <?php } } else
+                                    echo $detail_item[6];
+                                    }
+                                 ?>
                                 </select>
                             </td>
                             <input type="hidden" name="gia<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[5]; ?>" />
@@ -185,8 +194,34 @@
                         </tr>
                         <?php 
                             $detail_id_arr[] = $detail_item[0];
+                           // print_r($db[0][7]);
                         } ?>
                     </table>
+                    
+                    <div class="col-md-12"><label class="control-label">Phí Giao Hàng</label><br /></div>
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <input type="radio" name="nguoitraship" value="0" <?php if($db[0][7]==0)
+                                                                                {
+                                                                                    echo 'checked="checked"' ;                                                                              
+                                                                                    
+                                                                               }else
+                                                                               {
+                                                                                echo "";
+                                                                               }
+                                                                                     ?>   /> Chủ Trả Phí
+                        </div>
+                        <div class="col-md-3">
+                            <input type="radio" name="nguoitraship" value="1" <?php if($db[0][7]==1)
+                                                                                {
+                                                                                    echo 'checked="checked"' ;                                                                              
+                                                                                    
+                                                                               }else
+                                                                               {
+                                                                                echo "";
+                                                                               }?> /> Khách Trả Phí
+                        </div>
+                    </div>
                     <div class="text-right">
                         <?php if($check_product_acceptance == false){?>
                         <button type="submit" name="submit" class="btn btn-success">Cập nhật</button>

@@ -89,9 +89,9 @@
             $con = $this->getconnect();
             return $con->lastInsertId('customerID');
         }
-        public function addBills($customerID,$billing,$date,$loaiship,$tongtien,$ship)
+        public function addBills($customerID,$billing,$date,$loaiship,$tongtien,$ship,$nguoitra)
         {
-            $query = 'insert into bills(customerID,billingAddress,PurchaseDate,delivery,totalPrice,phiship) values(?,?,?,?,?,?)';
+            $query = 'insert into bills(customerID,billingAddress,PurchaseDate,delivery,totalPrice,phiship,nguoitraship) values(?,?,?,?,?,?,?)';
             $param = array();
             $param[]=$customerID;
 			$param[]=$billing;
@@ -99,6 +99,7 @@
 			$param[]=$loaiship;
             $param[]=$tongtien;
             $param[] =$ship;
+            $param[] = $nguoitra;
             $this->doQuery($query,$param);
             $con = $this->getconnect();
             return $con->lastInsertId('billID');
