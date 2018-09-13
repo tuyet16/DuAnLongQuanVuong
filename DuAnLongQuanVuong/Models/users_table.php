@@ -27,6 +27,13 @@ class Users extends Database{
         $rs = $this->doQuery($query,$param);
         return $rs;
    }
+   public function changePass($pass,$id){
+		$query = 'UPDATE users SET password=? WHERE userid=?';
+        $param = array();
+        $param[] = $pass;
+        $param[] = $id;
+        $this->doQuery($query, $param);   
+   }
     public function addUser($pass,$fullname,$email,$address,$phone,$tenshop){
         $query = 'INSERT INTO users(password,fullname,email,address,phone,shopName) VALUES(?,?,?,?,?,?)';
         $param = array();

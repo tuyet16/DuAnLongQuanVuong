@@ -21,7 +21,7 @@ $().ready(function() {
 					},
 					tennv:{
 						required: "Vui lòng không để trống",
-						minlength: " (Độ dài từ 6 ký tự trở lên)",
+						minlength: " (Độ dài từ 3 ký tự trở lên)",
 						maxLength: "(Độ dài nhỏ hơn 50 ký tự)"
 					},
 					diachi:{
@@ -31,14 +31,16 @@ $().ready(function() {
 					},
 					sdt:{
 						required: "Vui lòng không để trống",
-						phoneUK:"Chỉ được nhập 10 đến 11 số"
+						//number : "Số điện thoại bắt buộc kiểu số",
+						maxlength:"Không được quá 50 kí tự",
 						
 					}
 				},
 		rules:{
 			sdt: {
 			  required:true,
-			  phoneUK:true,
+			  //number:true,
+			  maxlength:50
 			}
   		}	
 	});
@@ -49,24 +51,24 @@ $().ready(function() {
         <form id="formAddEmployee" method="post" action="?action=add_employee" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-2">Mã nhân viên</div> 
-                <div class="col-md-5"><input type="text" id="manv" name="manv" class="form-control" width="60%" 
-                	required minLength='3' maxlength="15"/>
+                <div class="col-md-5">
+                	<input type="text" id="manv" name="manv" class="form-control" width="60%" required minlength='3' maxlength="15"/>
                     <label for="manv_error" class="form-error"></label>
                 </div>
             </div>
              <div class="row" style="margin-top:2px">
                 <div class="col-md-2">Tên nhân viên</div> 
-                <div class="col-md-5"> <input type="text" id="tennv" name="tennv" class="form-control" width="60%" required minLength='6' maxlength="50"/>
+                <div class="col-md-5"> <input type="text" id="tennv" name="tennv" class="form-control" width="60%" required minlength='3' maxlength="50"/>
                 <label for="tennv_error" class="form-error"></label></div>
             </div>
              <div class="row" style="margin-top:2px">
                 <div class="col-md-2">Địa chỉ</div> 
-                <div class="col-md-5"> <textarea rows="4" cols="50" name="diachi" id="diachi" class="form-control" width="60%" required minLength='10' maxlength="255" ></textarea>
+                <div class="col-md-5"> <textarea rows="4" cols="50" name="diachi" id="diachi" class="form-control" width="60%" required minlength='10' maxlength="255" ></textarea>
                 <label for="diachi_error" class="form-error"></label></div>
             </div>
             <div class="row" style="margin-top:2px">
                 <div class="col-md-2">Số điện thoại</div> 
-                <div class="col-md-5"> <input id="sdt" name="sdt" type="text" class="form-control" width="60%" required />
+                <div class="col-md-5"> <input id="sdt" name="sdt" type="text" class="form-control" width="60%" required maxlength='50' />
                 <label for="sdt_error" class="form-error"></label></div>
             </div>
             <div class="row" style="margin-top:2px">

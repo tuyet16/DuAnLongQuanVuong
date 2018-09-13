@@ -55,16 +55,16 @@ $().ready(function() {
         	<div style="padding-left:2%">
             	<form id="formChangePass" method="post" action="users_controller.php?action=changepass">
                 	<input type="hidden" name="iduser" value="<?php echo $_SESSION['userid']; ?>"/>
-                    <label class="form-error"><?php if(isset($_SESSION['error'])) 
+                    <label class="form-error"><h4><?php if(isset($_SESSION['error'])) 
 														echo $_SESSION['error'];
-													unset($_SESSION['error']); ?></label><br />
+													unset($_SESSION['error']); ?></h4></label><br />
             		Mật khẩu hiện tại
                 	<input type="password" id="passOld" name="passOld" class="form-control" style="width:45%;" required />
                     <label for="passOld_error" class="form-error" style="margin-bottom:2%"></label><br/>
                     Mật khẩu mới
                 	<input type="password" id="passNew" name="passNew" class="form-control" style="width:45%;" required minlength="8"/>
                     <label for="passNew_error" class="form-error" style="margin-bottom:2%"></label><br/>
-                    Nhập lại mật khẩu mới
+                    Xác nhận mật khẩu mới
                 	<input type="password" id="passNewAgain" name="passNewAgain" class="form-control" style="width:45%;" required minlength="8"/>
                     <label for="passNewAgain_error" class="form-error"></label><br/>
              

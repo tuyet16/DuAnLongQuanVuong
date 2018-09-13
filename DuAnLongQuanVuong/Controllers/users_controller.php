@@ -74,6 +74,35 @@ include_once('../Libs/messagebox_lib.php');
            // print_r($_POST);
            header('Location:admin_controller.php');
         break;
+		case 'changepass':
+			$view = Page::View();
+				if(isset($_SESSION['userid'])){
+					$id = $_SESSION['userid'];
+					$category = new Categories(); 
+					$dsCategories = $category->getDScategory($id);
+					$model = new Users();
+					$u = $model->getUserByID($id);
+					$pass = $u[0]->password;
+					$old= filter_input(INPUT_POST, 'passOld');
+					if($old !=NULL)
+					{	if($old==$pass){
+							$new = $_POST['passNew'];
+							$test=$model->changePass($new,$id);
+							//$_SESSION['error']=$test->rowCount();
+							if(!isset($test)){
+								$_SESSION['error']="Đổi mật khẩu thành công";
+							}else{ $_SESSION['error']="Nếu không thay đổi mật khẩu được <br> Vui lòng liên hệ qua SĐT : .....";}
+							
+						}
+						else{
+						$_SESSION['error']="Kiểm tra lại mật khẩu hiện tại";	}
+					}
+				}
+				$GLOBALS['template']['menu'] = include_once'../template/menu.php';
+                $GLOBALS['template']['leftmenu'] = include_once'../template/shopleftmenu.php';
+                $GLOBALS['template']['content'] = include_once $view;
+                include_once('../template/index.php');
+		break;
         case 'donhang':
             $product_model = new products();
             $dsProducts = $product_model->getProduct();

@@ -87,7 +87,7 @@ $().ready(function() {
             </div>	
              </div>
                 <div class="col-md-2">
-                     <img src="../Views/img/<?php echo $EmployeeByID[0]->hinhanh; ?>"/>
+                     <img src="../Views/img/thumb/thumb_<?php echo $EmployeeByID[0]->hinhanh; ?>"/>
                 </div>
             </div>
         </form>
