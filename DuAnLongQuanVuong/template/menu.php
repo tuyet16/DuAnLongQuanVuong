@@ -1,74 +1,71 @@
  <?php
 ob_start(); //Bien luu = chuoi
 ?>
-<div class="row" style="background-color:#AAD5FF ;">
-   
-    <div class="col-md-12">
+
+<div class="row" style="background-color:#AAD5FF ;">   
+    <div class="col-md-12 col-sm-12 col-xs-12">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-  </ol>
-
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-    <div class="item active">
-      <img src="../Views/images/cr5.jpg" width="100%" alt="Los Angeles"/>
-    </div>
-
-    <div class="item">
-      <img src="../Views/images/cr4.jpg" width="100%" alt="Chicago"/>
-    </div>
-
-   
-  </div>
-
-  <!-- Left and right controls -->
-  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="right carousel-control" href="#myCarousel" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-    </div>
-</div>
-    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: darkblue;color: yellow;border: 1px solid darkblue;">
-      <div class="container">
-        <ul class="nav navbar-nav">
-          <li class="dropdown">
-        
-        <ul class="nav navbar-nav">
-         <!-- <li><a href="home_controller.php">Trang Chủ</a></li>-->
-          <li class="dropdown">
-        <div class="navbar-header">
-           <a class="navbar-brand" href="home_controller.php" style="color: white;">Trang Chủ</a>
-           
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+    
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="../Views/images/cr5.jpg" width="100%" alt="Los Angeles"/>
         </div>
+    
+        <div class="item">
+          <img src="../Views/images/cr4.jpg" width="100%" alt="Chicago"/>
+        </div>    
+       
+      </div>    
+      <!-- Left and right controls -->
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+    </div>
+</div>
+<!--Menu -->
+<div class="row">
+    <div class="col-md-12 col-sm-12 ">
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: darkblue;color: yellow;border: 1px solid darkblue;">
+        <div class="col-md-1.1 col-sm-2 col-xs-4.5 navbar-header" >
+           <a class="navbar-brand" href="home_controller.php" style="color: white;">Trang Chủ</a>         
+        </div>
+        <div class="col-md-8.9 col-sm-8 col-xs-7.5">
         <ul class="nav navbar-nav">
-           <!--<li><a href="#">Trang Chủ</a></li>-->
           <li><a href="#">Liên hệ</a></li>
-          <?php if(isset($_SESSION['role'])){
-                    if($_SESSION['role']==0)
-                    {
-                        echo '<li><a href="../Controllers/admin_controller.php?action=index">Quản Lý</a></li>';
-            }
-            else
-            {
-                echo '<li><a href="../Controllers/shop_controller.php?action=index">Quản Lý</a></li>';
-            }
-            }?>
-            
+          <?php 
+            if(isset($_SESSION['role'])){
+                if($_SESSION['role']==0)
+                {
+                    echo '<li><a href="../Controllers/admin_controller.php?action=index">Quản Lý</a></li>';
+                }
+                else
+                {
+                    echo '<li><a href="../Controllers/shop_controller.php?action=index">Quản Lý</a></li>';
+                }
+            }?>            
             <form class="navbar-form navbar-left">
-              <div class="form-group">
+            <div class="row">
+              <div class="col-xs-10">                
+                <input type="text" class="form-control" width="85%" placeholder="Tìm Kiếm"/>
                 
-                <input type="text" class="form-control" placeholder="Tìm Kiếm"/>
               </div>
-              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+              <div class="col-xs-2">
+                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+              </div>
+              </div>
             </form>
             <?php if(isset($_SESSION['fullname']))
             {
@@ -82,6 +79,8 @@ ob_start(); //Bien luu = chuoi
         <?php }?>
         
         </ul>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-4">
         <ul class="nav navbar-nav navbar-right">
             <li><a href="../Controllers/shoppingcart_controller.php?action=viewcart">
                     <img src='../Views/img/cart3.png' width="25%"/>
@@ -95,9 +94,10 @@ ob_start(); //Bien luu = chuoi
             </a></li>
         
         </ul>
-               
       </div>
     </nav>
+    </div>
+</div>
     <!-- Modal -->
     <script>
     	/*$().ready(function() {
@@ -135,7 +135,8 @@ ob_start(); //Bien luu = chuoi
     </script>
    		<!--Login-->
     <div class="modal fade" id="myLogin" role="dialog">
-        <div class="modal-dialog" style="width:28%">
+         <div class="col-md-4 col-sm-4 col-xs-1"></div>
+        <div class="col-md-5 col-sm-6 col-xs-10 modal-dialog">
         
           <!-- Modal content-->
           <div class="modal-content">
@@ -168,7 +169,7 @@ ob_start(); //Bien luu = chuoi
           </div>
           </div>
         </div>
-        <script>
+ <script>
 $().ready(function() {
 	// validate the form when it is submitted
 	var validator = $("#signup").validate({
@@ -229,45 +230,45 @@ $().ready(function() {
 });
 </script>
         <!--Sign up-->
-        <div class="modal fade" id="mySignup" role="dialog">
-        <div class="modal-dialog" style="width:28%">
-        
-          <!-- Modal content-->
-          <div class="modal-content">
+        <div class="modal fade row" id="mySignup" role="dialog" >
+        <div class="col-md-4 col-sm-4 col-xs-1"></div>
+        <div class="col-md-5 col-sm-6 col-xs-10 modal-dialog">
+                  <!-- Modal content-->
+          <div class="modal-content row">
             <div class="modal-header" style="border-bottom: none;text-align: center;background-color: #314D68;padding: 22px 12px; color:#FFF">
               <button type="button" class="close" data-dismiss="modal">x</button>
               <h4 class="modal-title">Đăng kí</h4>
             </div>
-            <div class="modal-body" style="padding: 30px 35px 35px;">
+            <div class="modal-body " style="padding: 30px 35px 35px;">
                	<div class="login-form">
                     <form action="users_controller.php?action=dangky" method="post" id="signup">
                         <ol>
                             <li>
-                                <input type="text" id="username" name="username" placeholder="Họ và tên" title="Vui lòng nhập tên của bạn" required="">
+                                <input type="text" id="username" name="username" class="form-control" placeholder="Họ và tên" title="Vui lòng nhập tên của bạn" required=""/>
                                 <label for="username_error" class="form-error"></label>
                             </li>
                             <li>
-                                <input type="email" id="email" name="email" placeholder="mail@gmail.com" title="Vui lòng nhập email" required="">
+                                <input type="email" id="email" name="email" class="form-control" placeholder="mail@gmail.com" title="Vui lòng nhập email" required=""/>
                                 <label for="email_error" class="form-error"></label>
                             </li>
                             <li>
-                                <input type="text" id="tenshop" name="tenshop" placeholder="Tên Shop" title="Vui lòng nhập tên shop" required=""/>
+                                <input type="text" id="tenshop" name="tenshop" class="form-control" placeholder="Tên Shop " title="Vui lòng nhập tên shop" required=""/>
                                 <label for="tenshop_error" class="form-error"></label>
                             </li>
                              <li>
-                                <input type="text" id="address" name="address" placeholder=" Địa chỉ" title="Vui lòng nhập địa chỉ shop" required=""/>
+                                <input type="text" id="address" name="address" class="form-control" placeholder=" Địa chỉ" title="Vui lòng nhập địa chỉ shop" required=""/>
                                 <label for="address_error" class="form-error"></label>
                             </li>
                             <li>
-                                <input type="text" id="tel" name="tel" placeholder="Vui lòng nhập số điện thoại" required="" >
+                                <input type="text" id="tel" name="tel" class="form-control" placeholder="Vui lòng nhập số điện thoại" required="" />
                                <label id="tel_error" for="tel_error" class="form-error"></label>
                             </li>
                             <li>
-                            	<input type="password" class="lock" name="password1" placeholder="Mật khẩu" id="password1" required="">
+                            	<input type="password" class="lock" class="form-control" name="password1" placeholder="Mật khẩu" id="password1" required=""/>
                                 <label for="password1_error" class="form-error"></label>
                             </li>
                             <li>
-                       			 <input type="password" class="lock" name="password2" placeholder="Mật khẩu nhập lại" id="password2" required="">
+                       			 <input type="password" class="lock" class="form-control" name="password2" placeholder="Mật khẩu nhập lại" id="password2" required=""/>
                                  <label for="password2_error" class="form-error"></label>
                         	</li>
                         </ol>
@@ -276,6 +277,7 @@ $().ready(function() {
                 </div>
                 </div>
               </div>
+            </div>
             </div>
         </div>
         

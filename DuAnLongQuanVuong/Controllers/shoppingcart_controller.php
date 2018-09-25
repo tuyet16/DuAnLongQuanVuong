@@ -114,6 +114,28 @@
                 MessageBox::Show("Hệ thống đang bảo trì,bạn vui lòng đặt hàng sau");
             } 
         break;
+        case "timkiem":
+                $shopcarts = new ShoppingCart();
+                $tk = $shopcarts->timkiem($_POST['sdt']);
+                if($tk !=null)
+                {
+                    $Arrtimkiem = array();
+                    foreach($tk as $sdt)
+                    {
+                        $Arrtimkiem['ten'] = $sdt->customerName;
+                        $Arrtimkiem['quan'] = $sdt->districtID;
+                        $Arrtimkiem['diachi'] = $sdt->address;                        
+                    }
+                }
+                else
+                {
+                    $Arrtimkiem['ten'] = " ";
+                    $Arrtimkiem['quan'] = " ";
+                    $Arrtimkiem['diachi'] = "";
+                   
+                }
+                 echo json_encode($Arrtimkiem);
+        break;
         
     }
 

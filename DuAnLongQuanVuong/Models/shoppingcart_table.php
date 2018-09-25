@@ -114,6 +114,7 @@
             $param[] = $billID;
             $this->doQuery($query,$param);
         }
+        //ham tinh phi dich vu
         public function tinhphidichvu($quan,$giaohang)
         {
             if($giaohang == 0)
@@ -131,6 +132,26 @@
             $rs = $this->doQuery($sql,$param);
             return $rs[0]->phiship;
         }
+        //ham tim kiem dia chi khach hang bang sdt
+        public function timkiem($sdt)
+        {
+            $query= 'select distinct customerName,address,districtID from customers where phone = ? limit 0,1';
+            $param = array();
+            $param[]= $sdt;
+            $rs =$this->doQuery($query,$param);    
+            return $rs;       
+        }
+        
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
     }
     

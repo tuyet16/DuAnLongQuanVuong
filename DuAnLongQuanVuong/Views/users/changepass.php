@@ -52,7 +52,7 @@ $().ready(function() {
 <div class="row">
 	<fieldset>
     	<legend><h2>Tạo mật khẩu mới</h2></legend>
-        	<div style="padding-left:2%">
+        	<div style="padding-left:2%; margin-bottom:40px;">
             	<form id="formChangePass" method="post" action="users_controller.php?action=changepass">
                 	<input type="hidden" name="iduser" value="<?php echo $_SESSION['userid']; ?>"/>
                     <label class="form-error"><h4><?php if(isset($_SESSION['error'])) 

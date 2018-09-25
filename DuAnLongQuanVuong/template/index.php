@@ -29,7 +29,7 @@
       $( function() {
         
         $( "#datepicker" ).datepicker({
-          dateFormat: "dd-mm-yy"
+          dateFormat: "dd-mm-yy",
         });
         $( "#check_delivery_date" ).datepicker({
           dateFormat: "dd-mm-yy"
@@ -75,18 +75,21 @@
 </head>
 
 <body>
+<div class="row">
+<div class="col-md-12 col-sm-12 col-xs-12">
     <?php
     if(isset($GLOBALS['template']['menu'])){
         echo $GLOBALS['template']['menu'];
     }
     
 ?>
-
+</div>
+</div>
     <div class="container-fluid" style="padding-top: 10px;" >
         
         <div class="row bg-transparent">
             <?php if(isset($GLOBALS['template']['leftmenu'])): ?>
-           <div class="col-sm-3">
+           <div class="col-md-3 col-sm-3 col-xs-5">
                 <?php
                 
                 if(isset($GLOBALS['template']['leftmenu'])){
@@ -95,7 +98,7 @@
                 ?>
             </div>
             
-            <div class="col-sm-9">
+            <div class="col-md-9 col-sm-9 col-xs-7">
                     <?php
                 if(isset($GLOBALS['template']['content'])){
                     echo $GLOBALS['template']['content'];
@@ -103,7 +106,7 @@
             ?>
             </div>
             <?php else: ?>
-            <div class="col-sm-12">
+            <div class="col-md-12 col-sm-12 col-xs-12">
                     <?php
                 if(isset($GLOBALS['template']['content'])){
                     echo $GLOBALS['template']['content'];

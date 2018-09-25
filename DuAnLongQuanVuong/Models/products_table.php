@@ -54,6 +54,21 @@
             $rs = $this->doQuery($query,$param);
             return $rs;
         }
+        public function phantrangchu($start=-1,$limit=12)
+        {
+            if($start==-1)
+            {
+                $query = 'select *from products';                    
+            }
+            else
+            {
+                $query = 'select * from products LIMIT '.$start.','.$limit;
+            }
+            //$param = array();
+//            $param[] = $id;   
+            $rs = $this->doQuery($query);
+            return $rs;
+        }
         public function phantrangHome($id,$start=-1,$limit=12)
         {
             if($start==-1)
@@ -62,7 +77,7 @@
             }
             else
             {
-                $query = 'select * from products where categoryID=? LIMIT '.$start.','.$limit;
+                $query = 'select * from products where categoryID = ? LIMIT '.$start.','.$limit;
             }
             $param = array();
             $param[] = $id;   

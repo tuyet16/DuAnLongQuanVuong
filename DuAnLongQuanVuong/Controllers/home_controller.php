@@ -11,53 +11,37 @@
     }
     switch($action)
     {
-        case 'index':
-			
+        case 'index':			
             $product_model = new products();
-            $dsProducts = $product_model->getProduct();
+            //$dsProducts = $product_model->getProduct();
             $category = new Categories();
             $dsCategories = $category->getCategories();
-            if(isset($_SESSION['userid']))
-            {
-                $id = $_SESSION['userid'];
-                $rsCategories = $category->getDScategory($id);                  
-            }  
+            //if(isset($_SESSION['userid']))
+//            {
+//                $id = $_SESSION['userid'];
+//                $rsCategories = $category->getDScategory($id);                  
+//            }  
+            //if(isset($_GET['id']))
+//            {
+//                $id = $_GET['id'];
+                $product = new products();
+                $start = 0;
+                if(isset($_GET['start']))
+                {
+                    $start= $_GET['start'];
+                }                
+                $rsProducts = $product_model->phantrangchu($start);
+                $rsProductPage = $product_model->phantrangchu();
+                $pagination = Page::createPagination($rsProductPage);             
+            //}
             $view = Page::View();
+           
             $GLOBALS['template']['menu'] = include_once '../template/menu.php';
             $GLOBALS['template']['leftmenu'] = include_once '../template/leftmenu.php';
             $GLOBALS['template']['content'] = include_once $view;
             $GLOBALS['template']['footer'] = include_once'../template/footer.php';
             include_once('../template/index.php');             
-        break;
-        case 'services':
-            $category = new Categories(); 
-            $dsCategories = $category->getCategories();
-			$tableDB = new Database();
-            $tables = $tableDB->getTables();
-            $view = Page::View();
-            $GLOBALS['template']['menu'] = include_once'../template/menu.php';
-            $GLOBALS['template']['leftmenu'] = include_once'../template/leftmenu.php';
-            $GLOBALS['template']['content'] = include_once $view;
-            $GLOBALS['template']['footer'] = include_once'../template/footer.php';
-            include_once('../template/index.php');
-				header("Location: services_controller.php");
-			break;
-        break;
-         case 'chitiet':
-		 	$category = new Categories(); 
-            $dsCategories = $category->getCategories();
-            if(isset($_GET['id'])){
-                $id = $_GET['id'];
-                $productsObj = new products();
-                $rs_chi_tiet_san_pham = $productsObj->getByIDProduct($id);
-            }
-            $view = Page::View();
-            $GLOBALS['template']['menu'] = include_once'../template/menu.php';
-            $GLOBALS['template']['leftmenu'] = include_once'../template/leftmenu.php';
-            $GLOBALS['template']['content'] = include_once $view;
-            $GLOBALS['template']['footer'] = include_once'../template/footer.php';
-            include_once('../template/index.php');
-        break;
+        break;        
         case 'xemsanpham':          
             $category = new Categories(); 
             $dsCategories = $category->getCategories();

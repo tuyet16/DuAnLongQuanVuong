@@ -1,24 +1,71 @@
 <?php
 	ob_start();
 ?>
-
+<script src="../js/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#dt").keyup(function(){
+           var request= $.ajax({           
+                url:"../Controllers/shoppingcart_controller.php?action=timkiem",
+                method:'POST',
+                data:{sdt: this.value},
+                dataType:'html'
+            });
+            request.done(function(a){
+                tim = JSON.parse(a);               
+                $('#name').val(tim['ten']);
+                $('#dc').val(tim['diachi']);
+                $('#quan').val(tim['quan']);
+            });            
+        });
+        
+    });
+</script>
+<script>
+$().ready(function() {
+	// validate the form when it is submitted
+	var validator = $("#signup").validate({
+		errorPlacement: function(error, element) {
+			// Append error within linked label
+			$( element )
+				.closest( "form" )
+					.find( "label[for='" + element.attr( "id" ) + "_error']" )
+						.append( error );
+		},
+		errorElement: "span",
+		messages: {
+					dt:{
+						required: "Vui lòng không để trống",
+                        phoneUK:"Chỉ được nhập 10 đến 11 số"
+					},
+					hoten:{
+						required: "Vui lòng không để trống",
+					},
+					dc:{
+						required: "Vui lòng không để trống"
+					}
+				},
+	});
+});
+</script>
 <div class="container" style="margin-bottom: 50px;">
   <form method="post" action="?action=dathang">
+  
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
          <legend style="color: RED;">THÔNG TIN NGƯỜI NHẬN</legend> 
             <div class="row">
-                <label class="control-label">Họ tên người nhận</label>
-                <input type="text" name="hoten" class="form-control" />
+                <label class="control-label">Điện thoại di động</label>
+                <input type="text" name="dienthoai" id="dt" class="form-control" required="" />
             </div>
             <div class="row">
-                <label class="control-label">Điện thoại di động</label>
-                <input type="text" name="dienthoai" class="form-control" />
+                <label class="control-label">Họ tên người nhận</label>
+                <input type="text" name="hoten" id="hoten" class="form-control"  required="" />
             </div>
             <div class="row">
                 <label class="control-label">Quận/Huyện</label>                
-                <select name="quan" class="form-control">
+                <select name="quan" id="quan" class="form-control" >
                 <?php foreach($DSdistrict as $row){ ?>
                     <option value="<?php echo $row->districtID; ?>"><?php echo $row->districtName; ?></option>
                 <?php } ?>
@@ -26,7 +73,7 @@
             </div>
             <div class="row">
                 <label class="control-label">Địa chỉ</label>
-                <input type="text" name="diachi" class="form-control" />
+                <input type="text" name="diachi" id="dc" class="form-control"  required="" />
             </div>
              <div class="row">
                 <label class="control-label">Phương thức giao hàng</label>
