@@ -113,8 +113,10 @@ function __construct($orientation='P', $unit='mm', $size='A4')
 	}
 	elseif(is_dir(dirname(__FILE__).'/font'))
 		$this->fontpath = dirname(__FILE__).'/font/';
+        //$this->fontpath = 'C:/xampp/htdocs/DuAnLongQuanVuong/DuAnLongQuanVuong/Libs/font/';
 	else
 		$this->fontpath = '';
+        //$this->fontpath = 'C:/xampp/htdocs/DuAnLongQuanVuong/DuAnLongQuanVuong/Libs/font/';
 	// Core fonts
 	$this->CoreFonts = array('courier', 'helvetica', 'times', 'symbol', 'zapfdingbats');
 	// Scale factor

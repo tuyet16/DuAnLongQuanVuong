@@ -60,7 +60,6 @@ ob_start(); //Bien luu = chuoi
             <div class="row">
               <div class="col-xs-10">                
                 <input type="text" class="form-control" width="85%" placeholder="Tìm Kiếm"/>
-                
               </div>
               <div class="col-xs-2">
                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
@@ -68,8 +67,11 @@ ob_start(); //Bien luu = chuoi
               </div>
             </form>
             <?php if(isset($_SESSION['fullname']))
-            {
-               echo '<li><a href="#" data-toggle="modal" data-target="#mySignup"><span class="glyphicon glyphicon-user"></span>Đăng Ký</a></li>';
+            { 
+				 if($_SESSION['role']==0)
+                {
+                   echo '<li><a href="#" data-toggle="modal" data-target="#mySignup"><span class="glyphicon glyphicon-user"></span>Đăng Ký</a></li>';
+                }
                echo '<li><a>Xin chào '. $_SESSION['fullname'].'</a></li>';
                echo '<li><a href="../Controllers/users_controller.php?action=logout">Đăng Xuất</a></li>';
             } else{?>     
@@ -198,15 +200,6 @@ $().ready(function() {
 					tel:{
 						required: "Vui lòng không để trống",
 						phoneUK:"Chỉ được nhập 10 đến 11 số"
-					},
-					password1:{
-						required: "Vui lòng không để trống",
-						minlength:"Mật khẩu phải có từ 8 kí tự <br> Chứa cả chữ và số"
-					},
-					password2:{
-						required: "Vui lòng không để trống",
-						minlength:"Mật khẩu phải có từ 8 kí tự <br> Chứa cả chữ và số",
-						equalTo: "Mật khẩu chưa khớp"
 					}	
 				},
 		rules:{
@@ -217,13 +210,6 @@ $().ready(function() {
 			tel:{
 				required:true,
 				phoneUK:true
-			},
-			password1:{
-				minlength:8
-			},
-			password2:{
-				minlength : 8,
-                equalTo : '[name="password1"]'
 			}
   		}	
 	});
@@ -264,13 +250,16 @@ $().ready(function() {
                                <label id="tel_error" for="tel_error" class="form-error"></label>
                             </li>
                             <li>
-                            	<input type="password" class="lock" class="form-control" name="password1" placeholder="Mật khẩu" id="password1" required=""/>
-                                <label for="password1_error" class="form-error"></label>
-                            </li>
-                            <li>
-                       			 <input type="password" class="lock" class="form-control" name="password2" placeholder="Mật khẩu nhập lại" id="password2" required=""/>
-                                 <label for="password2_error" class="form-error"></label>
-                        	</li>
+                            	<input type="hidden" class="lock" class="form-control" name="password1" id="password1" 
+                                value="<?php
+										$letter='0123456789abcdfghjkmnpqrstvwxyzABCDFGHJKMNPQRSTVWXYZ@*!~#$%^&()-+=';
+										$str="";
+										for($i=0;$i<8;$i++){
+											$str .= substr($letter,mt_rand(0,strlen($letter)-1),1);	
+										}
+										echo $str;
+								?>"/>
+                            </li> 
                         </ol>
                          <input type="submit" value="Đăng kí"/>
                     </form>
