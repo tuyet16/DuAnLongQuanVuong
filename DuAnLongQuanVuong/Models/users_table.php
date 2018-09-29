@@ -5,7 +5,7 @@ class Users extends Database{
     public function __construct() {
         parent::__construct();
         
-    }   
+    }
     public function getUser(){
         $query = 'SELECT * FROM users';
         $rs = $this->doQuery($query);

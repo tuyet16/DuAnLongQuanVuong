@@ -16,10 +16,10 @@
             //$dsProducts = $product_model->getProduct();
             $category = new Categories();
             $dsCategories = $category->getCategories();
-            //if(isset($_SESSION['userid']))
-//            {
-//                $id = $_SESSION['userid'];
-//                $rsCategories = $category->getDScategory($id);                  
+            if(isset($_SESSION['userid']))
+            {
+                $id = $_SESSION['userid'];
+                $rsCategories = $category->getDScategory($id);                  
 //            }  
             //if(isset($_GET['id']))
 //            {
@@ -33,7 +33,7 @@
                 $rsProducts = $product_model->phantrangchu($start);
                 $rsProductPage = $product_model->phantrangchu();
                 $pagination = Page::createPagination($rsProductPage);             
-            //}
+            }
             $view = Page::View();
            
             $GLOBALS['template']['menu'] = include_once '../template/menu.php';

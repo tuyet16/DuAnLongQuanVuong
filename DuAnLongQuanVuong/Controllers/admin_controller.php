@@ -433,7 +433,7 @@ include_once('../config/bootload.php');
                             
                             $pdf->Ln();
                             $pdf->Ln();
-                            $pdf->Output($filename, 'D');
+                            $pdf->Output('C',$filename);
                             
                            // echo "Shipper: \t". chr(255).chr(254) . mb_convert_encoding($in[0][4] ,'UTF-16LE','UTF-8' )."\t"."ÐT: \t".$in[0][5]."\n";
 //                            echo "Tên Khách Hàng: \t". $in[0][6]."\n";

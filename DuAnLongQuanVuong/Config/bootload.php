@@ -2,7 +2,11 @@
 session_start();
 date_default_timezone_set("Asia/Ho_Chi_Minh");
 include_once '../Errors/mvcexception.php';
+<<<<<<< HEAD
 //define('FPDF_FONTPATH','C:\xampp\htdocs\DuAnLongQuanVuong\DuAnLongQuanVuong\Libs\font');
+=======
+define('FPDF_FONTPATH','C:\xampp\htdocs\DuAnLongQuanVuong\DuAnLongQuanVuong\Libs\font');
+>>>>>>> 167459d187ff320c323f7c216ac9a548746697cb
 //define('FPDF_FONTPATH','');
 /**
  * Hàm này tự động tìm các tập tin có cùng tên với class và nạp vào file đang thiếu class đó 
