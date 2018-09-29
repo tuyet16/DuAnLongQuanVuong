@@ -18,7 +18,13 @@
     }
     else
     {
-    ?>
+        foreach($DSdonhang as $user=>$us){ ?>
+        <div class="row">
+          <div class="col-md-12" style="color: blue; font-weight: bold; text-align: center;">
+            <h2>Tên Shop: <?php echo $us['thongtinshop'][0]; ?></h2> 
+          </div>
+        </div>                 
+                
     <table class="table table-bordered table-striped">
       <tr style="background-color:darkblue;color:#FFF">
         <td>&nbsp; STT</td>
@@ -32,7 +38,6 @@
       <?php $tong =0;
             $thongke = array(); ?>
       <tr>
-      <p>
       <form method="post" action="?action=inhoadon">
         <td colspan="7" style="color: red;"><h4><?php if(isset($date)){ $dt=date_create($date); echo $ngay = date_format($dt,'d-m-y'); } ?>
         <input type="hidden" name="ngay" value="<?php if(isset($date)) echo $date; ?>" />     
@@ -40,17 +45,19 @@
       
       </tr>
             <?php $i=1; if($DSdonhang != null && $date != ""){ 
-                foreach($DSdonhang[$date] as $billID=>$db){ ?>
+              foreach($us as $billID=>$db){ 
+                if($db != $us['thongtinshop']){ ?>                     
+                    
           <tr style="background-color: #000; color: #FFF;">
             <td>&nbsp;<?php echo $i++; ?></td>
-            <td>&nbsp;<?php  echo $db[1][0];?></td>
+            <td>&nbsp;<?php  echo $db[2][0];?></td>
             <td>&nbsp;<?php if($db[0][2]==0) 
-                                {
-                                    echo 'Giao Thường';
-                                }
-                                else
-                                {echo 'Giao Nhanh';}?></td>
-            <td>&nbsp;<?php echo number_format($db[0][3]); $tong += $db[0][3];?></td>
+                            {
+                                echo 'Giao Thường';
+                            }
+                            else
+                            {echo 'Giao Nhanh';}?></td>
+            <td>&nbsp;<?php echo $db[0][3]; $tong += $db[0][3];?></td>
             <td>&nbsp;<?php echo date_format($dt,'d-m-Y'); ?></td>
             <td>             
                 <a class="collapsed card-link" data-toggle="collapse" style="color: #fff;" 
@@ -84,12 +91,11 @@
              ?>
                   <div class="card-body">
                     <div class="container-fluid">
-                    <div class="row">
-                       
-                       <label>Số điện thoại: <?php echo $db[1][2]; ?></label>
+                    <div class="row">                       
+                       <label>Số điện thoại: <?php echo $db[2][2]; ?></label>
                      </div>
                      <div class="row"> 
-                      <label>Địa chỉ:  <?php echo $db[1][1].', '. $db[1][3]; ?></label>
+                      <label>Địa chỉ:  <?php echo $db[2][1].', '. $db[2][3]; ?></label>
                     </div>
                     <div class="row">                           
                         <div class="col-md-10" style="color: red; font-weight: bold;">
@@ -107,6 +113,7 @@
                          <form method="post" action="?action=editnhanvien">
                         <table class="table table-bordered table-striped text-center">
                          <input type="hidden" name="billID" value="<?php echo $billID; ?>"/>
+                        
                          <input type="hidden" name="ngay" value="<?php echo $date; ?>"/>
                             <tr style="background-color:green; color: white; ">
                                 <td>STT</td>
@@ -115,9 +122,10 @@
                                 <td>Đơn vị</td>
                                 <td>Giá</td>
                                 <td>Giảm giá</td>
+                                <td>Phí Phụ Thu</td>
                                 <td>Thành tiền</td>
                             </tr>
-                            <?php $a=1; foreach($db[2] as $detail_item){ 
+                            <?php $a=1; foreach($db[1] as $detail_item){ 
                                 if($detail_item != null){?>
                             <tr>
                                 <td><?php echo $a++; ?></td>
@@ -142,6 +150,10 @@
                                     <?php  } ?>
                                    
                                 </td>
+                                <td style=" color: red; font-weight:bold">
+                                    <input type="text" name="phuthu<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[8]; ?>" />
+                                </td>
+                                 <input type="hidden" name="detailID" value="<?php echo $detail_item[0]; ?>"/>
                                 <input type="hidden" name="gia<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[6]; ?>" />
                                 <td><?php echo number_format($detail_item[3]); ?></td>
                             </tr>
@@ -149,8 +161,7 @@
                         </table>
                         <?php 
                         $shipper = '';
-                        ?>
-                        
+                        ?>                        
                         <div class="row">
                             <div class="col-md-3 text-right">
                                 <div class="row">
@@ -160,7 +171,7 @@
                                         if($db[0][6] == $employee[0]){
                                             $shipper = $employee[2];  
                                         ?>
-                                        <option value="<?php echo $employee[0]; ?>" selected><?php echo $employee[2]; ?></option>
+                                        <option value="<?php echo $employee[0]; ?>" selected/><?php echo $employee[2]; ?></option>
                                     <?php }
                                         else{
                                      ?>
@@ -179,7 +190,7 @@
                                 Chưa có shipper nào được phân công
                                 <?php
                                 }
-                                else{
+                                else{ 
                                 ?>
                                 Shipper đã được phân công :<b style="font-size: 120%; font-weight: bold;color: red;"><?php echo $shipper;?></b>
                                 <?php
@@ -191,23 +202,23 @@
                                 <a href="?action=inhoadon&billID=<?php echo $billID; ?>" class="btn btn-danger">In Hóa Đơn</a>
                             </div>
                         </div>
+                        
                     </div>
                     </form>
-                    </div>    
-                  </div>
-                </div>
+                  </div>    
               </div>
-            </td>
-        </tr>
-      <?php }
+            </div>
+          </div>
+      </div>
+      </div>
+    </td>            
+</tr>
+      <?php }}
       }
        ?>  
-   </div>
-        
-
 </table>
 
 <?php
-}
+}}
 	return ob_get_clean();
 ?>

@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 include_once('../config/bootload.php');
     $action = filter_input(INPUT_POST,'action');
     if($action == Null)
@@ -52,10 +52,8 @@ include_once('../config/bootload.php');
                 $user = new Users();
                 $user->editUsers($hoten,$email,$diachi,$sdt,$tenshop,$id);
                 header('Location:admin_controller.php?action=dsshop');
-            }
-            
-        }
-            
+            }            
+        }            
         break; 
 		case 'delete_user':
 		if(!isset($_GET['confirm'])){
@@ -105,7 +103,7 @@ include_once('../config/bootload.php');
                     $date = $ngay;
                     
                 }
-                //else
+//                //else
 //                {
 //                    $DSdonhang1 = $user->gethoadonAmin();
 //                    $DSdonhang = $DSdonhang1;
@@ -116,21 +114,35 @@ include_once('../config/bootload.php');
                 $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
                 $GLOBALS['template']['content'] = include_once $view;
                 include_once('../template/index.php');
+            
             }
             else
             {
                 header('Location:home_controller.php');
             }                    
         break;
+        //Edit nhan vien và phí phụ thu của khách hàng
         case 'editnhanvien':
-            if(isset($_POST['billID']) && isset($_POST['nhanvien']))
+            if(isset($_POST['billID']) && isset($_POST['nhanvien'])&&isset($_POST['detailID']))
             {
                 $id= $_POST['billID'];
                 $nhanvien= $_POST['nhanvien'];
+                $detailID = $_POST['detailID'];
                 $dt = date_create('');
-                $date = date_format($dt, 'Y-m-d');
-                $user = new Users();
-                $nhanvien = $user->editnhanvien($date, $nhanvien,$id);
+                $date = date_format($dt, 'Y-m-d');            
+                foreach($_POST as $detail_id=>$edit)
+                {
+                    if($detail_id != 'submit')
+                    {                      
+                        if(strpos($detail_id,'phuthu') === false )
+                        {
+                            $phuthu =$_POST['phuthu' . $detail_id];
+                            $user = new Users();
+                            $user->editnhanvien($date, $nhanvien,$phuthu,$detailID,$id); 
+                        }
+                    }
+                }
+               // print_r($_POST);
                 header('Location: ?action=donhang&BillID='. $id .'&chonngay='. $_POST['ngay']);
             }
             
@@ -197,18 +209,18 @@ include_once('../config/bootload.php');
         break;
         case 'doanhthungay':
             $user = new Users();
-            $DSdonhang = $user->getthongkengay();
-            
             if(isset($_POST['chonngay']))
-            {
-                $doanhthu = $DSdonhang;
+            {                
                 $date1 =  date_create($_POST['chonngay']);
                 $date = date_format($date1,'Y-m-d');
+                $DSdonhang = $user->getthongkengay($date);
+                $doanhthu = $DSdonhang;
             }
             else
             {
+                $DSdonhang1 = $user->getthongkengay();
                 $doanhthu = $DSdonhang;
-                $date=key($doanhthu);                
+                //$date=key($doanhthu);                
             } 
             $view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
@@ -271,19 +283,21 @@ include_once('../config/bootload.php');
                 $id = $_GET['billID'];
                 $user = new Users();                   
                 $thongtin = $user->getHDAdminByID($id) ;
-                
-                //$header = array('STT','Tên Hàng','ĐVT','SL','Đơn Giá','Thành Tiền');
-                //print_r($thongtin);             
-                //$in = $thongtin;
                 $header = array('STT','Tên Hàng','ĐVT','SL','Đơn Giá','Thành Tiền');
                 //print_r($thongtin);             
                 $in = $thongtin;
-                if(isset($in[$id][0][6]))
-                {
-                    if(strlen($in[$id][0][6]) >0)
-                    {
+                $header = array('STT','Tên Hàng','ĐVT','SL','Đơn Giá','Thành Tiền');
+                //print_r($thongtin);             
+                $in = $thongtin;
                     $flag = false;
+                        //print_r($billID);
+                        //print_r($in);
                         $ngay =$in[$id][0][3];
+                        //echo $time;
+                        //$chon = explode('-',$ngay);
+                        //$nam = $chon[0];
+                        //$thang = $chon[1];
+                        //$filename = "D:/donhang/".$nam.'/'.'Thang_'.$thang.'/'.$ngay.'/'.$ngay.'_'.$id.".xls";
                         $tem = date_create($ngay);
                         $ngay = date_format($tem, 'd-m-Y');
                         $filename = $ngay . '_' . $id . '.pdf';
@@ -331,7 +345,6 @@ include_once('../config/bootload.php');
                             //$pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
                             //$pdf->SetFont('DejaVu','B',12);
                             // Header
-                            //Chia độ rộng của một ô.
                             $w = array(5, 28, 10, 10, 17, 20);
                             for($i=0;$i<count($header);$i++)
                                 $pdf->Cell($w[$i],7,$header[$i],1,0,'C',true);
@@ -342,7 +355,8 @@ include_once('../config/bootload.php');
                             $i = 0;
                             $fill = false;
                             $tong = 0;
-                            foreach($in[$id][1] as $row){                                
+                           // print_r($in[$id][1][0][10]);
+                            foreach($in[$id][1] as $row){
                                 $pdf->Cell($w[0], 6, ++$i, 'LR', 0, 'C',$fill);
                                 $pdf->Cell($w[1], 6, $row[4], 'LR', 0, 'L', $fill);
                                 $pdf->Cell($w[2], 6, $row[5], 'LR', 0, 'C', $fill);
@@ -351,24 +365,51 @@ include_once('../config/bootload.php');
                                 $pdf->Cell($w[5], 6, number_format($row[3]), 'LR', 0, 'R', $fill);
                                 $tong += $row[3];
                                 $pdf->Ln();
-                                $fill = !$fill;
+                                $fill = !$fill;                                
                             }
                             if($in[$id][0][10]==1)
-                            {                                
-                                $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
-                                $pdf->Cell($w[1], 6, 'Phí Ship', 'LR', 0, 'L', $fill);
-                                $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
-                                $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
-                                $pdf->Cell($w[4], 6, '', 'LR', 0, 'C', $fill);
-                                $pdf->Cell($w[5], 6,  number_format($in[$id][0][8]),'LR', 0, 'R', $fill);
-                                $pdf->Ln();
-                                $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
-                                $pdf->Cell($w[1], 6, '', 'LR', 0, 'L', $fill);
-                                $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
-                                $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
-                                $pdf->Cell($w[4], 6, 'TỔNG CỘNG', 'LR', 0, 'C', $fill);
-                                $pdf->Cell($w[5], 6, number_format($tong+$in[$id][0][8]), 'LR', 0, 'R', $fill);
-                                $pdf->Ln();
+                            {   
+                                if($in[$id][1][0][10]==0)
+                                {
+                                    $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
+                                    $pdf->Cell($w[1], 6, 'Phí Ship', 'LR', 0, 'L', $fill);
+                                    $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[4], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[5], 6,  number_format($in[$id][0][8]),'LR', 0, 'R', $fill);
+                                    $pdf->Ln();
+                                    $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
+                                    $pdf->Cell($w[1], 6, '', 'LR', 0, 'L', $fill);
+                                    $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[4], 6, 'TỔNG CỘNG', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[5], 6, number_format($tong+$in[$id][0][8]), 'LR', 0, 'R', $fill);
+                                    $pdf->Ln();
+                                }
+                                else
+                                {
+                                    $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
+                                    $pdf->Cell($w[1], 6, 'Phí Ship', 'LR', 0, 'L', $fill);
+                                    $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[4], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[5], 6,  number_format($in[$id][0][8]),'LR', 0, 'R', $fill);
+                                    $pdf->Ln();
+                                    $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
+                                    $pdf->Cell($w[1], 6, 'Phí Phụ Thu', 'LR', 0, 'L', $fill);
+                                    $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[4], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[5], 6,  number_format($in[$id][1][0][10]),'LR', 0, 'R', $fill);
+                                    $pdf->Ln();
+                                    $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
+                                    $pdf->Cell($w[1], 6, '', 'LR', 0, 'L', $fill);
+                                    $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[4], 6, 'TỔNG CỘNG', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[5], 6, number_format($tong+$in[$id][0][8]+$in[$id][1][0][10]), 'LR', 0, 'R', $fill);
+                                    $pdf->Ln();
+                                }
                             }
                             else
                             {
@@ -380,8 +421,8 @@ include_once('../config/bootload.php');
                                 $pdf->Cell($w[5], 6, number_format($tong), 'LR', 0, 'R', $fill);
                                 $pdf->Ln();
                             }
-                            
-                            // Closing line
+                        
+                             //Closing line
                             $pdf->Cell(array_sum($w),0,'','T');
                            
                             $pdf->Ln();
@@ -394,24 +435,17 @@ include_once('../config/bootload.php');
                             $pdf->Ln();
                             $pdf->Output($filename, 'D');
                             
-                            //echo "Shipper: \t". chr(255).chr(254) . mb_convert_encoding($in[0][4] ,'UTF-16LE','UTF-8' )."\t"."ĐT: \t".$in[0][5]."\n";
+                           // echo "Shipper: \t". chr(255).chr(254) . mb_convert_encoding($in[0][4] ,'UTF-16LE','UTF-8' )."\t"."ÐT: \t".$in[0][5]."\n";
 //                            echo "Tên Khách Hàng: \t". $in[0][6]."\n";
-//                            echo "Địa Chỉ: \t". $in[0][2]."\t \t"."ĐT: \t".$in[0][7];
+//                            echo "Ð?a Ch?: \t". $in[0][2]."\t \t"."ÐT: \t".$in[0][7];
 //                            $temp = implode("\t", $ar);
 //                            echo chr(255).chr(254).mb_convert_encoding($temp ,'UTF-16BE','UTF-8' )."\r\n";
-               // $ar = array('STT','Tên Hàng','Đơn Vị','Số lượng','Đơn Giá','Thành Tiền');
-                //print_r($thongtin);   
-                //$data = "Some utf-8 characters d?a ch?";          
+//                $ar = array('STT','Tên Hàng','Ðon V?','S? lu?ng','Ðon Giá','Thành Ti?n');
+//                print_r($thongtin);   
+//                $data = "Some utf-8 characters d?a ch?";          
                         
-             } }}
-             else
-             {
-                echo('Cần Phải Phân Công Shipper Trước Khi In');
-                //echo $_SERVER['PHP_SELF'];
-               // header('Location:admin_controller.php?');
-             }   
+             }    
             }
         break;
-
-    }
+}
 ?>

@@ -18,19 +18,16 @@
                 $category = new Categories(); 
                 $dsCategories = $category->getDScategory($userid);
                 $product_model = new products();
-                //$dsProducts = $product_model->getProductByuserid($userid);     
-            }
-            if(isset($_GET['id']))
-            {
-                $id = $_GET['id'];
-                $product = new products();
+               // $dsProducts = $product_model->getProductByuserid($userid);     
+            
+            
                 $start = 0;
                 if(isset($_GET['start']))
                 {
                     $start= $_GET['start'];
                 }                
-                $rsProducts = $product_model->phantrang($id,$userid,$start);
-                $rsProductPage = $product_model->phantrang($id,$userid);
+                $rsProducts = $product_model->phantrangHome($userid,$start);
+                $rsProductPage = $product_model->phantrangHome($userid);
                 $pagination = Page::createPagination($rsProductPage);                
             }
             else

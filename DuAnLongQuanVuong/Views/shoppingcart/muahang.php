@@ -13,7 +13,7 @@
             });
             request.done(function(a){
                 tim = JSON.parse(a);               
-                $('#name').val(tim['ten']);
+                $('#hoten').val(tim['ten']);
                 $('#dc').val(tim['diachi']);
                 $('#quan').val(tim['quan']);
             });            
