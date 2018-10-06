@@ -6,7 +6,7 @@ ob_start();
     <div class="col-md-12 col-sm-12 col-xs-12">    
     <?php
         $i = 0;
-     foreach($rsProducts as $row){        
+    foreach($rsProducts as $row){        
         echo '
             <div class="col-md-3 col-sm-6" col-xs-6 style="padding:10px;">
             <div class="card" style="border: 1px solid silver;">

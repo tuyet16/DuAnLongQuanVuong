@@ -25,7 +25,7 @@
                 }
             }
         }
-        
+        //edit so lương hàng đã mua
         public function UpdateCart($masp,$soluong)
         {
             $_SESSION['cart'][$masp] = $soluong;
@@ -34,6 +34,7 @@
         {
             unset($_SESSION['cart'][$masp]);
         }
+        //hiển thị số lượng hàng trong giỏ hàng
         public function ViewCart()
         {
             $cart_object = array();
@@ -104,13 +105,14 @@
             $con = $this->getconnect();
             return $con->lastInsertId('billID');
         }
-        public function addDetails($prodcutID,$amount,$price,$billID)
+        public function addDetails($prodcutID,$amount,$price,$thanhtien,$billID)
         {
-            $query ='insert into detailsbills(productID,amount,price,billID) values(?,?,?,?)';
+            $query ='insert into detailsbills(productID,amount,price,thanhtien,billID) values(?,?,?,?,?)';
             $param = array();
             $param[] = $prodcutID;
             $param[] = $amount;
             $param[] = $price;
+            $param[] = $thanhtien;
             $param[] = $billID;
             $this->doQuery($query,$param);
         }

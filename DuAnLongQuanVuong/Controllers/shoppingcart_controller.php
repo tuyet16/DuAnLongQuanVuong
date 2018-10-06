@@ -102,8 +102,9 @@
                     {
                         $model_pr = new products();
                         $rsProducts = $model_pr->getByIDProduct($masp);
+                        $gia = $rsProducts[0]->price;
                         $thanhtien = $amount * $rsProducts[0]->price;
-                        $detail_id = $shopping_ml->addDetails($masp,$amount,$thanhtien,$bills_id);
+                        $detail_id = $shopping_ml->addDetails($masp,$amount,$gia,$thanhtien,$bills_id);
                     }
                     unset($_SESSION['cart']); 
                     header('Location: home_controller.php');                   

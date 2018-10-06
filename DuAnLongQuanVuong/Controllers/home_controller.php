@@ -12,7 +12,7 @@
     switch($action)
     {
         case 'index':			
-            $product_model = new products();
+             $product_model = new products();
             //$dsProducts = $product_model->getProduct();
             $category = new Categories();
             $dsCategories = $category->getCategories();
@@ -20,11 +20,11 @@
             {
                 $id = $_SESSION['userid'];
                 $rsCategories = $category->getDScategory($id);                  
-//            }  
+            }  
             //if(isset($_GET['id']))
 //            {
 //                $id = $_GET['id'];
-                $product = new products();
+//                $product = new products();
                 $start = 0;
                 if(isset($_GET['start']))
                 {
@@ -33,14 +33,13 @@
                 $rsProducts = $product_model->phantrangchu($start);
                 $rsProductPage = $product_model->phantrangchu();
                 $pagination = Page::createPagination($rsProductPage);             
-            }
+         //   }
             $view = Page::View();
-           
             $GLOBALS['template']['menu'] = include_once '../template/menu.php';
             $GLOBALS['template']['leftmenu'] = include_once '../template/leftmenu.php';
             $GLOBALS['template']['content'] = include_once $view;
             $GLOBALS['template']['footer'] = include_once'../template/footer.php';
-            include_once('../template/index.php');             
+            include_once('../template/index.php');          
         break;        
         case 'xemsanpham':          
             $category = new Categories(); 

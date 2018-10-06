@@ -10,6 +10,11 @@
             </p>
         </div>
     </form>
+    <?php if($DSdonhang ==null)
+    {
+        echo '<div class="text-center" style="font-size:140%;padding-top:10%;">Không có đơn hàng nào cần giao</div>';
+    } 
+    else{?>
     <table class="table table-bordered table-striped">
       <tr style="background-color:darkblue;color:#FFF">
         <td>&nbsp; STT</td>
@@ -26,8 +31,8 @@
         </td>
       </tr>  
         
-      <?php 
-        if($DSdonhang != null){
+      <?php
+       
       $i=1; foreach($DSdonhang[$date] as $nv){  
                 $tongtienhang =0;
                $tongship =0;

@@ -5,7 +5,7 @@ class Users extends Database{
     public function __construct() {
         parent::__construct();
         
-    }
+    }   
     public function getUser(){
         $query = 'SELECT * FROM users';
         $rs = $this->doQuery($query);
@@ -165,6 +165,7 @@ class Users extends Database{
     //In hóa Đơn
      public function getHDAdminByID($id)
     {
+        $tongphuthu=0;
         $donhangarr = array();
         $query ='select distinct us.fullname,us.address,
                         bi.billID,
@@ -205,9 +206,11 @@ class Users extends Database{
                                                         $bill->fullname,
                                                         $bill->address,
                                                         $detail->phuthu);
-                
-            }                        
+                $tongphuthu += $detail->phuthu;
+            }
+                $donhangarr[$bill->billID]['tongphuthu'] =$tongphuthu;           
         }
+              
         return $donhangarr;
     }
     public function gethoadonAmin($ngay=null)
@@ -276,7 +279,7 @@ class Users extends Database{
         }
         return $donhangarr;
     } 
-    public function editnhanvien($date, $idEm,$phuthu,$detailID,$id)
+    public function editnhanvien($date, $idEm,$phuthu,$id)
     {
         $query = 'update bills set setDate=?, idEm=? where billID=?';
         $param = array();
@@ -285,12 +288,13 @@ class Users extends Database{
         $param[] = $id;
         $this->doQuery($query,$param);
        //print_r($param);
-        
+       foreach($phuthu as $dtID=>$pt){
         $sql = 'update detailsbills set phuthu=? where detailID=?';
         $param = array();
-        $param[] = $phuthu;
-        $param[] = $detailID;
+        $param[] = $pt;
+        $param[] = $dtID;
         $this->doQuery($sql,$param);
+        }
         //print_r($param);
     } 
    
@@ -306,7 +310,7 @@ class Users extends Database{
         $rs = $this->doQuery($query,$param);
         return $rs;
     }
-    public function getTinhtrang($date='')
+    public function getTinhtrang($date=null)
     {
         $tinhtrangArr = array();
         
@@ -348,6 +352,10 @@ class Users extends Database{
     public function getthongkengay($ngay=null)
     {     
         $thongkeArr = array();
+        $tongship =0;
+        $tongluong =0;
+        $tongdoanhthu=0;
+        $tongphuthuall =0;
         if($ngay != null)
         {
             $query ='select distinct us.userid,us.fullname from bills bi,products pr, detailsbills dt ,users us
@@ -365,14 +373,9 @@ class Users extends Database{
             $param = array();
             $dtngay = $this->doQuery($query); 
         }
+           
         foreach($dtngay as $user)
-        {
-            $tongship =0;
-            $tongluong =0;
-            $tongdoanhthu=0;
-            $tongshipshop =0;
-            $tongluongshop =0;
-            $tongdoanhthushop=0;
+        {  
             $thongkeArr[$user->userid]['thongtinshop'][0]= $user->fullname;    
                            
             $sql = 'select distinct bi.*,cs.customerName,ep.employeeName
@@ -383,42 +386,50 @@ class Users extends Database{
             $param[] = $ngay;
             $param[] = $user->userid;
             $thongtin = $this->doQuery($sql,$param);
+            $tongdoanhthushop=0; 
+            $tongshipshop =0;
+            $tongphuthushop =0;
+            $i=1;
             foreach($thongtin as $tt)
             {                
-                $thongkeArr[$user->userid]['thongtinshop'][$tt->billID][0]= array($tt->billID,$tt->customerName,$tt->totalPrice,$tt->employeeName,
-                                        $tt->tinhtrang,$tt->phiship,$tt->luongnv,'tongphuthu'=>0);     
-                 $sql1 = 'select dt.detailID,dt.phuthu,dt.price from detailsbills dt, products pr, users us
+                $thongkeArr[$user->userid]['thongtinshop'][$i][0]= array($tt->billID,$tt->customerName,$tt->totalPrice,$tt->employeeName,
+                                        $tt->tinhtrang,$tt->phiship,$tt->luongnv,'tongphuthu'=>0,'tongtientungbill'=>0);     
+                 $sql1 = 'select dt.* from detailsbills dt, products pr, users us
                                  where dt.productID= pr.productID and us.userid = pr.userid and dt.billID=? and us.userid=?';
                  $param = array();
                  $param[] = $tt->billID;
                  $param[] = $user->userid;
                  $dt = $this->doQuery($sql1,$param);
-                 $tongphuthu=0;     
+                 $tongphuthu=0;                      
+                 $tongtientungbill=0;                        
                  foreach($dt as $detail)
                  {
-                    $thongkeArr[$user->userid]['thongtinshop'][$tt->billID][1][]=array($detail->detailID,$detail->phuthu,$detail->price);
+                    $thongkeArr[$user->userid]['thongtinshop'][$i][1][]=array($detail->detailID,$detail->phuthu,
+                                    $detail->price,$detail->amount,$detail->thanhtien);
                     $tongphuthu += $detail->phuthu;
-                    $tongtientungshop +=$detail->price;
-                 }      
-                 $thongkeArr[$user->userid]['thongtinshop'][$tt->billID][0]['tongphuthu']=$tongphuthu;
-                  $thongkeArr[$user->userid]['thongtinshop'][$tt->billID][0]['tongtientungshop']=$tongtientungshop;
-                if($tt->tinhtrang == 2)
+                    
+                    $tongtientungbill += $detail->price* $detail->amount;
+                    $tongdoanhthushop += $detail->thanhtien;  
+                    $tongphuthushop+= $detail->phuthu;
+                                
+                 } 
+                    //$tongdoanhthu += $tongdoanhthushop;  
+                 $thongkeArr[$user->userid]['thongtinshop'][$i][0]['tongphuthu']=$tongphuthu;
+                  $thongkeArr[$user->userid]['thongtinshop'][$i][0]['tongtientungbill']=$tongtientungbill;
+                  //$thongkeArr[$user->userid]['thongtinshop'][$i][0]['tongdoanhthushop']=$tongdoanhthushop;
+                  
+                  $i++;
+                 if($tt->tinhtrang == 2)
                 {
-                 $tongship += $tt->phiship;
+                 $tongshipshop += $tt->phiship;
                  $tongluong += $tt->luongnv;
-                 $tongdoanhthu += $tt->totalPrice;
-                }
-                $thongkeArr[$user->userid]['tongship']=$tongship;
-                $thongkeArr[$user->userid]['tongluong']= $tongluong;
-                $thongkeArr[$user->userid]['tongdoanhthu'] = $tongdoanhthu;
+                // $tongdoanhthu += $tongdoanhthushop;                               
                 
+                }         
                 
                 //tinh so hoa don da giao va chua giao
                 $tongchuagiao = 0;
-                $tongdagiao =0;
-                $tongchuagiaoshop = 0;
-                $tongdagiaoshop =0;
-                
+                $tongdagiao =0;                
                 //$tongcg = 'select count(tinhtrang) as chuagiao from bills where tinhtrang <> 2 and setDate=?';
 //                $param =array();
 //                $param[] =$ngay;
@@ -446,11 +457,24 @@ class Users extends Database{
                 $param[] =$user->userid;
                 $hd = $this->doQuery($tongcg,$param);
                 $tongchuagiao = $hd[0]->chuagiao;
-                $thongkeArr[$user->userid]['chuagiao'] = $tongchuagiao; 
+                //$thongkeArr[$user->userid]['chuagiao'] = $tongchuagiao; 
             }
             //số hóa đơn đã giao của từng shop
             
+                $thongkeArr[$user->userid]['tongdtshop']=$tongdoanhthushop;
+                 $thongkeArr[$user->userid]['tongshipshop']=$tongshipshop;
+                 $thongkeArr[$user->userid]['tongphuthushop']=$tongphuthushop;
+                $tongdoanhthu += $tongdoanhthushop;
+                $tongship += $tongshipshop;
+                $tongphuthuall += $tongphuthushop;
+                //$thongkeArr[$user->userid]['tongdoanhthushop']=$tongdoanhthushop;  
         }
+         $thongkeArr['tongdoanhthu'] = $tongdoanhthu;
+          $thongkeArr['tongship']=$tongship;
+          $thongkeArr['tongluong']= $tongluong;
+          $thongkeArr['tongphuthuall']= $tongphuthuall;
+          //$thongkeArr['dagiao'] = $tongdagiao;
+         // $thongkeArr['chuagiao'] = $tongchuagiao;
         return $thongkeArr;
     } 
     //thong kê doanh thu hàng tháng

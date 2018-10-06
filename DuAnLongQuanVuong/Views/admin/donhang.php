@@ -89,28 +89,28 @@
              <?php
              }
              ?>
-                  <div class="card-body">
-                    <div class="container-fluid">
-                    <div class="row">                       
-                       <label>Số điện thoại: <?php echo $db[2][2]; ?></label>
-                     </div>
-                     <div class="row"> 
-                      <label>Địa chỉ:  <?php echo $db[2][1].', '. $db[2][3]; ?></label>
+              <div class="card-body">
+                <div class="container-fluid">
+                <div class="row">                       
+                   <label>Số điện thoại: <?php echo $db[2][2]; ?></label>
+                 </div>
+                 <div class="row"> 
+                  <label>Địa chỉ:  <?php echo $db[2][1].', '. $db[2][3]; ?></label>
+                </div>
+                <div class="row">                           
+                    <div class="col-md-10" style="color: red; font-weight: bold;">
+                    <?php if($db[0][7]==1)
+                        {
+                            echo 'Người Thanh Toán Phí Ship: Khách Hàng ';
+                        }
+                        ?>
                     </div>
-                    <div class="row">                           
-                        <div class="col-md-10" style="color: red; font-weight: bold;">
-                            <?php if($db[0][7]==1)
-                                {
-                                    echo 'Người Thanh Toán Phí Ship: Khách Hàng ';
-                                }
-                                ?>
-                        </div>
-                        </div>
+                </div>
                     <?php if(isset($_POST['nhanvien'])){
                         $select = $_POST['nhanvien'];
                     } ?>
                     <div class="row">
-                         <form method="post" action="?action=editnhanvien">
+                        <form method="post" action="?action=editnhanvien">
                         <table class="table table-bordered table-striped text-center">
                          <input type="hidden" name="billID" value="<?php echo $billID; ?>"/>
                         
@@ -198,21 +198,25 @@
                                 ?>
                             </div>
                             <div class="col-md-4 text-right">
+                            <?php if($db[0][4] !=2){ ?>
                                 <button type="submit" name="submit" class="btn btn-success">Cập nhật</button>
+                            <?php }
+                            else echo ''; ?>
                                 <a href="?action=inhoadon&billID=<?php echo $billID; ?>" class="btn btn-danger">In Hóa Đơn</a>
                             </div>
                         </div>
-                        
-                    </div>
-                    </form>
+                      </form>  
+                    </div>                    
                   </div>    
               </div>
+              
             </div>
           </div>
       </div>
       </div>
     </td>            
 </tr>
+</div>
       <?php }}
       }
        ?>  
