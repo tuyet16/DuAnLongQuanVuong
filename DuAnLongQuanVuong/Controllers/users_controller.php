@@ -196,9 +196,9 @@ include_once('../Libs/messagebox_lib.php');
                 $dt = date_create($_GET['date']);
                 $date = date_format($dt, 'Y-m-d');
                 header('Location: ?action=donhang&date=' . $date);
-            }
-            
+            }            
         break;
+        
     }
 
 ?>

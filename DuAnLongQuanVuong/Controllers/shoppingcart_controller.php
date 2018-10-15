@@ -24,14 +24,17 @@
         break;
         case 'viewcart':
             $category = new Categories();
+            
             $dsCategories = $category->getCategories();
             if(isset($_SESSION['userid']))
             {
                 $id = $_SESSION['userid'];
-                $rsCategories = $category->getDScategory($id);                  
+                $rsCategories = $category->getDScategory($id);                
             }  
-            $view = Page::View();
             $shoppingcart = new ShoppingCart();
+            
+            $view = Page::View();
+            
             $rsCart = $shoppingcart->ViewCart();
             $tongtien = $shoppingcart->getTotal();
             $category = new Categories();
@@ -66,10 +69,14 @@
             header('Location: shoppingcart_controller.php?action=viewcart');            
         break;
         case 'muahang':
+            $quan = $_POST['quan'];
+            $giaohang= $_POST['giaohang'];
             $view = Page::View();
             $dt_model = new districts();
             $DSdistrict = $dt_model->getDistrict();
             $shoppingcart = new ShoppingCart();
+            
+            $ship = $shoppingcart->tinhphidichvu($quan,$giaohang);
             $rsCart = $shoppingcart->ViewCart();
             $tongtien = $shoppingcart->getTotal();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
@@ -104,7 +111,7 @@
                         $rsProducts = $model_pr->getByIDProduct($masp);
                         $gia = $rsProducts[0]->price;
                         $thanhtien = $amount * $rsProducts[0]->price;
-                        $detail_id = $shopping_ml->addDetails($masp,$amount,$gia,$thanhtien,$bills_id);
+                        $detail_id = $shopping_ml->addDetails($masp,$amount,$gia,$thanhtien,$ship,$bills_id);
                     }
                     unset($_SESSION['cart']); 
                     header('Location: home_controller.php');                   

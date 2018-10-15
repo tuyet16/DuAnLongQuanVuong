@@ -106,6 +106,7 @@ $().ready(function() {
                 <td>Số lượng</td>
                 <td>Giá Thành</td>
                 <td>Thành Tiền</td>
+                <td>Phí Ship</td>
                 <td></td>
             </tr>
             <?php foreach($rsCart as $row){ ?>            
@@ -118,6 +119,7 @@ $().ready(function() {
                 </td>
                 <td><label><?php echo $row['soluong']; ?></label></td>
                 <td><?php echo number_format($row['gia']); ?></td>
+                <td><?php echo number_format($row['thanhtien']); ?></td>
                 <td><?php echo number_format($row['thanhtien']); ?></td>
                 
             </tr>

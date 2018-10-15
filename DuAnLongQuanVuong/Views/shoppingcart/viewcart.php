@@ -2,7 +2,7 @@
 ?>
     <fieldset>
         <legend><img src="../Views/img/cart.png" width="12%"/><b style="color: red;">GIỎ HÀNG</b></legend>
-        <h5>Bán từ Shop: Long Quân</h5>
+        <!--<h5>Bán từ Shop: Long Quân</h5>-->
         <form method="post" action="?action=updatecart">
         <table class="table table-hover">
             <tr>
@@ -10,6 +10,7 @@
                 <td>Số lượng</td>
                 <td>Giá Thành</td>
                 <td>Thành Tiền</td>
+                <td>Phí Ship</td>
                 <td></td>
             </tr>
             <?php foreach($rsCart as $row){ ?>            

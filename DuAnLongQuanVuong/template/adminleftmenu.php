@@ -12,7 +12,10 @@
         <div class="list-group-item list-group-item-action"><a href="../Controllers/services_controller.php">DỊCH VỤ</a></div>
         <div class="list-group-item list-group-item-action"><a href="../Controllers/districts_controller.php">QUẬN</a></div>
         <div class="list-group-item list-group-item-action"><a href="../Controllers/areas_controller.php">KHU VỰC</a></div>  
-        <div class="list-group-item list-group-item-action"><a href="../Controllers/units_controller.php">ĐƠN VỊ</a></div>        
+        <div class="list-group-item list-group-item-action"><a href="../Controllers/units_controller.php">ĐƠN VỊ</a></div> 
+         <div class="list-group-item list-group-item-action"><a href="../Controllers/admin_controller.php?action=doihinh">THAY ĐỔI QUẢNG CÁO</a></div>';
+       
+                 
 
     </div>
     <div class="list-group" style="padding-top: 3%;">

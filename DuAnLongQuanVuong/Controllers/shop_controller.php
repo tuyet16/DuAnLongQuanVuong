@@ -34,26 +34,6 @@
             {
                 header('Location:home_controller.php');
             } 
-//            if(isset($_SESSION['userid']))
-//            {
-//                $userid = $_SESSION['userid'];
-//                $category = new Categories(); 
-//                $dsCategories = $category->getDScategory($userid);
-//                $product = new products();
-//                $dsProducts = $product->getProductByuserid($userid);
-//                $start = 0;
-//                if(isset($_GET['start']))
-//                {
-//                    $start= $_GET['start'];
-//                }                
-//                $rsProducts = $product->phantrangHome($userid,$start);
-//                $rsProductPage = $product->phantrangHome($userid);
-//                $pagination = Page::createPagination($rsProductPage);
-//            }
-//            else
-//            {
-//                header('Location:home_controller.php');
-//            }           
             $view = Page::View();
             $GLOBALS['template']['menu'] = include_once '../template/menu.php';
             $GLOBALS['template']['leftmenu'] = include_once '../template/shopleftmenu.php';

@@ -2,42 +2,63 @@
 ob_start(); //Bien luu = chuoi
 ?>
 
-<div class="row" style="background-color:#AAD5FF ;">   
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-  <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-      </ol>
-    
-      <!-- Wrapper for slides -->
-      <div class="carousel-inner">
-        <div class="item active">
-          <img src="../Views/images/cr5.jpg" width="100%" alt="Los Angeles"/>
+<div class="row" style="margin-top: 60px;height: 100%;">
+    <div class="col-md-8">
+        <div class="row" style="background-color:#AAD5FF ;">   
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+              <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+              </ol>
+            
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner">
+               <div class="item active" style="height: 225px;"><img src="../Views/img/Fe1.jpg" /></div>
+                <?php // print_r($rsvitriquangcao1); 
+                $im=$rsvitriquangcao1[0][2];
+                foreach($rsvitriquangcao1 as $vt1)
+                {
+                    print_r($vt1);
+                    if($vt[2]==1)
+                    {
+                        echo '
+                        <div class="item active" style="height:225px;">
+                            <img src="../Views/img/'.$vt1->hinh1.'" width="100%" height="225px" /></div>';
+                    }
+                    else
+                    {
+                    echo '
+                        <div class="item" style="height:225px;">
+                            <img src="../Views/img/'.$vt1->hinh1.'" width="100%" height="225px" /></div>';
+                    }
+                } $im++;?>
+                  
+              </div>    
+              <!-- Left and right controls -->
+              <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+            </div>
         </div>
-    
-        <div class="item">
-          <img src="../Views/images/cr4.jpg" width="100%" alt="Chicago"/>
-        </div>    
-       
-      </div>    
-      <!-- Left and right controls -->
-      <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="right carousel-control" href="#myCarousel" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-        <span class="sr-only">Next</span>
-      </a>
     </div>
+    <div class="col-md-4" style="padding: 0; margin:0;">
+    
+        <img src="../Views/img/<?php echo $rsvitriqc2[0]->hinh1; ?>" width="100%" height="225px"/>
     </div>
 </div>
+
 <!--Menu -->
 <div class="row">
-    <div class="col-md-12 col-sm-12 ">
+    <div class="col-md-12 col-sm-12" >
     <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: darkblue;color: yellow;border: 1px solid darkblue;">
         <div class="col-md-1.1 col-sm-2 col-xs-4.5 navbar-header" >
            <a class="navbar-brand" href="home_controller.php" style="color: white;">Trang Chủ</a>         

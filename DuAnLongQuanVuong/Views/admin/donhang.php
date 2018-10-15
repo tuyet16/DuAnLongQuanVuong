@@ -198,11 +198,18 @@
                                 ?>
                             </div>
                             <div class="col-md-4 text-right">
-                            <?php if($db[0][4] !=2){ ?>
+                            <?php //if($db[0][4] !=2){ ?>
                                 <button type="submit" name="submit" class="btn btn-success">Cập nhật</button>
-                            <?php }
-                            else echo ''; ?>
+                            <?php //}
+                            //else echo ''; 
+                            if($db[0][6]==0)
+                            {
+                                echo 'Vui lòng chọn người giao hàng';
+                            }
+                            else
+                            {?>
                                 <a href="?action=inhoadon&billID=<?php echo $billID; ?>" class="btn btn-danger">In Hóa Đơn</a>
+                                <?php } ?>
                             </div>
                         </div>
                       </form>  

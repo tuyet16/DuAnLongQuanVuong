@@ -135,7 +135,7 @@
                 <td><?php echo $i++;?></td>
                 <td><?php echo $dthu[0][0]; ?></td>
                 <td><?php echo $dthu[0][1]; ?></td>
-                <td><?php echo $dthu[0]['tongtientungshop']; ?></td>
+                <td><?php echo $dthu[0]['tongtientungbill']; ?></td>
                 <td><?php echo $dthu[0][3]; ?></td>
                 <td><?php echo $dthu[0][5]; ?></td>
             </tr>

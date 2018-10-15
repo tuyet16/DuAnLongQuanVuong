@@ -87,7 +87,8 @@ class Users extends Database{
             $param[]=$bill->customerID;
             $cs = $this->doQuery($sql,$param);
             $donhangarr[$bill->PurchaseDate][$bill->billID][1] = array($cs[0]->customerName
-                                ,$cs[0]->address,$cs[0]->phone,$cs[0]->districtName);            
+                                ,$cs[0]->address,$cs[0]->phone,$cs[0]->districtName);
+                         
             $sql1 = 'select dt.*,pr.productName, pr.unitID,un.unitName,pr.price as gia from detailsbills dt,products pr,units un             
                                 where dt.productID=pr.productID and pr.unitID=un.unitID 
                                         and dt.billID=? and pr.userid=?';
@@ -166,6 +167,7 @@ class Users extends Database{
      public function getHDAdminByID($id)
     {
         $tongphuthu=0;
+         $shipshop=0;
         $donhangarr = array();
         $query ='select distinct us.fullname,us.address,
                         bi.billID,
@@ -173,6 +175,7 @@ class Users extends Database{
                         bi.billingAddress,
                         bi.phiship,
                         bi.nguoitraship,
+                        bi.idEm,
                         bi.totalPrice,ep.employeeName,
                     ep.phone as sdtNV,cs.customerName,cs.phone as sdtkh,
                     dt.productID 
@@ -183,10 +186,11 @@ class Users extends Database{
         $param = array();
         $param[] = $id;
         $rs = $this->doQuery($query,$param);
+       
         foreach($rs as $bill)
         {
             $donhangarr[$bill->billID][0]= array($bill->fullname,$bill->address,$bill->billingAddress,$bill->setDate,$bill->employeeName
-                           ,$bill->sdtNV,$bill->customerName,$bill->sdtkh,$bill->phiship,$bill->totalPrice,$bill->nguoitraship);
+                           ,$bill->sdtNV,$bill->customerName,$bill->sdtkh,$bill->phiship,$bill->totalPrice,$bill->nguoitraship,$bill->idEm);
             $sql1 = 'select dt.*,pr.productName, pr.unitID,un.unitName,pr.price as gia from detailsbills dt,products pr,units un             
                                 where dt.productID=pr.productID and pr.unitID=un.unitID and dt.billID=? and dt.ProductID=?';
             $param = array();
@@ -205,10 +209,13 @@ class Users extends Database{
                                                         $detail->discount,
                                                         $bill->fullname,
                                                         $bill->address,
-                                                        $detail->phuthu);
+                                                        $detail->phuthu,
+                                                        $detail->phishipshop);
                 $tongphuthu += $detail->phuthu;
+                $shipshop += $detail->phishipshop;
             }
-                $donhangarr[$bill->billID]['tongphuthu'] =$tongphuthu;           
+                $donhangarr[$bill->billID]['tongphuthu'] =$tongphuthu;   
+                $donhangarr[$bill->billID]['shipshop'] =$shipshop;        
         }
               
         return $donhangarr;
@@ -407,19 +414,20 @@ class Users extends Database{
                     $thongkeArr[$user->userid]['thongtinshop'][$i][1][]=array($detail->detailID,$detail->phuthu,
                                     $detail->price,$detail->amount,$detail->thanhtien);
                     $tongphuthu += $detail->phuthu;
-                    
+                   if($tt->tinhtrang == 2)
+                    { 
                     $tongtientungbill += $detail->price* $detail->amount;
                     $tongdoanhthushop += $detail->thanhtien;  
                     $tongphuthushop+= $detail->phuthu;
+                    }
                                 
-                 } 
-                    //$tongdoanhthu += $tongdoanhthushop;  
+                 }   
                  $thongkeArr[$user->userid]['thongtinshop'][$i][0]['tongphuthu']=$tongphuthu;
                   $thongkeArr[$user->userid]['thongtinshop'][$i][0]['tongtientungbill']=$tongtientungbill;
                   //$thongkeArr[$user->userid]['thongtinshop'][$i][0]['tongdoanhthushop']=$tongdoanhthushop;
                   
                   $i++;
-                 if($tt->tinhtrang == 2)
+                if($tt->tinhtrang == 2)
                 {
                  $tongshipshop += $tt->phiship;
                  $tongluong += $tt->luongnv;
@@ -623,6 +631,54 @@ class Users extends Database{
                 $thongkenamArr['luongnamchuagiao'] = $hdcdg->tongluonngnv;
             }      
         return $thongkenamArr;
+    }
+    //đổi hình ảnh panel
+    public function doihinhpanel($hinh,$vitri,$id)
+    {
+        $query = 'update hinhanh set hinh1=?, vitri=? where hinhID=?';
+        $param = array();
+        $param[] = $hinh;
+        $param[] = $vitri;
+        $param[] = $id;
+        $rs = $this->doQuery($query, $param);
+        return $rs;
+    }
+    public function addhinhanh($hinh,$vitri,$ngay)
+    {
+        $query = 'insert into hinhanh(hinh1,vitri,ngay) values(?,?,?)';
+        $param = array();
+        $param[] = $hinh;
+        $param[] = $vitri;
+        $param[] = $ngay;
+        $rs = $this->doQuery($query, $param);
+        return $rs;
+    }
+    public function hinhdoi()
+    {
+        $query = 'select * from hinhanh order by hinhID';
+        $param = array();
+        $rs = $this->doQuery($query);
+        return $rs;
+    }
+    public function doiquangcao($id)
+    {
+        $query = 'select * from hinhanh where hinhID=?';
+        $param = array();
+        $param[] =$id;
+        $rs = $this->doQuery($query,$param);
+        return $rs;
+    }
+    public function carosoulpanel()
+    {
+        $query ="select * from hinhanh where vitri=1 order by hinhID limit 0,3 ";
+        $rs = $this->doQuery($query);
+        return $rs;
+    }
+    public function carosoulpane2()
+    {
+        $query ="select * from hinhanh where vitri=2 order by hinhID limit 0,1 ";
+        $rs = $this->doQuery($query);
+        return $rs;
     }
     
 }
