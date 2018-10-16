@@ -11,7 +11,10 @@
     }
     switch($action)
     {
-        case 'index':             
+        case 'index':   
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();          
             if(isset($_SESSION['userid']))
             {
                 $userid = $_SESSION['userid'];                
@@ -42,6 +45,9 @@
             include_once('../template/index.php');           
         break;
         case 'xemsanpham':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
             if(isset($_SESSION['userid']))
             {
                 $userid = $_SESSION['userid'];
@@ -70,6 +76,9 @@
             include_once('../template/index.php');           
         break;
         case 'dangnhap':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
 			$tableDB = new Database();
             $tables = $tableDB->getTables();
             $view = Page::View();
@@ -80,6 +89,9 @@
             include_once('../template/index.php');
         break;
         case 'suasanpham':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
             if(isset($_SESSION['userid']))
             {
                 $userid = $_SESSION['userid'];
@@ -94,6 +106,9 @@
             include_once('../template/index.php');
             break;
          case 'themsanpham':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
             $tableDB = new Database();
             $tables = $tableDB->getTables();
             $view = Page::View();
@@ -104,6 +119,9 @@
             include_once('../template/index.php');
             break;
          case 'donhang':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
             $tableDB = new Database();
             $tables = $tableDB->getTables();
             $view = Page::View();
@@ -115,6 +133,9 @@
             break;
          
             case 'doanhthu':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();            
             $tableDB = new Database();
             $tables = $tableDB->getTables();
             $view = Page::View();

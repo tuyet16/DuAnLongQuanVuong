@@ -18,11 +18,11 @@ ob_start(); //Bien luu = chuoi
               <div class="carousel-inner">
                <div class="item active" style="height: 225px;"><img src="../Views/img/Fe1.jpg" /></div>
                 <?php // print_r($rsvitriquangcao1); 
-                $im=$rsvitriquangcao1[0][2];
+                 //print_r($rsvitriquangcao1[0]);
                 foreach($rsvitriquangcao1 as $vt1)
                 {
-                    print_r($vt1);
-                    if($vt[2]==1)
+                    //print_r($vt1);
+                    if($vt1=='hinhID')
                     {
                         echo '
                         <div class="item active" style="height:225px;">
@@ -34,7 +34,7 @@ ob_start(); //Bien luu = chuoi
                         <div class="item" style="height:225px;">
                             <img src="../Views/img/'.$vt1->hinh1.'" width="100%" height="225px" /></div>';
                     }
-                } $im++;?>
+                } //$im++;?>
                   
               </div>    
               <!-- Left and right controls -->

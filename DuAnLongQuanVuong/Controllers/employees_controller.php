@@ -13,6 +13,9 @@
 	switch($action){
 		case 'index':
 		{
+            $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
 			$tableDB = new Database();
             $tables = $tableDB->getTables();
 			$dsEmployees=$model->getEmployees();
@@ -24,7 +27,10 @@
 			break;	
 		}
 		case 'add_employee':
-		{					
+		{	
+            $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
 			$manv = $_POST['manv'];
 			$tennv=$_POST['tennv'];
 			$dc = $_POST['diachi'];
@@ -36,6 +42,9 @@
 			break;
 		}
         case 'bangluong':
+            $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
 			$tableDB = new Database();
             $tables = $tableDB->getTables();
 			$view = Page::View();
@@ -46,27 +55,30 @@
 		break;
 		case 'edit_employee':
 		{
-				$name = filter_input(INPUT_POST, 'idem');
-				if($name == NULL)
-				{
-					try{
-						$view = Page::View();
-						if(file_exists($view) == false)
-							throw new MVCException('Tập tin không tồn tại' . $view);
-						else
-						{
-							$tablesDB = new Database();
-							$tables = $tablesDB->getTables();
-							$dsEmployees=$model->getEmployees();
-							$EmployeeByID = $model->getEmployeeByID($_GET['id']);
-							$GLOBALS['template']['menu'] = include_once '../template/menu.php';
-							$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
-							$GLOBALS['template']['content'] = include_once $view;
-							$GLOBALS['template']['title'] = 'Sửa thông tin nhân viên';
-							include_once '../template/index.php';
-						}
+		   $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
+			$name = filter_input(INPUT_POST, 'idem');
+			if($name == NULL)
+			{
+				try{
+					$view = Page::View();
+					if(file_exists($view) == false)
+						throw new MVCException('Tập tin không tồn tại' . $view);
+					else
+					{
+						$tablesDB = new Database();
+						$tables = $tablesDB->getTables();
+						$dsEmployees=$model->getEmployees();
+						$EmployeeByID = $model->getEmployeeByID($_GET['id']);
+						$GLOBALS['template']['menu'] = include_once '../template/menu.php';
+						$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+						$GLOBALS['template']['content'] = include_once $view;
+						$GLOBALS['template']['title'] = 'Sửa thông tin nhân viên';
+						include_once '../template/index.php';
 					}
-					catch(MVCException $e){	}
+				}
+				catch(MVCException $e){	}
 				}
 				else
 				{
@@ -93,6 +105,9 @@
 		}
 		case "delete_employee":
 		{
+		   $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
 			if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){
 					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);

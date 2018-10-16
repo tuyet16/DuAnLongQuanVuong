@@ -12,6 +12,9 @@
     $areas = new Areas();
 	switch($action){
 		case 'index':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
             $dt_model = new districts();
             $DSdistrict = $dt_model->getDistrict();
 			$tableDB = new Database();
@@ -24,6 +27,9 @@
             include_once('../template/index.php');
 		break;	
         case 'add':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
 			$GLOBALS['template']['menu'] = include_once '../template/menu.php';
 			$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
 			$GLOBALS['template']['content'] = include_once $view;
@@ -33,7 +39,11 @@
             header('Location:districts_controller.php');
         break;
         case "edit":
-		{	$name = filter_input(INPUT_POST, 'tenquan');
+		{	
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
+            $name = filter_input(INPUT_POST, 'tenquan');
 			if($name==NULL){
 				try{
 					$tablesDB = new Database();
@@ -71,6 +81,9 @@
 		break;
 	}
     case 'delete':
+         $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
         if(isset($_GET['id']))
         {
             $id = $_GET['id'];

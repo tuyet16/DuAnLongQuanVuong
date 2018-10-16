@@ -14,6 +14,8 @@ include_once('../Libs/messagebox_lib.php');
     {
         case 'index':
     	$user = new Users();
+        $rsvitriquangcao1 = $user->carosoulpanel();
+        $rsvitriqc2 = $user->carosoulpane2();
         $dsuser = $user->getUser();
 		$view = Page::View();
         $GLOBALS['template']['menu'] = include_once'../template/menu.php';
@@ -63,6 +65,7 @@ include_once('../Libs/messagebox_lib.php');
             header('Location: home_controller.php');
         break;        
         case 'dangky':
+        
             $hoten = $_POST['username'];
             $email = $_POST['email'];
             $tenshop = $_POST['tenshop'];
@@ -75,6 +78,9 @@ include_once('../Libs/messagebox_lib.php');
            header('Location:admin_controller.php');
         break;
 		case 'changepass':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
 			$view = Page::View();
 				if(isset($_SESSION['userid'])){
 					$id = $_SESSION['userid'];
@@ -104,6 +110,9 @@ include_once('../Libs/messagebox_lib.php');
                 include_once('../template/index.php');
 		break;
         case 'donhang':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
             $product_model = new products();
             $dsProducts = $product_model->getProduct();
             if(isset($_SESSION['userid']))
@@ -148,6 +157,9 @@ include_once('../Libs/messagebox_lib.php');
             }                    
         break;
         case 'shopedit':
+            $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
             if(isset($_POST['submit']))
             {
                 print_r($_POST);
@@ -166,7 +178,7 @@ include_once('../Libs/messagebox_lib.php');
                             $user = new Users();
                             $user->editDetailPriceByID($_POST[$detail_id],$tong,$_POST['giamgia'.$detail_id],$_POST['nguoitraship'],$detail_id,$billID);
                             $tongtien += $tong;
-                            $tong=1;                   
+                            $tong=1;                    
                             }        
                         }
                     }
@@ -180,16 +192,21 @@ include_once('../Libs/messagebox_lib.php');
             }
         break;
         case 'guidonhang':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
             $guidonhang =0;
             if(isset($_GET['detail_id']))
             {
                 $id= $_GET['detail_id'];
-                $user = new Users();
                 $guidonhang = $user->guidonhang($id);
             }
             header('Location:?action=donhang');
         break;
         case 'xoasanpham':
+            $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
             if(isset($_GET['detailID'])){
                 $user = new Users();
                 $user->deleteDetailID($_GET['detailID']);

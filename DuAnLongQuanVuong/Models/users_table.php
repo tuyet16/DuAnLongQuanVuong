@@ -434,17 +434,9 @@ class Users extends Database{
                 // $tongdoanhthu += $tongdoanhthushop;                               
                 
                 }         
-                
                 //tinh so hoa don da giao va chua giao
                 $tongchuagiao = 0;
-                $tongdagiao =0;                
-                //$tongcg = 'select count(tinhtrang) as chuagiao from bills where tinhtrang <> 2 and setDate=?';
-//                $param =array();
-//                $param[] =$ngay;
-//                $hd = $this->doQuery($tongcg,$param);
-//                $tongchuagiao = $hd[0]->chuagiao;
-//                $thongkeArr[$user->userid]['chuagiao'] = $tongchuagiao;
-                
+                $tongdagiao =0;                                
                 $tongdg = 'select count(bi.tinhtrang) as dagiao
                         from bills bi, customers cs, employees ep, detailsbills dt, products pr, users us
                         where bi.customerID = cs.customerID and bi.idEm = ep.idEm and dt.billID = bi.billID and 
@@ -670,7 +662,7 @@ class Users extends Database{
     }
     public function carosoulpanel()
     {
-        $query ="select * from hinhanh where vitri=1 order by hinhID limit 0,3 ";
+        $query ="select * from hinhanh where vitri= 1 order by hinhID limit 0,3 ";
         $rs = $this->doQuery($query);
         return $rs;
     }

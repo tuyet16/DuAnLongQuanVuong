@@ -12,6 +12,9 @@
     switch($action)
     {
         case 'add':
+         $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
             if(isset($_GET['id']))
             {
                 $masp = $_GET['id'];
@@ -23,6 +26,9 @@
             }
         break;
         case 'viewcart':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
             $category = new Categories();
             
             $dsCategories = $category->getCategories();
@@ -47,6 +53,9 @@
             
         break;
         case 'updatecart':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
             $shopcart = new ShoppingCart();
             $_SESSION['sosl'] = $shopcart->getTongsl();
             if(isset($_POST['submit'])){
@@ -59,6 +68,9 @@
             header('Location: shoppingcart_controller.php?action=viewcart');
         break;
         case 'deletecart':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
             if(isset($_GET['id']))
             {
                 $masp = $_GET['id'];
@@ -69,6 +81,9 @@
             header('Location: shoppingcart_controller.php?action=viewcart');            
         break;
         case 'muahang':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
             $quan = $_POST['quan'];
             $giaohang= $_POST['giaohang'];
             $view = Page::View();
@@ -84,6 +99,9 @@
             include_once('../template/index.php');
         break;
         case 'dathang':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
             $hoten = $_POST['hoten'];
             $dienthoai = $_POST['dienthoai'];
             $quan = $_POST['quan'];
@@ -123,6 +141,9 @@
             } 
         break;
         case "timkiem":
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsvitriqc2 = $user->carosoulpane2();
                 $shopcarts = new ShoppingCart();
                 $tk = $shopcarts->timkiem($_POST['sdt']);
                 if($tk !=null)
