@@ -1,8 +1,38 @@
  <?php
 ob_start(); //Bien luu = chuoi
 ?>
+<!--Script run carousel-->
+<script>
+	$(document).ready(function() {
+ 
+  $(".owl-carousel").owlCarousel({
+	loop:true,
+	margin:10,
+	autoplay:true,
+	autoplayTimeout:1000,
+	autoplayHoverPause:true,
+	autoPlay: 3000, //Set AutoPlay to 3 seconds
+ 
+  });
+ 
+});
+</script>
+<div id="demo" >
+        <div class="container">
+          <div class="row" style="margin-top:80px">
+              <div id="owl-demo" class="owl-carousel" style="display:inherit">
+                <?php foreach($rsvitriquangcao1 as $vt1)
+                	{	echo '<div style="width: auto;">
+								<img src="../Views/img/'.$vt1->hinh1.'" alt="Owl Image"></div>';
+                
+					}
+				?>
+              </div
+          </div>
+        </div>
 
-<div class="row" style="margin-top: 60px;height: 100%;">
+    </div>
+<?php /*?><div class="row" style="margin-top:auto ;height: 100%;">
     <div class="col-md-8">
         <div class="row" style="background-color:#AAD5FF ;">   
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -16,13 +46,21 @@ ob_start(); //Bien luu = chuoi
             
               <!-- Wrapper for slides -->
               <div class="carousel-inner">
-               <div class="item active" style="height: 225px;"><img src="../Views/img/Fe1.jpg" /></div>
+               <div class="item active"><img src="../Views/img/Fe1.jpg" /></div>
                 <?php // print_r($rsvitriquangcao1); 
+<<<<<<< HEAD
                  //print_r($rsvitriquangcao1[0]);
                 foreach($rsvitriquangcao1 as $vt1)
                 {
                     //print_r($vt1);
                     if($vt1=='hinhID')
+=======
+               // $im=$rsvitriquangcao1[0][2];
+                foreach($rsvitriquangcao1 as $vt1)
+                {
+                    //print_r($vt1);
+                    if($vt1=="hinhID")
+>>>>>>> 6422e3275b9b0719c496e54ee391bc4c8f2001f3
                     {
                         echo '
                         <div class="item active" style="height:225px;">
@@ -34,7 +72,11 @@ ob_start(); //Bien luu = chuoi
                         <div class="item" style="height:225px;">
                             <img src="../Views/img/'.$vt1->hinh1.'" width="100%" height="225px" /></div>';
                     }
+<<<<<<< HEAD
                 } //$im++;?>
+=======
+                } ?>
+>>>>>>> 6422e3275b9b0719c496e54ee391bc4c8f2001f3
                   
               </div>    
               <!-- Left and right controls -->
@@ -54,16 +96,30 @@ ob_start(); //Bien luu = chuoi
     
         <img src="../Views/img/<?php echo $rsvitriqc2[0]->hinh1; ?>" width="100%" height="225px"/>
     </div>
-</div>
-
+</div><?php */?>
 <!--Menu -->
 <div class="row">
-    <div class="col-md-12 col-sm-12" >
+    <div class="col-md-12" >
     <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: darkblue;color: yellow;border: 1px solid darkblue;">
-        <div class="col-md-1.1 col-sm-2 col-xs-4.5 navbar-header" >
-           <a class="navbar-brand" href="home_controller.php" style="color: white;">Trang Chủ</a>         
+        <div class="navbar-header">
+        	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar btn-navmenu"></span>
+                <span class="icon-bar btn-navmenu"></span>
+                <span class="icon-bar btn-navmenu"></span>                        
+             </button>
+           <a class="navbar-brand" href="home_controller.php" style="color: white;">Trang Chủ</a>
+            <form class="navbar-form navbar-left">
+                <div class="row">
+                  <div class="col-md-9 col-xs-9">                
+                    <input type="text" class="form-control" width="85%" placeholder="Tìm Kiếm"/>
+                  </div>
+                  <div class="col-md-1 col-xs-1">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </div>
+                  </div>
+            </form>         
         </div>
-        <div class="col-md-8.9 col-sm-8 col-xs-7.5">
+        <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
           <li><a href="#">Liên hệ</a></li>
           <?php 
@@ -77,16 +133,7 @@ ob_start(); //Bien luu = chuoi
                     echo '<li><a href="../Controllers/shop_controller.php?action=index">Quản Lý</a></li>';
                 }
             }?>            
-            <form class="navbar-form navbar-left">
-            <div class="row">
-              <div class="col-xs-10">                
-                <input type="text" class="form-control" width="85%" placeholder="Tìm Kiếm"/>
-              </div>
-              <div class="col-xs-2">
-                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-              </div>
-              </div>
-            </form>
+           
             <?php if(isset($_SESSION['fullname']))
             { 
 				 if($_SESSION['role']==0)
@@ -99,25 +146,26 @@ ob_start(); //Bien luu = chuoi
      
             <li><a href="#" data-toggle="modal" data-target="#myLogin">
             <span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</a></li>
+            
         <?php }?>
         
         </ul>
+         <!-- <div class="col-md-2 col-sm-2 col-xs-4">-->
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="../Controllers/shoppingcart_controller.php?action=viewcart">
+                            <img src='../Views/img/cart3.png' width="25%"/>
+                            Giỏ Hàng<?php if(isset($_SESSION['cart']))
+                            {
+                                echo '                            
+                                     <span class="badge" style="font-size:120%">
+                                        '.$_SESSION['sosl'].'';
+                            } ?>                   
+                            </span>
+                    </a></li>
+                
+                </ul>
+             <!-- </div>-->
         </div>
-        <div class="col-md-2 col-sm-2 col-xs-4">
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="../Controllers/shoppingcart_controller.php?action=viewcart">
-                    <img src='../Views/img/cart3.png' width="25%"/>
-                    Giỏ Hàng<?php if(isset($_SESSION['cart']))
-                    {
-                        echo '                            
-                             <span class="badge" style="font-size:120%">
-                                '.$_SESSION['sosl'].'';
-                    } ?>                   
-                    </span>
-            </a></li>
-        
-        </ul>
-      </div>
     </nav>
     </div>
 </div>

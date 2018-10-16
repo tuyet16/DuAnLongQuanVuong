@@ -1,5 +1,34 @@
 <?php ob_start();?>
+<style>
+.btn-cart {
+	background-image:url(../Views/img/cart3.png);
+    background-repeat: no-repeat;
+	margin-right:10px;
+    border: medium none;
+    bottom: 30px;
+    cursor: pointer;
+    display: inline-block;
+    height: 50px;
+    outline: medium none;
+    padding: 0;
+    position: fixed;
+    right: 20px;
+    width: 50px;
+    z-index: 9999;
+	border-radius:50%;
+}
+</style>
+<a href="../Controllers/shoppingcart_controller.php?action=viewcart">
+	<div class="btn-cart">
 
+            <?php if(isset($_SESSION['cart']))
+            {
+                echo '                            
+                     <span class="badge" style="font-size:120%">
+                        '.$_SESSION['sosl'].'';
+            } ?>                   
+	</div>
+</a>
 <div class="footer"  style="background-color: #AAD5FF;padding-top: 20px;">
 <div class="row">
     <div class="col-md-2">
