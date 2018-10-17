@@ -100,9 +100,11 @@ $().ready(function() {
 					<td>&nbsp;'.ucfirst($row->employeeName).'</td>
 					<td>&nbsp;'.$row->address.'</td>
 					<td>&nbsp;'.$row->phone.'</td>
-                    <td><img src="../Views/img/'.$row->hinhanh.'" width="30%"/></td>
-					<td><a href="../Controllers/employees_controller.php?action=edit_employee&id='.$row->idEm.'"><span class="glyphicon glyphicon-pencil"></span></a> &nbsp; 
-						<a href="../Controllers/employees_controller.php?action=delete_employee&id='.$row->idEm.'"><span class="glyphicon glyphicon-remove"></span></a></td>
+                    <td style="width:35%"><img src="../Views/img/'.$row->hinhanh.'" width="30%"/></td>
+					<td>
+						<a href="../Controllers/employees_controller.php?action=xemchitiet&id='.$row->idEm.'"><span class="glyphicon glyphicon-list-alt" data-toggle="tooltip" title="Xem chi tiết"></span></a> &nbsp;
+						<a href="../Controllers/employees_controller.php?action=edit_employee&id='.$row->idEm.'"><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="Sửa"></span></a> &nbsp; 
+						<a href="../Controllers/employees_controller.php?action=delete_employee&id='.$row->idEm.'"><span class="glyphicon glyphicon-remove" data-toggle="tooltip" title="Xóa"></span></a></td>
 				  </tr>';
 			}
 		  ?>

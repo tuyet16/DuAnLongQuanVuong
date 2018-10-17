@@ -635,12 +635,11 @@ class Users extends Database{
         $rs = $this->doQuery($query, $param);
         return $rs;
     }
-    public function addhinhanh($hinh,$vitri,$ngay)
+    public function addhinhanh($hinh,$ngay)
     {
-        $query = 'insert into hinhanh(hinh1,vitri,ngay) values(?,?,?)';
+        $query = 'insert into hinhanh(hinh1,ngay) values(?,?)';
         $param = array();
         $param[] = $hinh;
-        $param[] = $vitri;
         $param[] = $ngay;
         $rs = $this->doQuery($query, $param);
         return $rs;
@@ -662,13 +661,13 @@ class Users extends Database{
     }
     public function carosoulpanel()
     {
-        $query ="select * from hinhanh where vitri = 1 order by hinhID desc limit 0,3 ";
+        $query ="select * from hinhanh order by hinhID desc limit 0,3 ";
         $rs = $this->doQuery($query);
         return $rs;
     }
     public function carosoulpane2()
     {
-        $query ="select * from hinhanh where vitri=2 order by hinhID desc limit 0,1 ";
+        $query ="select * from hinhanh order by hinhID desc limit 0,1 ";
         $rs = $this->doQuery($query);
         return $rs;
     }

@@ -1,18 +1,41 @@
  <?php
 ob_start(); //Bien luu = chuoi
 ?>
+<style>
+#owl-demo .item img{
+  display: block;
+  width: 100%;
+  height:250px;
+}
+.owl-nav{
+	display:none;	
+}
+.owl-dots{
+	display:none;	
+}
+</style>
 <!--Script run carousel-->
 <script>
 	$(document).ready(function() {
  
   $(".owl-carousel").owlCarousel({
-	loop:true,
-	margin:10,
-	autoplay:true,
-	autoplayTimeout:1000,
-	autoplayHoverPause:true,
-	autoPlay: 3000, //Set AutoPlay to 3 seconds
- 
+		loop:true,
+		margin:10,
+		//responsiveClass:true,
+		autoplay:true,
+		autoplayTimeout:1000,
+		autoplayHoverPause:true,
+		autoPlay: 3000, //Set AutoPlay to 3 seconds
+		responsive:{
+			0:{
+				items:1,
+				nav:true
+			},
+			600:{
+				items:3,
+				nav:false,
+			},
+		}
   });
  
 });
@@ -20,10 +43,10 @@ ob_start(); //Bien luu = chuoi
 <div id="demo" >
         <div class="container">
           <div class="row" style="margin-top:80px">
-              <div id="owl-demo" class="owl-carousel" style="display:inherit">
+              <div id="owl-demo" class="owl-carousel" style="display:block">
                 <?php foreach($rsvitriquangcao1 as $vt1)
-                	{	echo '<div style="width: auto;">
-								<img src="../Views/img/'.$vt1->hinh1.'" alt="Owl Image"></div>';
+                	{	echo '<div class="item">
+								<img src="../Views/img/'.$vt1->hinh1.'" alt="Owl Image" width="100%"></div>';
                 
 					}
 				?>
@@ -32,71 +55,6 @@ ob_start(); //Bien luu = chuoi
         </div>
 
     </div>
-<?php /*?><div class="row" style="margin-top:auto ;height: 100%;">
-    <div class="col-md-8">
-        <div class="row" style="background-color:#AAD5FF ;">   
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div id="myCarousel" class="carousel slide" data-ride="carousel">
-          <!-- Indicators -->
-              <ol class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
-              </ol>
-            
-              <!-- Wrapper for slides -->
-              <div class="carousel-inner">
-               <div class="item active"><img src="../Views/img/Fe1.jpg" /></div>
-                <?php // print_r($rsvitriquangcao1); 
-<<<<<<< HEAD
-                 //print_r($rsvitriquangcao1[0]);
-                foreach($rsvitriquangcao1 as $vt1)
-                {
-                    //print_r($vt1);
-                    if($vt1=='hinhID')
-=======
-               // $im=$rsvitriquangcao1[0][2];
-                foreach($rsvitriquangcao1 as $vt1)
-                {
-                    //print_r($vt1);
-                    if($vt1=="hinhID")
->>>>>>> 6422e3275b9b0719c496e54ee391bc4c8f2001f3
-                    {
-                        echo '
-                        <div class="item active" style="height:225px;">
-                            <img src="../Views/img/'.$vt1->hinh1.'" width="100%" height="225px" /></div>';
-                    }
-                    else
-                    {
-                    echo '
-                        <div class="item" style="height:225px;">
-                            <img src="../Views/img/'.$vt1->hinh1.'" width="100%" height="225px" /></div>';
-                    }
-<<<<<<< HEAD
-                } //$im++;?>
-=======
-                } ?>
->>>>>>> 6422e3275b9b0719c496e54ee391bc4c8f2001f3
-                  
-              </div>    
-              <!-- Left and right controls -->
-              <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-                <span class="sr-only">Next</span>
-              </a>
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4" style="padding: 0; margin:0;">
-    
-        <img src="../Views/img/<?php echo $rsvitriqc2[0]->hinh1; ?>" width="100%" height="225px"/>
-    </div>
-</div><?php */?>
 <!--Menu -->
 <div class="row">
     <div class="col-md-12" >

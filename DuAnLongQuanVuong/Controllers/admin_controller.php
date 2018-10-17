@@ -295,19 +295,19 @@ include_once('../config/bootload.php');
             $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
             $rsvitriqc2 = $user->carosoulpane2();
-            $rsdoihinh = $user->hinhdoi();      
-            if(isset($_POST['hinh']) && isset($_POST['vitri']))
-            {
-                $hinh = $_POST['hinh'];
-                $vitri = $_POST['vitri'];
+            $rsdoihinh = $user->hinhdoi();  
+			$name = filter_input(INPUT_POST, 'upimg');  
+			if($name!=NULL){  
+				$img = Image::GetFile($_FILES['upimg']);
                 $ngay = date('d-m-Y');               
-                $user->addhinhanh($hinh,$vitri,$ngay);
-            }
-            $view = Page::View();
-            $GLOBALS['template']['menu'] = include_once'../template/menu.php';
-            $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
-            $GLOBALS['template']['content'] = include_once $view;
-            include_once('../template/index.php');
+                $user->addhinhanh($img,$ngay);
+				 $view = Page::View();
+				$GLOBALS['template']['menu'] = include_once'../template/menu.php';
+				$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+				$GLOBALS['template']['content'] = include_once $view;
+				include_once('../template/index.php');
+			}
+           	header('Location:../Controllers/admin_controller.php?action=doihinh');
         break;
         case 'doiquangcao':
             $user = new Users();
