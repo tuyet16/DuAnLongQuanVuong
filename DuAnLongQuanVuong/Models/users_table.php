@@ -662,13 +662,13 @@ class Users extends Database{
     }
     public function carosoulpanel()
     {
-        $query ="select * from hinhanh where vitri= 1 order by hinhID limit 0,3 ";
+        $query ="select * from hinhanh where vitri = 1 order by hinhID desc limit 0,3 ";
         $rs = $this->doQuery($query);
         return $rs;
     }
     public function carosoulpane2()
     {
-        $query ="select * from hinhanh where vitri=2 order by hinhID limit 0,1 ";
+        $query ="select * from hinhanh where vitri=2 order by hinhID desc limit 0,1 ";
         $rs = $this->doQuery($query);
         return $rs;
     }

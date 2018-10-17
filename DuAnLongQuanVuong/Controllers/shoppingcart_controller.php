@@ -84,14 +84,10 @@
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
             $rsvitriqc2 = $user->carosoulpane2();
-            $quan = $_POST['quan'];
-            $giaohang= $_POST['giaohang'];
             $view = Page::View();
             $dt_model = new districts();
             $DSdistrict = $dt_model->getDistrict();
             $shoppingcart = new ShoppingCart();
-            
-            $ship = $shoppingcart->tinhphidichvu($quan,$giaohang);
             $rsCart = $shoppingcart->ViewCart();
             $tongtien = $shoppingcart->getTotal();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
@@ -155,16 +151,20 @@
                         $Arrtimkiem['quan'] = $sdt->districtID;
                         $Arrtimkiem['diachi'] = $sdt->address;                        
                     }
+                    //$phiship  = $shopcarts->tinhphidichvu($Arrtimkiem['quan'],$_POST['ghthuong']);
+                    //$Arrtimkiem['phiship'] = $phiship;
                 }
                 else
                 {
                     $Arrtimkiem['ten'] = " ";
                     $Arrtimkiem['quan'] = " ";
                     $Arrtimkiem['diachi'] = "";
+                    //$Arrtimkiem['phiship'] = "";
                    
                 }
                  echo json_encode($Arrtimkiem);
         break;
+        
         
     }
 

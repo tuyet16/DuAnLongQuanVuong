@@ -64,8 +64,7 @@
                                               'soluong'=>$soluong,
                                               'gia'=>$rsProduct[0]->price,
                                               'thanhtien'=>$thanhtien,
-                                              'masp'=>$masp,
-                                              'ship'=>$phiship);                                                   
+                                              'masp'=>$masp);                                                   
                     }                  
                 }
             }
@@ -136,7 +135,7 @@
             $param = array();
             $param[] = $quan;
             $rs = $this->doQuery($sql,$param);
-            return $rs[0]->phiship;
+            return $rs;
         }
         //ham tim kiem dia chi khach hang bang sdt
         public function timkiem($sdt)

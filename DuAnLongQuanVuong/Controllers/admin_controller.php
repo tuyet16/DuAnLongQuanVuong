@@ -301,7 +301,7 @@ include_once('../config/bootload.php');
                 $hinh = $_POST['hinh'];
                 $vitri = $_POST['vitri'];
                 $ngay = date('d-m-Y');               
-                $themhinh =$user->addhinhanh($hinh,$vitri,$ngay);
+                $user->addhinhanh($hinh,$vitri,$ngay);
             }
             $view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
@@ -338,7 +338,7 @@ include_once('../config/bootload.php');
                     {
                         $img = Image::GetFile($_FILES['hinh']);
                         
-                        $user->doihinhpanel($img,$vitri,$id);
+                        $user->doihinhpanel($img,$vitri,$id);   
                     }   
                      else
                      {

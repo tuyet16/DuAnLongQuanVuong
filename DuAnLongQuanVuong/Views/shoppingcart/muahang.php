@@ -8,7 +8,7 @@
            var request= $.ajax({           
                 url:"../Controllers/shoppingcart_controller.php?action=timkiem",
                 method:'POST',
-                data:{sdt: this.value},
+                data:{sdt: this.value,ghthuong: $("#gh").value},
                 dataType:'html'
             });
             request.done(function(a){
@@ -16,11 +16,14 @@
                 $('#hoten').val(tim['ten']);
                 $('#dc').val(tim['diachi']);
                 $('#quan').val(tim['quan']);
+                $('#gh').val(tim['giaohang']);
+                $('#ps').val(tim('phiship'));
             });            
         });
-        
     });
+    
 </script>
+
 <script>
 $().ready(function() {
 	// validate the form when it is submitted
@@ -77,7 +80,7 @@ $().ready(function() {
             </div>
              <div class="row">
                 <label class="control-label">Phương thức giao hàng</label>
-                <select name="giaohang" class="form-control">
+                <select name="giaohang" id="gh" class="form-control">
                     <option value="0">Giao thường</option>
                     <option value="1">Giao nhanh</option>
                 </select>
@@ -87,6 +90,10 @@ $().ready(function() {
                 <div class="col-md-3"><input type="radio" name="nguoitraship" value="0" checked="checked" /> Chủ Trả Phí</div>
                <div class="col-md-3"><input type="radio" name="nguoitraship" value="1"/> Khách Trả Phí</div>
                
+            </div>
+            <div class="row">
+                <label class="control-label">Tổng Phí Ship</label>
+                <div id="ps"><?php ?></div>
             </div>
         </div>
         <div class="col-md-2"></div>
