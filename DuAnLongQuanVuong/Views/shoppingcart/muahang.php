@@ -5,19 +5,20 @@
 <script>
     $(document).ready(function(){
         $("#dt").keyup(function(){
+           // alert($("#gh").val());
            var request= $.ajax({           
                 url:"../Controllers/shoppingcart_controller.php?action=timkiem",
                 method:'POST',
-                data:{sdt: this.value,ghthuong: $("#gh").value},
+                data:{sdt: this.value,ghthuong: $("#gh").val()},
                 dataType:'html'
             });
             request.done(function(a){
+                //alert(a);
                 tim = JSON.parse(a);               
                 $('#hoten').val(tim['ten']);
                 $('#dc').val(tim['diachi']);
                 $('#quan').val(tim['quan']);
-                $('#gh').val(tim['giaohang']);
-                $('#ps').val(tim('phiship'));
+                $('#ps').text(tim['phiship']);
             });            
         });
     });
@@ -93,7 +94,7 @@ $().ready(function() {
             </div>
             <div class="row">
                 <label class="control-label">Tổng Phí Ship</label>
-                <div id="ps"><?php ?></div>
+                <div id="ps" style="color: red; font-weight: bold;"></div>
             </div>
         </div>
         <div class="col-md-2"></div>

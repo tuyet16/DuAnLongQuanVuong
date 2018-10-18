@@ -151,15 +151,15 @@
                         $Arrtimkiem['quan'] = $sdt->districtID;
                         $Arrtimkiem['diachi'] = $sdt->address;                        
                     }
-                    //$phiship  = $shopcarts->tinhphidichvu($Arrtimkiem['quan'],$_POST['ghthuong']);
-                    //$Arrtimkiem['phiship'] = $phiship;
+                    $phiship  = $shopcarts->tinhphidichvu($Arrtimkiem['quan'],$_POST['ghthuong']);
+                    $Arrtimkiem['phiship'] = $phiship[0]->phiship;
                 }
                 else
                 {
                     $Arrtimkiem['ten'] = " ";
                     $Arrtimkiem['quan'] = " ";
                     $Arrtimkiem['diachi'] = "";
-                    //$Arrtimkiem['phiship'] = "";
+                    $Arrtimkiem['phiship'] = "";
                    
                 }
                  echo json_encode($Arrtimkiem);

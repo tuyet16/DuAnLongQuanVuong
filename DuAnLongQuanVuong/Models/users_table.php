@@ -226,61 +226,64 @@ class Users extends Database{
         $donhangarr = array();
         if($ngay != null)
         {
-            $query ='select distinct us.userid,us.fullname from bills bi,products pr, detailsbills dt,users us
+            $query ='select distinct bi.* from bills bi,products pr, detailsbills dt,users us
                 where bi.billID = dt.billID and dt.productID = pr.productID and us.userid=pr.userid
                         and dt.shop_acceptance=1 and bi.PurchaseDate=? order by bi.PurchaseDate desc';
             $param = array();
             $param[] = $ngay;
-            $rs = $this->doQuery($query,$param); 
+            $bi = $this->doQuery($query,$param); 
         }
         else
         {        
-            $query ='select distinct us.userid,us.fullname from bills bi,products pr, detailsbills dt ,users us
+            $query ='select distinct bi.* from bills bi,products pr, detailsbills dt ,users us
                     where bi.billID = dt.billID and dt.productID = pr.productID and us.userid=pr.userid and dt.shop_acceptance=1 
                     order by bi.PurchaseDate';
             $param = array();
-            $rs = $this->doQuery($query); 
-        }
-        foreach($rs as $user)
+            $bi = $this->doQuery($query); 
+        }                         
+        foreach($bi as $bill)
         {
-            $donhangarr[$user->userid]['thongtinshop']= array($user->fullname);
+            $donhangarr[$bill->billID]['thongtinbill']= array($bill->customerID,$bill->billingAddress,$bill->delivery
+                                    ,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck,$bill->idEm,$bill->nguoitraship);
+            $tongtien += $bill->totalPrice;
+            //khach hangf
+            $sql = 'select cs.*, dt.districtName  from customers cs, districts dt where cs.districtID = dt.districtID and cs.customerID=?';
+            $param =array();
+            $param[]=$bill->customerID;
+            $cs = $this->doQuery($sql,$param);
+            
+            $donhangarr[$bill->billID]['thongtinkh'] = array($cs[0]->customerName
+                                ,$cs[0]->address,$cs[0]->phone,$cs[0]->districtName); 
+              //cacs shop                      
             $query1 = 'select distinct bi.*,us.userid,us.fullname from bills bi,products pr, detailsbills dt ,users us
                     where bi.billID = dt.billID and dt.productID = pr.productID and dt.shop_acceptance=1 and us.userid =pr.userid 
-                    and us.userid=? and bi.PurchaseDate=? order by bi.PurchaseDate ';
+                  and bi.billID=? order by bi.PurchaseDate ';
             $param = array();
-            $param[] = $user->userid;
-            $param[] = $ngay;
-            $bi = $this->doQuery($query1,$param);                    
-            foreach($bi as $bill)
+            $param[] =$bill->billID;
+            $rs = $this->doQuery($query1,$param);           
+            foreach($rs as $user)
             {
-                $donhangarr[$user->userid][$bill->billID][0]= array($bill->customerID,$bill->billingAddress,$bill->delivery
-                                        ,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck,$bill->idEm,$bill->nguoitraship);
-                $tongtien += $bill->totalPrice;
-                 $sql1 = 'select dt.*,pr.productName, pr.unitID,un.unitName,pr.price as gia ,dt.phuthu  
-                                from detailsbills dt , users us ,products pr,units un where dt.productID=pr.productID 
-                                and pr.userid= us.userid and pr.unitID=un.unitID and dt.billID=? and us.userid=?';
+                $donhangarr[$bill->billID][$user->userid]['tenshop'][]= array($user->fullname);        
+                //detailbills    
+                $sql1 = 'select dt.*,pr.productName, pr.unitID,un.unitName,pr.price as gia ,dt.phuthu  
+                            from detailsbills dt , users us ,products pr,units un where dt.productID=pr.productID 
+                            and pr.userid= us.userid and pr.unitID=un.unitID and dt.billID=? and us.userid =?';
                 $param = array();
                 $param[]= $bill->billID;
-                $param[] = $user->userid;
-                $dt = $this->doQuery($sql1,$param);            
+                $param[]= $user->userid;
+                $dt = $this->doQuery($sql1,$param);         
                 foreach($dt as $detail)
                 {
-                    $donhangarr[$user->userid][$bill->billID][1][]=array($detail->detailID,$detail->productID,$detail->amount
+                    $donhangarr[$bill->billID][$user->userid]['detail'][]=array($detail->detailID,$detail->productID,$detail->amount
                                             ,$detail->price,$detail->productName,$detail->unitName,$detail->gia,$detail->discount,
                                             $detail->phuthu);
-                } 
-                $sql = 'select * from customers cs, districts dt where cs.districtID = dt.districtID and customerID=?';
-                $param =array();
-                $param[]=$bill->customerID;
-                $cs = $this->doQuery($sql,$param);
-                $donhangarr[$user->userid][$bill->billID][2] = array($cs[0]->customerName
-                                    ,$cs[0]->address,$cs[0]->phone,$cs[0]->districtName);            
+                }                            
                
                 $sqlnhanvien = 'select * from employees ';
                 $nv = $this->doQuery($sqlnhanvien);
                 foreach($nv as $employee)
                 {
-                    $donhangarr[$user->userid][$bill->billID][3][]=array($employee->idEm,$employee->employeeID,$employee->employeeName);
+                    $donhangarr[$bill->billID][$user->userid]['nhanvien'][]=array($employee->idEm,$employee->employeeID,$employee->employeeName);
                 }                                   
             } 
         }
