@@ -14,7 +14,6 @@
 		case 'index':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             $category = new Categories();
             $dsCategories = $category->getCategories();
 			$services = new Services();

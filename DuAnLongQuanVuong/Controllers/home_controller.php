@@ -13,8 +13,7 @@
     {
         case 'index':	
         $user = new Users();
-            $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();		
+            $rsvitriquangcao1 = $user->carosoulpanel();		
              $product_model = new products();
             //$dsProducts = $product_model->getProduct();
             $category = new Categories();
@@ -46,8 +45,7 @@
         break;        
         case 'xemsanpham':    
             $user = new Users();
-            $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();      
+            $rsvitriquangcao1 = $user->carosoulpanel();      
             $category = new Categories(); 
             $dsCategories = $category->getCategories();
            // $rsCategories = $category->getCategoryByID($id);           
@@ -74,7 +72,6 @@
         case 'chitiet':
             $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 		 	$category = new Categories(); 
             $dsCategories = $category->getCategories();
             if(isset($_GET['id'])){
@@ -92,7 +89,6 @@
         case 'dathang':
             $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
             $GLOBALS['template']['leftmenu'] = include_once'../template/leftmenu.php';
             $GLOBALS['template']['content'] = include_once $view;

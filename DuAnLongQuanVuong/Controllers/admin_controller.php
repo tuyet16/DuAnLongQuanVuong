@@ -14,11 +14,11 @@ include_once('../config/bootload.php');
         case 'index':
             $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
     	   header('Location: ?action=donhang');
         break;
         case 'dsshop':
             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             $dsUsers = $user->getUser();
             $view = Page::View();            
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
@@ -28,9 +28,8 @@ include_once('../config/bootload.php');
             include_once('../template/index.php');
         break;
         case 'suashop':
-        $user = new Users();
-        $rsvitriquangcao1 = $user->carosoulpanel();
-        $rsvitriqc2 = $user->carosoulpane2();
+        	$user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
         if(isset($_GET['id']))
         {
             $id = $_GET['id'];
@@ -62,9 +61,8 @@ include_once('../config/bootload.php');
         }            
         break; 
 		case 'delete_user':
-            $user = new Users();
+           $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 		if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){
 					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);
@@ -83,8 +81,8 @@ include_once('../config/bootload.php');
         break;
         case 'donhang':
             $user = new Users();
+           $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             $employ = new Employees();
             $rsEmploy = $employ->getEmployees();
             if(isset($_SESSION['userid']))
@@ -163,9 +161,8 @@ include_once('../config/bootload.php');
         break;
         case 'tinhtrang':
             $idnv=0;
-            $user = new Users();
+          	$user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             //$edittinhtrang = $user->getTinhtrang();
             if(isset($_POST['submit']))
             {
@@ -226,7 +223,6 @@ include_once('../config/bootload.php');
             $doanhthu=null;
             $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             if(isset($_POST['chonngay']))
             {                
                 $date1 =  date_create($_POST['chonngay']);
@@ -242,8 +238,8 @@ include_once('../config/bootload.php');
             include_once('../template/index.php');
         break;
         case 'doanhthuthang':
-            $user = new Users();
-                        
+           $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             if(isset($_POST['chonthang']))
             {
                 $chon= explode(' ',$_POST['chonthang']);                
@@ -268,8 +264,8 @@ include_once('../config/bootload.php');
             include_once('../template/index.php');
         break;
         case 'doanhthunam':
-            $user = new Users();
-                                  
+           $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             if(isset($_POST['chonnam']))
             { 
                 $nam = $_POST['chonnam'];                  
@@ -294,64 +290,30 @@ include_once('../config/bootload.php');
         case 'doihinh':  
             $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
-            $rsdoihinh = $user->hinhdoi();  
-			$name = filter_input(INPUT_POST, 'upimg');  
-			if($name!=NULL){  
-				$img = Image::GetFile($_FILES['upimg']);
-                $ngay = date('d-m-Y');               
-                $user->addhinhanh($img,$ngay);
-				 $view = Page::View();
-				$GLOBALS['template']['menu'] = include_once'../template/menu.php';
-				$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
-				$GLOBALS['template']['content'] = include_once $view;
-				include_once('../template/index.php');
+            $rsdoihinh = $user->hinhdoi();   
+			if(isset($_FILES['upimg'])){ 
+					 $i = $_FILES['upimg'];
+                    $img = Image::GetFile($i);
+                	$ngay=date('Y-m-d H:i:s');               
+                	$user->addhinhanh($img,$ngay);
+					header('Location:admin_controller.php?action=doihinh');
 			}
-           	header('Location:../Controllers/admin_controller.php?action=doihinh');
+			$view = Page::View();
+			$GLOBALS['template']['menu'] = include_once'../template/menu.php';
+			$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+			$GLOBALS['template']['content'] = include_once $view;
+			include_once('../template/index.php');
+           	
         break;
         case 'doiquangcao':
             $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
-            if(isset($_GET['id']))
-            {                
-                $rsdoihinh = $user->hinhdoi();
-                $rshinh = $user->doiquangcao($_GET['id']);  
-                $view = Page::View();
-                $GLOBALS['template']['menu'] = include_once'../template/menu.php';
-                $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
-                $GLOBALS['template']['content'] = include_once $view;
-                include_once('../template/index.php'); 
-             }
-             else
-             {   
-                $user = new Users();
-                $rsdoihinh = $user->hinhdoi();
-                 $rshinh =null;
-                 if(isset($_POST['image']) &&isset($_POST['vitri']) &&isset($_POST['hinhID']))
-                 {
-                    $hinh = $_POST['image'];
-                    $vitri = $_POST['vitri'];
-                    $id = $_POST['hinhID']; 
-                                       
-                    if(is_uploaded_file($_FILES['hinh']['tmp_name']))
-                    {
-                        $img = Image::GetFile($_FILES['hinh']);
-                        
-                        $user->doihinhpanel($img,$vitri,$id);   
-                    }   
-                     else
-                     {
-                        $user->doihinhpanel($hinh,$vitri,$id);
-                     }  
-                 }                       
-            }             
-            $view = Page::View();
-            $GLOBALS['template']['menu'] = include_once'../template/menu.php';
-            $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
-            $GLOBALS['template']['content'] = include_once $view;
-            include_once('../template/index.php');
-           // header('Location:../Controllers/admin_controller.php?action=doihinh');
+			if(isset($_GET['id']))
+          	{	$id = $_GET['id'];
+				$ngay=date('Y-m-d H:i:s');
+				$user->doihinhpanel($ngay,$id);
+				header('Location:admin_controller.php?action=doihinh');
+			}
         break;
         
         //In hóa đơn

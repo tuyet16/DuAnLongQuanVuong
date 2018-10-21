@@ -15,7 +15,7 @@ include_once('../Libs/messagebox_lib.php');
         case 'index':
     	$user = new Users();
         $rsvitriquangcao1 = $user->carosoulpanel();
-        $rsvitriqc2 = $user->carosoulpane2();
+
         $dsuser = $user->getUser();
 		$view = Page::View();
         $GLOBALS['template']['menu'] = include_once'../template/menu.php';
@@ -23,7 +23,9 @@ include_once('../Libs/messagebox_lib.php');
         $GLOBALS['template']['content'] = include_once $view;
         include_once('../template/index.php');
         break;
-        case 'dangnhap':            
+        case 'dangnhap': 
+		$user = new Users();
+		 $rsvitriquangcao1 = $user->carosoulpanel();           
             if(isset($_POST['email1']) && isset($_POST['password']))
             {
                 $email = $_POST['email1'];
@@ -61,6 +63,8 @@ include_once('../Libs/messagebox_lib.php');
                    
         break;
         case 'logout':
+			$user = new Users();
+		 	$rsvitriquangcao1 = $user->carosoulpanel();
             session_destroy();
             header('Location: home_controller.php');
         break;        
@@ -73,6 +77,7 @@ include_once('../Libs/messagebox_lib.php');
             $sdt = $_POST['tel'];
             $pass = $_POST['password1'];
             $user = new Users();
+			 $rsvitriquangcao1 = $user->carosoulpanel();
             $dsUsers = $user->addUser($pass,$hoten,$email,$diachi,$sdt,$tenshop);
            // print_r($_POST);
            header('Location:admin_controller.php');
@@ -80,7 +85,6 @@ include_once('../Libs/messagebox_lib.php');
 		case 'changepass':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 			$view = Page::View();
 				if(isset($_SESSION['userid'])){
 					$id = $_SESSION['userid'];
@@ -112,7 +116,6 @@ include_once('../Libs/messagebox_lib.php');
         case 'donhang':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             $product_model = new products();
             $dsProducts = $product_model->getProduct();
             if(isset($_SESSION['userid']))
@@ -159,7 +162,6 @@ include_once('../Libs/messagebox_lib.php');
         case 'shopedit':
             $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             if(isset($_POST['submit']))
             {
                 print_r($_POST);
@@ -194,7 +196,6 @@ include_once('../Libs/messagebox_lib.php');
         case 'guidonhang':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             $guidonhang =0;
             if(isset($_GET['detail_id']))
             {
@@ -206,7 +207,6 @@ include_once('../Libs/messagebox_lib.php');
         case 'xoasanpham':
             $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             if(isset($_GET['detailID'])){
                 $user = new Users();
                 $user->deleteDetailID($_GET['detailID']);

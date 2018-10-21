@@ -14,7 +14,6 @@
         case 'add':
          $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             if(isset($_GET['id']))
             {
                 $masp = $_GET['id'];
@@ -28,7 +27,6 @@
         case 'viewcart':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             $category = new Categories();
             
             $dsCategories = $category->getCategories();
@@ -55,7 +53,7 @@
         case 'updatecart':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
+
             $shopcart = new ShoppingCart();
             $_SESSION['sosl'] = $shopcart->getTongsl();
             if(isset($_POST['submit'])){
@@ -70,7 +68,7 @@
         case 'deletecart':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
+
             if(isset($_GET['id']))
             {
                 $masp = $_GET['id'];
@@ -83,7 +81,7 @@
         case 'muahang':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
+
             $view = Page::View();
             $dt_model = new districts();
             $DSdistrict = $dt_model->getDistrict();
@@ -97,7 +95,6 @@
         case 'dathang':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             $hoten = $_POST['hoten'];
             $dienthoai = $_POST['dienthoai'];
             $quan = $_POST['quan'];
@@ -139,7 +136,6 @@
         case "timkiem":
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
                 $shopcarts = new ShoppingCart();
                 $tk = $shopcarts->timkiem($_POST['sdt']);
                 if($tk !=null)

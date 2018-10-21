@@ -625,19 +625,18 @@ class Users extends Database{
         return $thongkenamArr;
     }
     //đổi hình ảnh panel
-    public function doihinhpanel($hinh,$vitri,$id)
+    public function doihinhpanel($ngay,$id)
     {
-        $query = 'update hinhanh set hinh1=?, vitri=? where hinhID=?';
+        $query = 'update hinhanh set ngay=? where hinhID=?';
         $param = array();
-        $param[] = $hinh;
-        $param[] = $vitri;
+		$param[]=$ngay;
         $param[] = $id;
         $rs = $this->doQuery($query, $param);
         return $rs;
     }
     public function addhinhanh($hinh,$ngay)
     {
-        $query = 'insert into hinhanh(hinh1,ngay) values(?,?)';
+        $query = 'INSERT INTO hinhanh(hinh1,ngay) VALUES (?,?)';
         $param = array();
         $param[] = $hinh;
         $param[] = $ngay;
@@ -651,27 +650,12 @@ class Users extends Database{
         $rs = $this->doQuery($query);
         return $rs;
     }
-    public function doiquangcao($id)
-    {
-        $query = 'select * from hinhanh where hinhID=?';
-        $param = array();
-        $param[] =$id;
-        $rs = $this->doQuery($query,$param);
-        return $rs;
-    }
     public function carosoulpanel()
     {
-        $query ="select * from hinhanh order by hinhID desc limit 0,3 ";
+        $query ="select * from hinhanh order by ngay desc limit 0,3 ";
         $rs = $this->doQuery($query);
         return $rs;
-    }
-    public function carosoulpane2()
-    {
-        $query ="select * from hinhanh order by hinhID desc limit 0,1 ";
-        $rs = $this->doQuery($query);
-        return $rs;
-    }
-    
+    }  
 }
 
 

@@ -14,7 +14,6 @@
 		case 'index':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 			$tableDB = new Database();
             $tables = $tableDB->getTables();
 			$dsAreas=$model->getAreas();
@@ -28,7 +27,6 @@
 		{
 		   $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 			 $name = filter_input(INPUT_POST, 'areas_name');
 			if($name == NULL)
 			{
@@ -61,7 +59,6 @@
 		{
     		   $user = new Users();
                 $rsvitriquangcao1 = $user->carosoulpanel();
-                $rsvitriqc2 = $user->carosoulpane2();
 				$name = filter_input(INPUT_POST, 'areas_name');
 				if($name == NULL)
 				{
@@ -96,7 +93,6 @@
 		case "delete_areas":
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 			if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){
 					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);
