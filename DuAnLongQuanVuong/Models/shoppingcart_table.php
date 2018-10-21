@@ -54,8 +54,10 @@
                     foreach($_SESSION['cart'] as $masp=>$soluong)
                     {
                         $product_model = new products();
-                        
-                        $rsProduct = $product_model->getByIDProduct($masp); 
+                        $user = new Users();
+                                                
+                        $rsProduct = $product_model->getByIDProduct($masp);
+                        //$phiship =  $user->tinhphidichvu();
                        // $phiship = =>tinhphi();              
                         $thanhtien = $soluong * $rsProduct[0]->price;
                         $this->total += $thanhtien;
@@ -135,7 +137,7 @@
             $param = array();
             $param[] = $quan;
             $rs = $this->doQuery($sql,$param);
-            return $rs;
+            return $rs[0]->phiship;
         }
         //ham tim kiem dia chi khach hang bang sdt
         public function timkiem($sdt)

@@ -14,7 +14,7 @@
         case 'index':   
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();          
+            $rsvitriqc2 = $user->carosoulpane2();      
             if(isset($_SESSION['userid']))
             {
                 $userid = $_SESSION['userid'];                
@@ -22,7 +22,6 @@
                 $dsCategories = $category->getDScategory($userid);
                 $product_model = new products();
                // $dsProducts = $product_model->getProductByuserid($userid);     
-            
             
                 $start = 0;
                 if(isset($_GET['start']))

@@ -92,6 +92,9 @@
                  <div class="row"> 
                   <label>Địa chỉ:  <?php echo $db['thongtinkh'][1].', '. $db['thongtinkh'][3]; ?></label>
                 </div>
+                 <div class="row"> 
+                  <label>Phí Ship:  <?php echo $db['thongtinbill'][8]; ?></label>
+                </div>
                 <div class="row">                       
                     <div class="col-md-10" style="color: red; font-weight: bold;">
                     <?php if($db['thongtinbill'][7]==1)
@@ -104,11 +107,16 @@
                     <?php if(isset($_POST['nhanvien'])){
                         $select = $_POST['nhanvien'];
                     } ?>
-                     <?php foreach($DSdonhang as $user){ //print_r($user); ?> 
-                        
-                         <div><?php echo $user['tenshop'][0][0] ?></div>  
-                
                     <div class="row">
+                     <?php
+                      foreach($db as $us=>$user){ 
+                        //print_r($key);
+                      if(is_numeric($us))
+                      {                         
+                        ?> 
+                         <div><?php  echo $db[$us]['tenshop'][0] ;?></div> 
+                         <div><?php  echo $db[$us]['tenshop'][1] ;?></div> 
+                
                         <form method="post" action="?action=editnhanvien">
                         <table class="table table-bordered table-striped text-center">
                          <input type="hidden" name="billID" value="<?php echo $billID; ?>"/>                        
@@ -121,10 +129,11 @@
                                 <td>Giá</td>
                                 <td>Giảm giá</td>
                                 <td>Phí Phụ Thu</td>
+                                <td>Phí Ship</td>
                                 <td>Thành tiền</td>
                             </tr>                            
                             <?php $a=1;
-                             foreach($db[1] as $key=>$detail_item){ 
+                             foreach($user as $key=>$detail_item){ 
                                 if($key== 'detail')
                                 {
                                 if($detail_item != null){?>
@@ -152,15 +161,19 @@
                                    
                                 </td>
                                 <td style=" color: red; font-weight:bold">
-                                    <input type="text" name="phuthu<?php echo $detail_item[0][0]; ?>" value="<?php echo $detail_item[0][8]; ?>" />
+                                    <input type="text" name="phuthu<?php echo $detail_item[0][0]; ?>" value="<?php echo number_format($detail_item[0][8]); ?>" />
+                                </td>
+                                <td style=" color: red; font-weight:bold">
+                                    <input type="text" name="phiship<?php echo $detail_item[0][0]; ?>" 
+                                            value="<?php echo number_format(ceil($db['thongtinbill'][8]/1000/$db['soshop']*1.0)*1000); ?>" />
                                 </td>
                                  <input type="hidden" name="detailID" value="<?php echo $detail_item[0][0]; ?>"/>
                                 <input type="hidden" name="gia<?php echo $detail_item[0][0]; ?>" value="<?php echo $detail_item[0][6]; ?>" />
                                 <td><?php echo number_format($detail_item[0][3]); ?></td>
                             </tr>
-                           <?php }}}?> 
+                           <?php }}?> 
                         </table>
-                        <?php 
+                        <?php }}
                         $shipper = '';
                         ?>                        
                         <div class="row">

@@ -10,7 +10,7 @@
         } 
     ?>
     </title>
-    <link type="text/css" rel="stylesheet" href="../views/css/designer.css"/>
+   
     <link rel="stylesheet" type="text/css" href="../Views/css/owl.carousel.min.css"/>
     <link rel="stylesheet" type="text/css" href="../Views/css/owl.theme.default.min.css"/>
    	<link type="text/css" rel="stylesheet" href="../views/css/bootstrap.min.css"/>
@@ -19,7 +19,7 @@
     <link type="text/css" rel="stylesheet" href="../views/css/jquery-ui.theme.min.css"/>
     <link type="text/css" rel="stylesheet" href="../views/css/froala_editor.min.css"/>
     <link type="text/css" rel="stylesheet" href="../views/css/froala_style.min.css"/>
-	
+	 <link type="text/css" rel="stylesheet" href="../views/css/designer.css"/>
     <script src="../Views/js/jquery.min.js"> </script>
     <script src="../Views/js/owl.carousel.min.js"></script>
     <script src="../Views/js/bootstrap.min.js"></script>  

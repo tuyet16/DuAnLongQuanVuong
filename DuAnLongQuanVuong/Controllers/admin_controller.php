@@ -146,7 +146,7 @@ include_once('../config/bootload.php');
                   
                  foreach($_POST as $k=>$value)
                  {
-                    if(strpos($k,'phuthu') > -1){
+                    if(strpos($k,'phuthu') > -1 && strpos($k,'phiship')){
                         $t = trim(str_replace('phuthu','',$k));
                         echo $t;
                         $phuthu[$t] = $_POST[$k];
@@ -154,12 +154,8 @@ include_once('../config/bootload.php');
                  }                    
                 $user = new Users();
                 $user->editnhanvien($date, $nhanvien,$phuthu,$id);                      
-                //print_r($_POST);
-//                print_r($phuthu);
                 header('Location: ?action=donhang&BillID='. $id .'&chonngay='. $_POST['ngay']);
             }
-            
-            ////header('Location:?action=donhang');
         break;
         case 'tinhtrang':
             $idnv=0;
@@ -295,19 +291,19 @@ include_once('../config/bootload.php');
             $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
             $rsvitriqc2 = $user->carosoulpane2();
-            $rsdoihinh = $user->hinhdoi();      
-            if(isset($_POST['hinh']) && isset($_POST['vitri']))
-            {
-                $hinh = $_POST['hinh'];
-                $vitri = $_POST['vitri'];
+            $rsdoihinh = $user->hinhdoi();  
+			$name = filter_input(INPUT_POST, 'upimg');  
+			if($name!=NULL){  
+				$img = Image::GetFile($_FILES['upimg']);
                 $ngay = date('d-m-Y');               
-                $user->addhinhanh($hinh,$vitri,$ngay);
-            }
-            $view = Page::View();
-            $GLOBALS['template']['menu'] = include_once'../template/menu.php';
-            $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
-            $GLOBALS['template']['content'] = include_once $view;
-            include_once('../template/index.php');
+                $user->addhinhanh($img,$ngay);
+				 $view = Page::View();
+				$GLOBALS['template']['menu'] = include_once'../template/menu.php';
+				$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+				$GLOBALS['template']['content'] = include_once $view;
+				include_once('../template/index.php');
+			}
+           	header('Location:../Controllers/admin_controller.php?action=doihinh');
         break;
         case 'doiquangcao':
             $user = new Users();

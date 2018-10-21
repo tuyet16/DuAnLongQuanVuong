@@ -244,7 +244,7 @@ class Users extends Database{
         foreach($bi as $bill)
         {
             $donhangarr[$bill->billID]['thongtinbill']= array($bill->customerID,$bill->billingAddress,$bill->delivery
-                                    ,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck,$bill->idEm,$bill->nguoitraship);
+                ,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck,$bill->idEm,$bill->nguoitraship,$bill->phiship);
             $tongtien += $bill->totalPrice;
             //khach hangf
             $sql = 'select cs.*, dt.districtName  from customers cs, districts dt where cs.districtID = dt.districtID and cs.customerID=?';
@@ -255,16 +255,17 @@ class Users extends Database{
             $donhangarr[$bill->billID]['thongtinkh'] = array($cs[0]->customerName
                                 ,$cs[0]->address,$cs[0]->phone,$cs[0]->districtName); 
               //cacs shop                      
-            $query1 = 'select distinct bi.*,us.userid,us.fullname from bills bi,products pr, detailsbills dt ,users us
+            $query1 = 'select distinct bi.*,us.userid,us.fullname,us.phone from bills bi,products pr, detailsbills dt ,users us
                     where bi.billID = dt.billID and dt.productID = pr.productID and dt.shop_acceptance=1 and us.userid =pr.userid 
                   and bi.billID=? order by bi.PurchaseDate ';
             $param = array();
             $param[] =$bill->billID;
-            $rs = $this->doQuery($query1,$param);           
+            $rs = $this->doQuery($query1,$param); 
+            $soshop=0;          
             foreach($rs as $user)
             {
-                $donhangarr[$bill->billID][$user->userid]['tenshop'][]= array($user->fullname);        
-                //detailbills    
+                $donhangarr[$bill->billID][$user->userid]['tenshop']= array($user->fullname,$user->phone);        
+                $soshop ++; 
                 $sql1 = 'select dt.*,pr.productName, pr.unitID,un.unitName,pr.price as gia ,dt.phuthu  
                             from detailsbills dt , users us ,products pr,units un where dt.productID=pr.productID 
                             and pr.userid= us.userid and pr.unitID=un.unitID and dt.billID=? and us.userid =?';
@@ -276,7 +277,7 @@ class Users extends Database{
                 {
                     $donhangarr[$bill->billID][$user->userid]['detail'][]=array($detail->detailID,$detail->productID,$detail->amount
                                             ,$detail->price,$detail->productName,$detail->unitName,$detail->gia,$detail->discount,
-                                            $detail->phuthu);
+                                            $detail->phuthu,$detail->phishipshop,$detail->phishipkh);
                 }                            
                
                 $sqlnhanvien = 'select * from employees ';
@@ -285,11 +286,12 @@ class Users extends Database{
                 {
                     $donhangarr[$bill->billID][$user->userid]['nhanvien'][]=array($employee->idEm,$employee->employeeID,$employee->employeeName);
                 }                                   
-            } 
+            } $donhangarr[$bill->billID]['soshop']= $soshop; 
         }
         return $donhangarr;
     } 
-    public function editnhanvien($date, $idEm,$phuthu,$id)
+   
+    public function editnhanvien($date, $idEm,$phuthu,$phishipshop, $phishipkh,$id)
     {
         $query = 'update bills set setDate=?, idEm=? where billID=?';
         $param = array();
@@ -299,10 +301,12 @@ class Users extends Database{
         $this->doQuery($query,$param);
        //print_r($param);
        foreach($phuthu as $dtID=>$pt){
-        $sql = 'update detailsbills set phuthu=? where detailID=?';
+        $sql = 'update detailsbills set phuthu=?, phishipshop=?, phishipkh=? where detailID=?';
         $param = array();
         $param[] = $pt;
         $param[] = $dtID;
+        $param[] = $phishipshop;
+        $param[] = $phishipkh;
         $this->doQuery($sql,$param);
         }
         //print_r($param);
@@ -638,12 +642,11 @@ class Users extends Database{
         $rs = $this->doQuery($query, $param);
         return $rs;
     }
-    public function addhinhanh($hinh,$vitri,$ngay)
+    public function addhinhanh($hinh,$ngay)
     {
-        $query = 'insert into hinhanh(hinh1,vitri,ngay) values(?,?,?)';
+        $query = 'insert into hinhanh(hinh1,ngay) values(?,?)';
         $param = array();
         $param[] = $hinh;
-        $param[] = $vitri;
         $param[] = $ngay;
         $rs = $this->doQuery($query, $param);
         return $rs;
@@ -665,15 +668,19 @@ class Users extends Database{
     }
     public function carosoulpanel()
     {
-        $query ="select * from hinhanh where vitri = 1 order by hinhID desc limit 0,3 ";
+        $query ="select * from hinhanh order by hinhID desc limit 0,3 ";
         $rs = $this->doQuery($query);
         return $rs;
     }
     public function carosoulpane2()
     {
-        $query ="select * from hinhanh where vitri=2 order by hinhID desc limit 0,1 ";
+        $query ="select * from hinhanh order by hinhID desc limit 0,1 ";
         $rs = $this->doQuery($query);
         return $rs;
+    }
+    public function editphiship()
+    {
+        
     }
     
 }

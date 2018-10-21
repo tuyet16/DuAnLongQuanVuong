@@ -18,7 +18,8 @@
                 $('#hoten').val(tim['ten']);
                 $('#dc').val(tim['diachi']);
                 $('#quan').val(tim['quan']);
-                $('#ps').text(tim['phiship']);
+                $('#ps').text(tim['phiship']); 
+                $('#tongtien').text(tim['tongtien']);
             });            
         });
     });
@@ -114,7 +115,6 @@ $().ready(function() {
                 <td>Số lượng</td>
                 <td>Giá Thành</td>
                 <td>Thành Tiền</td>
-                <td>Phí Ship</td>
                 <td></td>
             </tr>
             <?php foreach($rsCart as $row){ ?>            
@@ -128,13 +128,12 @@ $().ready(function() {
                 <td><label><?php echo $row['soluong']; ?></label></td>
                 <td><?php echo number_format($row['gia']); ?></td>
                 <td><?php echo number_format($row['thanhtien']); ?></td>
-                <td><?php echo number_format($row['thanhtien']); ?></td>
                 
             </tr>
             <?php }?>
             <tr>
                 <td colspan="3" class="text-right" style="color: red; font-weight: bold;">Tổng tiền</td>
-                <td style="color: blue; font-weight: bold;"><?php echo number_format($tongtien);?></td>
+                <td style="color: blue; font-weight: bold;"><div id="tongtien"></div></td>
             </tr>   
                 
                 

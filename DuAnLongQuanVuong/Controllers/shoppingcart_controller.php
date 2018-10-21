@@ -108,7 +108,7 @@
             $shopping_ml->ViewCart(); 
             $tongtien = $shopping_ml->getTotal();
             $customer_id = $shopping_ml->addCustomer($hoten,$diachi,$dienthoai,$quan);
-            $nguoitra = $_POST['nguoitraship'];
+            $nguoitra = $_POST['nguoitraship'];           
             if($customer_id !=Null)
             {
                 $thoigian = date("Y-m-d H:i:s");
@@ -142,6 +142,9 @@
             $rsvitriqc2 = $user->carosoulpane2();
                 $shopcarts = new ShoppingCart();
                 $tk = $shopcarts->timkiem($_POST['sdt']);
+                $tt = $shopcart->ViewCart();
+                $tongtien = $shopcart->getTotal();
+                
                 if($tk !=null)
                 {
                     $Arrtimkiem = array();
@@ -152,7 +155,8 @@
                         $Arrtimkiem['diachi'] = $sdt->address;                        
                     }
                     $phiship  = $shopcarts->tinhphidichvu($Arrtimkiem['quan'],$_POST['ghthuong']);
-                    $Arrtimkiem['phiship'] = $phiship[0]->phiship;
+                    $Arrtimkiem['phiship'] = $phiship;
+                    $Arrtimkiem['tongtien'] = $tongtien+$phiship;
                 }
                 else
                 {
@@ -160,7 +164,7 @@
                     $Arrtimkiem['quan'] = " ";
                     $Arrtimkiem['diachi'] = "";
                     $Arrtimkiem['phiship'] = "";
-                   
+                   $Arrtimkiem['tongtien'] = "";
                 }
                  echo json_encode($Arrtimkiem);
         break;
