@@ -14,7 +14,6 @@
         case 'add':
          $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             if(isset($_GET['id']))
             {
                 $masp = $_GET['id'];
@@ -28,7 +27,6 @@
         case 'viewcart':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             $category = new Categories();
             
             $dsCategories = $category->getCategories();
@@ -55,7 +53,7 @@
         case 'updatecart':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
+
             $shopcart = new ShoppingCart();
             $_SESSION['sosl'] = $shopcart->getTongsl();
             if(isset($_POST['submit'])){
@@ -70,7 +68,7 @@
         case 'deletecart':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
+
             if(isset($_GET['id']))
             {
                 $masp = $_GET['id'];
@@ -83,7 +81,7 @@
         case 'muahang':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
+
             $view = Page::View();
             $dt_model = new districts();
             $DSdistrict = $dt_model->getDistrict();
@@ -97,7 +95,6 @@
         case 'dathang':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             $hoten = $_POST['hoten'];
             $dienthoai = $_POST['dienthoai'];
             $quan = $_POST['quan'];
@@ -106,7 +103,7 @@
             $DSdistrict = $district->getByIDDistrict($quan);
             $shopping_ml = new ShoppingCart();  
             $shopping_ml->ViewCart(); 
-            $tongtien = $shopping_ml->getTotal();
+            //$tongtien = $shopping_ml->getTotal();
             $customer_id = $shopping_ml->addCustomer($hoten,$diachi,$dienthoai,$quan);
             $nguoitra = $_POST['nguoitraship'];           
             if($customer_id !=Null)
@@ -116,7 +113,7 @@
                 $address = $diachi.' '.$DSdistrict[0]->districtName;
                 $ship = $shopping_ml->tinhphidichvu($quan,$giaohang);
                // echo $ship;
-                $bills_id = $shopping_ml->addBills($customer_id,$address,$thoigian,$giaohang,$tongtien,$ship,$nguoitra);                 
+                $bills_id = $shopping_ml->addBills($customer_id,$address,$thoigian,$giaohang,0,$ship,$nguoitra);                 
                 if($bills_id !=null)
                 {
                     foreach($_SESSION['cart'] as $masp=>$amount)
@@ -125,7 +122,7 @@
                         $rsProducts = $model_pr->getByIDProduct($masp);
                         $gia = $rsProducts[0]->price;
                         $thanhtien = $amount * $rsProducts[0]->price;
-                        $detail_id = $shopping_ml->addDetails($masp,$amount,$gia,$thanhtien,$ship,$bills_id);
+                        $detail_id = $shopping_ml->addDetails($masp,$amount,$gia,$thanhtien,$bills_id);
                     }
                     unset($_SESSION['cart']); 
                     header('Location: home_controller.php');                   
@@ -139,11 +136,10 @@
         case "timkiem":
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
                 $shopcarts = new ShoppingCart();
                 $tk = $shopcarts->timkiem($_POST['sdt']);
-                $tt = $shopcart->ViewCart();
-                $tongtien = $shopcart->getTotal();
+                $tt = $shopcarts->ViewCart();
+                $tongtien = $shopcarts->getTotal();
                 
                 if($tk !=null)
                 {
@@ -155,8 +151,8 @@
                         $Arrtimkiem['diachi'] = $sdt->address;                        
                     }
                     $phiship  = $shopcarts->tinhphidichvu($Arrtimkiem['quan'],$_POST['ghthuong']);
-                    $Arrtimkiem['phiship'] = $phiship;
-                    $Arrtimkiem['tongtien'] = $tongtien+$phiship;
+                    $Arrtimkiem['phiship'] = number_format($phiship);
+                    $Arrtimkiem['tongtien'] = number_format($tongtien+$phiship);
                 }
                 else
                 {

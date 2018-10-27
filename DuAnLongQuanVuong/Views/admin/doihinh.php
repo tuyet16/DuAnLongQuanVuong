@@ -3,11 +3,10 @@
     <fieldset>
         <legend>Thêm Hình Quảng Cáo</legend>        
        	<div class="col-md-9" style="padding-bottom: 20px;">
-            <form action="?action=doihinh" method="post" >  
+            <form action="?action=doihinh" method="post" enctype="multipart/form-data">  
                 <div class="row">
                     <div class="col-md-2">Chọn hình</div>
                     <div class="col-md-8">
-                    	<?php echo $img;?>
                         <input type="file" name="upimg" class="form-control" />
                     </div>
                      <div class="col-md-2"><input type="submit" class="btn btn-primary" name="submit" value="Lưu"/></div>

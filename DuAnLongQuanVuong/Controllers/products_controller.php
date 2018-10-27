@@ -14,7 +14,6 @@
 		case 'index':  
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             if(!isset($_SESSION['userid'])){
                 $category = new Categories();
                 $dsCategories = $category->getCategories();
@@ -42,7 +41,6 @@
         case 'themsanpham':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             $tensp= $_POST['tensp'];
             $loaisp = $_POST['categoryID'];
             $donvi = $_POST['unitID'];
@@ -59,7 +57,6 @@
         case 'suasanpham':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
             if(isset($_GET['id']))
             {
                 $id = $_GET['id'];
@@ -106,7 +103,6 @@
         case "xoasanpham":
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 			if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){
 					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);

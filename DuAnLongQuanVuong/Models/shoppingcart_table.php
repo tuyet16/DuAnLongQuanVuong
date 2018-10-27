@@ -109,15 +109,14 @@
             $con = $this->getconnect();
             return $con->lastInsertId('billID');
         }
-        public function addDetails($prodcutID,$amount,$price,$thanhtien,$phishipshop,$billID)
+        public function addDetails($prodcutID,$amount,$price,$thanhtien,$billID)
         {
-            $query ='insert into detailsbills(productID,amount,price,thanhtien,phishipshop,billID) values(?,?,?,?,?,?)';
+            $query ='insert into detailsbills(productID,amount,price,thanhtien,billID) values(?,?,?,?,?)';
             $param = array();
             $param[] = $prodcutID;
             $param[] = $amount;
             $param[] = $price;
             $param[] = $thanhtien;
-            $param[] = $phishipshop;
             $param[] = $billID;
             $this->doQuery($query,$param);
         }

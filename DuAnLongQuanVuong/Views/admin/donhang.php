@@ -40,7 +40,8 @@
       </tr>
             <?php $i=1; if($DSdonhang != null && $date != ""){ 
               foreach($DSdonhang as $billID=>$db){ 
-                //print_r($db);
+  
+                //print_r($db['thongtinbill'][3]);
                // if($db != $us['thongtinshop']){ ?>                     
                     
           <tr style="background-color: #000; color: #FFF;">
@@ -52,7 +53,7 @@
                             }
                             else
                             {echo 'Giao Nhanh';}?></td>
-            <td>&nbsp;<?php echo $db['thongtinbill'][3]; $tong += $db['thongtinbill'][3];?></td>
+            <td>&nbsp;<?php echo $db['thongtinbill'][3];  $tong += $db['thongtinbill'][3];?></td>
             <td>&nbsp;<?php echo date_format($dt,'d-m-Y'); ?></td>
             <td>             
                 <a class="collapsed card-link" data-toggle="collapse" style="color: #fff;" 
@@ -95,27 +96,21 @@
                  <div class="row"> 
                   <label>Phí Ship:  <?php echo $db['thongtinbill'][8]; ?></label>
                 </div>
-                <div class="row">                       
-                    <div class="col-md-10" style="color: red; font-weight: bold;">
-                    <?php if($db['thongtinbill'][7]==1)
-                        {
-                            echo 'Người Thanh Toán Phí Ship: Khách Hàng ';
-                        }
-                        ?>
-                    </div>
-                </div>
+                
                     <?php if(isset($_POST['nhanvien'])){
                         $select = $_POST['nhanvien'];
                     } ?>
                     <div class="row">
                      <?php
                       foreach($db as $us=>$user){ 
-                        //print_r($key);
+                    // print_r($user['sodetailshop']);
+                       // print_r($user);
                       if(is_numeric($us))
-                      {                         
+                      {    
+                        
                         ?> 
-                         <div><?php  echo $db[$us]['tenshop'][0] ;?></div> 
-                         <div><?php  echo $db[$us]['tenshop'][1] ;?></div> 
+                         <div style="color: blue;font-weight: bold;"><?php  echo $db[$us]['tenshop'][0] ;?></div> 
+                         <div style="color: blue; font-weight: bold;"><?php  echo $db[$us]['tenshop'][1] ;?></div> 
                 
                         <form method="post" action="?action=editnhanvien">
                         <table class="table table-bordered table-striped text-center">
@@ -128,64 +123,92 @@
                                 <td>Đơn vị</td>
                                 <td>Giá</td>
                                 <td>Giảm giá</td>
-                                <td>Phí Phụ Thu</td>
-                                <td>Phí Ship</td>
+                                <td>Phí Phụ Thu</td>                                
                                 <td>Thành tiền</td>
                             </tr>                            
                             <?php $a=1;
-                             foreach($user as $key=>$detail_item){ 
+                             foreach($user as $key=>$detail){
+                                //print_r($user);
+                                foreach($detail as $detail_item)
+                                {                                    
                                 if($key== 'detail')
                                 {
-                                if($detail_item != null){?>
+                                    $masp=0;
+                                    $maphiship =0; 
+                                if($detail_item != null){
+                                    $masp= $detail_item[1];
+                                    $maphiship = $detail_item[0];                                     
+                                    
+                                ?>    
+                                <div class="row">                       
+                                <div class="col-md-10" style="color: red; font-weight: bold;">
+                                
+                                <?php
+                                $flag =0;
+                                 if($detail_item[11]==1)
+                                {
+                                    $flag=1;
+                                    echo 'Người Thanh Toán Phí Ship: Khách Hàng ';
+                                }
+                                else
+                                {
+                                    $flag=0;
+                                    //echo 'Người Thanh Toán Phí Ship: Shop Thanh Toán ';
+                                }
+                                ?>
+                                </div>
+                            </div>                            
                             <tr>
                                 <td><?php echo $a++; ?></td>
-                                <td><?php echo $detail_item[0][4]; 
-                                    if(isset($thongke[$detail_item[0][4]]))
+                                <td><?php echo $detail_item[4]; 
+                                    if(isset($thongke[$detail_item[4]]))
                                     {
-                                        $thongke[$detail_item[0][4]] += $detail_item[0][2]; 
+                                        $thongke[$detail_item[4]] += $detail_item[2]; 
                                         //$thongke[$detail_item[4]].=' '.$detail_item[5];
                                     }
                                     else
                                     {
-                                        $thongke[$detail_item[0][4]] = $detail_item[0][2];
+                                        $thongke[$detail_item[4]] = $detail_item[2];
                                         //$thongke[$detail_item[4]].=' '.$detail_item[5];
                                     }
                                     ?></td>
-                                <td><?php echo $detail_item[0][2];  ?></td>
-                                <td><?php echo $detail_item[0][5]; ?></td>
-                                <td><?php echo number_format($detail_item[0][6]); ?></td>
+                                <td><?php echo $detail_item[2];  ?></td>
+                                <td><?php echo $detail_item[5]; ?></td>
+                                <td><?php echo number_format($detail_item[6]); ?></td>
                                 <td>
-                                    <?php echo $detail_item[0][7]; ?>%
-                                                                           
-                                    <?php  } ?>
-                                   
+                                    <?php echo $detail_item[7]; ?>%
                                 </td>
                                 <td style=" color: red; font-weight:bold">
-                                    <input type="text" name="phuthu<?php echo $detail_item[0][0]; ?>" value="<?php echo number_format($detail_item[0][8]); ?>" />
-                                </td>
-                                <td style=" color: red; font-weight:bold">
-                                    <input type="text" name="phiship<?php echo $detail_item[0][0]; ?>" 
-                                            value="<?php echo number_format(ceil($db['thongtinbill'][8]/1000/$db['soshop']*1.0)*1000); ?>" />
-                                </td>
-                                 <input type="hidden" name="detailID" value="<?php echo $detail_item[0][0]; ?>"/>
-                                <input type="hidden" name="gia<?php echo $detail_item[0][0]; ?>" value="<?php echo $detail_item[0][6]; ?>" />
-                                <td><?php echo number_format($detail_item[0][3]); ?></td>
+                                    <input type="text" name="phuthu<?php echo $detail_item[0]; ?>" value="<?php echo number_format($detail_item[8]); ?>" />
+                                </td>                             
+                              
+                                 <input type="hidden" name="detailID" value="<?php echo $detail_item[0]; ?>"/>
+                                <input type="hidden" name="gia<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[0][6]; ?>" />
+                                <td><?php echo number_format($detail_item[3]); ?></td>
                             </tr>
-                           <?php }}?> 
+                           <?php }}} }?>
+                             <td>Phí Ship</td>
+                            <td style=" color: red; font-weight:bold">
+                                <input type="text" name="phiship<?php echo $maphiship.'_'.$flag; ?>" 
+                                    value="<?php echo number_format(ceil($db['thongtinbill'][8]/1000/$db['soshop']*1.0)*1000); ?>" />
+                            </td>                           
+                            <?php  ?>
                         </table>
                         <?php }}
                         $shipper = '';
+                       
                         ?>                        
                         <div class="row">
                             <div class="col-md-3 text-right">
                                 <div class="row">
                                 Chọn nhân viên:                             
                                     <select name="nhanvien">
-                                    <?php foreach($db[1] as $key=>$employee){ 
-                                        
+                                    <?php foreach($db[1] as $key=>$employee){                             
+                                    
                                         if($key=='nhanvien')
                                         {
-                                        foreach($employee as $nv)
+                                        foreach($employee as $nv){
+                                        print_r($nv);
                                         if($db['thongtinbill'][6] == $nv[0]){
                                             $shipper = $nv[2];  
                                         ?>
@@ -195,7 +218,7 @@
                                      ?>
                                      <option value="<?php echo $nv[0]; ?>"><?php echo $nv[2]; ?></option>
                                      <?php
-                                        }
+                                        }}
                                      }}
                                      ?>
                                     </select>                            

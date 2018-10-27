@@ -15,7 +15,7 @@
             if($doanhthu == null){
                 echo ' <h1 class="text-center">Chưa có dữ liệu ngày này</h1>';
             }
-            else{
+            else{ print_r($doanhthu);
                 
         ?>      
       <div class="text-center" style="font-weight: bold;font-size: 17px; color: red;">THỐNG KÊ DOANH THU
@@ -46,6 +46,7 @@
       <div class="row">
           <div class="col-md-12"  style="font-weight: bold;font-size: 17px; color: navy;">
            Tổng Phụ Thu : <?php echo number_format($doanhthu['tongphuthuall']); ?>
+          
           </div>
       </div>
       <div class="row">
@@ -124,6 +125,7 @@
                 <td>Thành tiền</td>
                 <td>Nhân Viên giao</td>
                 <td>Phí Ship</td>
+                <td>Phí Phụ thu</td>
             </tr>
             
             <?php $i=1; foreach($us['thongtinshop'] as $k=>$dthu){ 
@@ -138,6 +140,7 @@
                 <td><?php echo $dthu[0]['tongtientungbill']; ?></td>
                 <td><?php echo $dthu[0][3]; ?></td>
                 <td><?php echo $dthu[0][5]; ?></td>
+                <td><?php echo $dthu[0]['tongphuthu']; ?></td>
             </tr>
             <?php }} 
             }}?>

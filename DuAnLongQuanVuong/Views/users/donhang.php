@@ -201,7 +201,7 @@
                     <div class="col-md-12"><label class="control-label">Phí Giao Hàng</label><br /></div>
                     <div class="col-md-12">
                         <div class="col-md-3">
-                            <input type="radio" name="nguoitraship" value="0" <?php if($db[0][7]==0)
+                            <input type="radio" name="nguoitraship" value="0" <?php if($detail_item[8]==0)
                                                                                 {
                                                                                     echo 'checked="checked"' ;                                                                              
                                                                                     
@@ -212,7 +212,7 @@
                                                                                      ?>   /> Chủ Trả Phí
                         </div>
                         <div class="col-md-3">
-                            <input type="radio" name="nguoitraship" value="1" <?php if($db[0][7]==1)
+                            <input type="radio" name="nguoitraship" value="1" <?php if($detail_item[8]==1)
                                                                                 {
                                                                                     echo 'checked="checked"' ;                                                                              
                                                                                     

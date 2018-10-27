@@ -14,7 +14,6 @@
 		case 'add_surcharge':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 			$surcharge = new Surcharge();
 			$name = filter_input(INPUT_POST, 'txtname');
 			if($name == NULL)
@@ -48,7 +47,7 @@
 		case 'edit_surcharge':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
+
 			$surcharge = new Surcharge();
 			if(isset($_GET['id']))
             {$id = $_GET['id'];
@@ -83,7 +82,6 @@
 		case 'delete_surcharge':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 			$surcharge = new Surcharge();
 			if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){

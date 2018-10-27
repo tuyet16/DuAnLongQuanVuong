@@ -80,7 +80,7 @@ class Users extends Database{
             $donhangarr[$bill->PurchaseDate][$bill->billID][0]= array($bill->customerID,$bill->billingAddress
                                                                     ,$bill->delivery,$bill->totalPrice,
                                                                     $bill->tinhtrang,$bill->shopcheck, 
-                                                                    $bill->PurchaseDate,$bill->nguoitraship);
+                                                                    $bill->PurchaseDate);
             $tongtien += $bill->totalPrice;
             $sql = 'select * from customers cs, districts dt where cs.districtID = dt.districtID and customerID=?';
             $param =array();
@@ -106,7 +106,8 @@ class Users extends Database{
                                                                     $detail->unitName,
                                                                     $detail->gia,
                                                                     $detail->discount,
-                                                                    $detail->shop_acceptance);
+                                                                    $detail->shop_acceptance,
+                                                                    $detail->nguoitraship);
                 if($detail->discount != 0){
                     $tong_dt += $detail->amount * $detail->gia * ((100-$detail->discount)/100);
                 }
@@ -125,21 +126,23 @@ class Users extends Database{
         $param[] =$id;
         $this->doQuery($sql,$param);
     }
-    public function editDetailPriceByID($soluong,$gia,$giamgia,$nguoitra,$detailID,$billID)
+    //cập nhật số tiền mà shop đã trao đổi với khách hàng về đơn hàng và thay đổi phí ship là do ai trả khách hay shop
+    public function editDetailPriceByID($soluong,$gia,$giamgia,$nguoitra,$detailID)
     {
-        $sql ='update detailsbills set amount=?,price=?,discount=? where detailID =?';
+        $sql ='update detailsbills set amount=?,price=?,discount=?, nguoitraship=? where detailID =?';
         $param = array();
         $param[]=$soluong;
         $param[]= $gia;
-        $param[] = $giamgia;        
+        $param[] = $giamgia;
+        $param[] = $nguoitra;        
         $param[] =$detailID;
         $this->doQuery($sql,$param);
         
-        $sql1 ="update bills set nguoitraship=? where billID=?";
-        $param = array();
-        $param[] = $nguoitra;
-        $param[] =$billID;
-        $this->doQuery($sql1,$param);
+       // $sql1 ="update bills set nguoitraship=? where detailID=?";
+//        $param = array();
+//        $param[] = $nguoitra;
+//        $param[] =$billID;
+//        $this->doQuery($sql1,$param);
     }
     public function editBillByID($price,$billID)
     {
@@ -149,17 +152,44 @@ class Users extends Database{
         $param[] = $billID;
         $this->doQuery($sql,$param);
     }
+    //khi nhấn gửi đơn hàng thì sẽ cập nhật tình trạng shop đã gửi đơn hàng cho shop
     public function guidonhang($id)
     {
         $detail_id_arr = explode('_', $id);
         $questions = str_repeat('?,', count($detail_id_arr)-1) . '?';
-        
+        print_r($detail_id_arr);
         $query = "update detailsbills set shop_acceptance=1 where detailID IN ($questions)";
         $param = array();
         foreach($detail_id_arr as $detail_id){
             $param[] = $detail_id;
         }
         $rs = $this->doQuery1($query,$param);
+        $query1= "select bi.totalPrice, bi.billID from detailsbills dt, bills bi where dt.billID = bi.billID and dt.detailID =?";
+        $param = array();
+        $param[] = $detail_id_arr[0];
+        $rs = $this->doQuery($query1,$param);
+        $totalprice = $rs[0]->totalPrice;
+       // echo $totalprice;
+        
+        $billID = $rs[0]->billID;
+        //echo $billID.'<br/>';
+        $sql = "select thanhtien from detailsbills where detailID=?";        
+        foreach($detail_id_arr as $detailID )
+        {
+            $param = array();
+            $param[] = $detailID;
+            $rs1 = $this->doQuery($sql,$param);
+            $totalprice+= $rs1[0]->thanhtien;
+           // echo $rs1[0]->thanhtien.'<br/>';
+            //echo $totalprice.'<br/>';
+        }
+        echo $totalprice;
+        $sql1 ='update bills set totalPrice=? where billID=? ';
+        $param = array();
+        $param[]= $totalprice;
+        $param[] = $billID;
+        $this->doQuery($sql1,$param);
+    
     }
     //Phần  này của admin
     
@@ -220,6 +250,7 @@ class Users extends Database{
               
         return $donhangarr;
     }
+    //đơn hàng mà admin nhận mỗi ngày
     public function gethoadonAmin($ngay=null)
     {
         $tongtien =0;
@@ -240,7 +271,8 @@ class Users extends Database{
                     order by bi.PurchaseDate';
             $param = array();
             $bi = $this->doQuery($query); 
-        }                         
+        }    
+                          
         foreach($bi as $bill)
         {
             $donhangarr[$bill->billID]['thongtinbill']= array($bill->customerID,$bill->billingAddress,$bill->delivery
@@ -261,7 +293,8 @@ class Users extends Database{
             $param = array();
             $param[] =$bill->billID;
             $rs = $this->doQuery($query1,$param); 
-            $soshop=0;          
+            $soshop=0;   
+             
             foreach($rs as $user)
             {
                 $donhangarr[$bill->billID][$user->userid]['tenshop']= array($user->fullname,$user->phone);        
@@ -277,7 +310,9 @@ class Users extends Database{
                 {
                     $donhangarr[$bill->billID][$user->userid]['detail'][]=array($detail->detailID,$detail->productID,$detail->amount
                                             ,$detail->price,$detail->productName,$detail->unitName,$detail->gia,$detail->discount,
-                                            $detail->phuthu,$detail->phishipshop,$detail->phishipkh);
+                                            $detail->phuthu,$detail->phishipshop,$detail->phishipkh,$detail->nguoitraship,$detail->thanhtien);
+                    //$tongtien = sum($detail->thanhtien); 
+            
                 }                            
                
                 $sqlnhanvien = 'select * from employees ';
@@ -287,11 +322,12 @@ class Users extends Database{
                     $donhangarr[$bill->billID][$user->userid]['nhanvien'][]=array($employee->idEm,$employee->employeeID,$employee->employeeName);
                 }                                   
             } $donhangarr[$bill->billID]['soshop']= $soshop; 
+           // $donhangarr[$bill->billID]['thanhtien']= $tongtien;      
         }
         return $donhangarr;
     } 
-   
-    public function editnhanvien($date, $idEm,$phuthu,$phishipshop, $phishipkh,$id)
+   //Cập nhật nhân viên giao hàng, cập nhật phí ship và phụ thu các shop
+    public function editnhanvien($date, $idEm,$phuthu,$phishipshop,$id)
     {
         $query = 'update bills set setDate=?, idEm=? where billID=?';
         $param = array();
@@ -299,19 +335,28 @@ class Users extends Database{
         $param[] = $idEm;
         $param[] = $id;
         $this->doQuery($query,$param);
-       //print_r($param);
+        
        foreach($phuthu as $dtID=>$pt){
-        $sql = 'update detailsbills set phuthu=?, phishipshop=?, phishipkh=? where detailID=?';
-        $param = array();
-        $param[] = $pt;
-        $param[] = $dtID;
-        $param[] = $phishipshop;
-        $param[] = $phishipkh;
-        $this->doQuery($sql,$param);
+            $sql = 'update detailsbills set phuthu=? where detailID=?';
+            $param = array();
+            $param[] = $pt;    
+            $param[] = $dtID;
+            $this->doQuery($sql,$param);
         }
-        //print_r($param);
+    //print_r($phishipshop);
+        foreach($phishipshop as $k=>$ps)
+        {
+            $sql = 'update detailsbills set phishipshop=?,phishipkh=? where detailID=? ';
+            $param = array();
+            $param[] = $ps[0];
+            $param[] = $ps[1];
+            $param[] = $k;
+            $this->doQuery($sql,$param);
+            // print_r($sql);
+        }
+       
     } 
-   
+   //edit tình trạng giao hàng đã giao hoặc chưa giao
     public function edittinhtrang($tinhtrang,$ghichu,$phiship,$luongnv,$id)
     {
         $query ='Update bills set tinhtrang =?, ghichu=?, phiship=?,luongnv=?  where billID=?';
@@ -324,6 +369,7 @@ class Users extends Database{
         $rs = $this->doQuery($query,$param);
         return $rs;
     }
+    //Danh sách các đơn hàng và trong tình trạng đã giao hay chưa
     public function getTinhtrang($date=null)
     {
         $tinhtrangArr = array();
@@ -419,11 +465,11 @@ class Users extends Database{
                  foreach($dt as $detail)
                  {
                     $thongkeArr[$user->userid]['thongtinshop'][$i][1][]=array($detail->detailID,$detail->phuthu,
-                                    $detail->price,$detail->amount,$detail->thanhtien);
+                                    $detail->price,$detail->amount,$detail->thanhtien,$detail->phishipshop,$detail->phishipkh);
                     $tongphuthu += $detail->phuthu;
                    if($tt->tinhtrang == 2)
                     { 
-                    $tongtientungbill += $detail->price* $detail->amount;
+                    $tongtientungbill += $detail->thanhtien;  
                     $tongdoanhthushop += $detail->thanhtien;  
                     $tongphuthushop+= $detail->phuthu;
                     }
@@ -431,8 +477,7 @@ class Users extends Database{
                  }   
                  $thongkeArr[$user->userid]['thongtinshop'][$i][0]['tongphuthu']=$tongphuthu;
                   $thongkeArr[$user->userid]['thongtinshop'][$i][0]['tongtientungbill']=$tongtientungbill;
-                  //$thongkeArr[$user->userid]['thongtinshop'][$i][0]['tongdoanhthushop']=$tongdoanhthushop;
-                  
+                  //$thongkeArr[$user->userid]['thongtinshop'][$i][0]['tongdoanhthushop']=$tongdoanhthushop;                  
                   $i++;
                 if($tt->tinhtrang == 2)
                 {
@@ -632,19 +677,18 @@ class Users extends Database{
         return $thongkenamArr;
     }
     //đổi hình ảnh panel
-    public function doihinhpanel($hinh,$vitri,$id)
+    public function doihinhpanel($ngay,$id)
     {
-        $query = 'update hinhanh set hinh1=?, vitri=? where hinhID=?';
+        $query = 'update hinhanh set ngay=? where hinhID=?';
         $param = array();
-        $param[] = $hinh;
-        $param[] = $vitri;
+		$param[]=$ngay;
         $param[] = $id;
         $rs = $this->doQuery($query, $param);
         return $rs;
     }
     public function addhinhanh($hinh,$ngay)
     {
-        $query = 'insert into hinhanh(hinh1,ngay) values(?,?)';
+        $query = 'INSERT INTO hinhanh(hinh1,ngay) VALUES (?,?)';
         $param = array();
         $param[] = $hinh;
         $param[] = $ngay;
@@ -658,17 +702,9 @@ class Users extends Database{
         $rs = $this->doQuery($query);
         return $rs;
     }
-    public function doiquangcao($id)
-    {
-        $query = 'select * from hinhanh where hinhID=?';
-        $param = array();
-        $param[] =$id;
-        $rs = $this->doQuery($query,$param);
-        return $rs;
-    }
     public function carosoulpanel()
     {
-        $query ="select * from hinhanh order by hinhID desc limit 0,3 ";
+        $query ="select * from hinhanh order by ngay desc limit 0,3 ";
         $rs = $this->doQuery($query);
         return $rs;
     }
@@ -682,7 +718,6 @@ class Users extends Database{
     {
         
     }
-    
 }
 
 

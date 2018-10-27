@@ -15,7 +15,6 @@
 		{
             $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 			$tableDB = new Database();
             $tables = $tableDB->getTables();
 			$dsEmployees=$model->getEmployees();
@@ -29,7 +28,6 @@
 		case 'xemchitiet':{
 			 $user = new Users();
 			$rsvitriquangcao1 = $user->carosoulpanel();
-			$rsvitriqc2 = $user->carosoulpane2();
 			$tableDB = new Database();
             $tables = $tableDB->getTables();
 			$view = Page::View();
@@ -50,16 +48,16 @@
 		{	
             $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 			$name = filter_input(INPUT_POST, 'manv');
-			if($name == NULL)
+			if($name != NULL)
 			{
 				$tennv=$_POST['tennv'];
 				$dc = $_POST['diachi'];
 				$dt = $_POST['sdt'];
 				$i = $_FILES['hinhanh'];
 				$img = Image::GetFile($i);
-				$model->insertNewEmployee($manv,$tennv,$dc,$dt,$img);
+				$model = new Employees();
+				$model->insertNewEmployee($name,$tennv,$dc,$dt,$img);
 				header('Location: employees_controller.php');
 			}
 			break;
@@ -67,7 +65,6 @@
         case 'bangluong':
             $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 			$tableDB = new Database();
             $tables = $tableDB->getTables();
 			$view = Page::View();
@@ -80,7 +77,6 @@
 		{
 		   $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 			$name = filter_input(INPUT_POST, 'idem');
 			if($name == NULL)
 			{
@@ -130,7 +126,6 @@
 		{
 		   $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 			if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){
 					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);

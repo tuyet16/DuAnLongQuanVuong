@@ -15,7 +15,6 @@
 		{
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 			$tableDB = new Database();
             $tables = $tableDB->getTables();
            	$dsUnit = $unit->getUnits();
@@ -26,7 +25,7 @@
 		case 'index':  
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
+ 
             $dsUnit = $units->getUnits();
 			$dsCategories= $model->getCategories();   
 			$view = Page::View();
@@ -40,7 +39,7 @@
 		{
             $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
+       
 			$ten = filter_input(INPUT_POST, 'ten');
 			if($ten == NULL)
 			{
@@ -95,7 +94,7 @@
 		case 'edit_unit':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
+      
 			if(isset($_GET['id']))
             {$id = $_GET['id'];
               try{
@@ -162,7 +161,6 @@
 		case "delete_unit":
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $rsvitriqc2 = $user->carosoulpane2();
 			if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){
 					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);
