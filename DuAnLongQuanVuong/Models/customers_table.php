@@ -32,7 +32,6 @@ class Customers extends Database {
 			$param[]=$dc;
 			$param[]=$dt;
 			$param[]=$quan;
-			$param[]=$phuong;
             $this->doQuery($query,$param);
         }
         public function editCustomer($name,$dc,$dt,$quan,$id)

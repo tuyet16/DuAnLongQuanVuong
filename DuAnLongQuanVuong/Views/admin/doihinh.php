@@ -5,9 +5,11 @@
        	<div class="col-md-9" style="padding-bottom: 20px;">
             <form action="?action=doihinh" method="post" enctype="multipart/form-data">  
                 <div class="row">
-                    <div class="col-md-2">Chọn hình</div>
-                    <div class="col-md-8">
-                        <input type="file" name="upimg" class="form-control" />
+                    <div class="row">
+                        <div class="col-md-2">Chọn hình</div>
+                        <div class="col-md-8">
+                            <input type="file" name="upimg" class="form-control" />
+                        </div>
                     </div>
                      <div class="col-md-2"><input type="submit" class="btn btn-primary" name="submit" value="Lưu"/></div>
                 </div>                   
@@ -28,7 +30,9 @@
 				<td>&nbsp;'.$i++.'</td>
 				<td>&nbsp;<img src="../Views/img/thumb/thumb_'.$row->hinh1.'"/></td>	
 				<td><a href="../Controllers/admin_controller.php?action=doiquangcao&id='.$row->hinhID.'">
-                    <span class="glyphicon glyphicon-pencil"></span></a> &nbsp; 
+                    <span class="glyphicon glyphicon-pencil"></span></a> &nbsp
+                    <a href="../Controllers/admin_controller.php?action=deletehinh&id='.$row->hinhID.'">
+                    <span class="glyphicon glyphicon-remove"></span></a>
 			  </tr>';
         } ?>
     </table>

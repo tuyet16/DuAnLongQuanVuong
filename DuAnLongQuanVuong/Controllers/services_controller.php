@@ -13,6 +13,7 @@
 	switch($action){
 		case 'index':
              $user = new Users();
+             $dsquydinh= $user->tieude();
             $rsvitriquangcao1 = $user->carosoulpanel();
             $category = new Categories();
             $dsCategories = $category->getCategories();

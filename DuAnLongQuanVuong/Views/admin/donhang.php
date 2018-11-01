@@ -104,13 +104,13 @@
                      <?php
                       foreach($db as $us=>$user){ 
                     // print_r($user['sodetailshop']);
-                       // print_r($user);
+                       //print_r($user);
                       if(is_numeric($us))
                       {    
-                        
-                        ?> 
-                         <div style="color: blue;font-weight: bold;"><?php  echo $db[$us]['tenshop'][0] ;?></div> 
-                         <div style="color: blue; font-weight: bold;"><?php  echo $db[$us]['tenshop'][1] ;?></div> 
+                        ?> <div class="col-md-2">Tên Shop:</div>
+                         <div class="col-md-10" style="color: blue;font-weight: bold;"> <?php  echo $db[$us]['tenshop'][0] ;?></div> 
+                         <div class="col-md-2">Số Điên Thoại:</div>
+                         <div class="col-md-10" style="color: blue; font-weight: bold;"> <?php  echo $db[$us]['tenshop'][1] ;?></div> 
                 
                         <form method="post" action="?action=editnhanvien">
                         <table class="table table-bordered table-striped text-center">
@@ -127,18 +127,18 @@
                                 <td>Thành tiền</td>
                             </tr>                            
                             <?php $a=1;
+                            $i= false;
                              foreach($user as $key=>$detail){
                                 //print_r($user);
                                 foreach($detail as $detail_item)
                                 {                                    
-                                if($key== 'detail')
+                                if($key == 'detail')
                                 {
                                     $masp=0;
                                     $maphiship =0; 
-                                if($detail_item != null){
-                                    $masp= $detail_item[1];
-                                    $maphiship = $detail_item[0];                                     
-                                    
+                                    if($detail_item != null){
+                                        $masp= $detail_item[1];
+                                        $maphiship = $detail_item[0];                                     
                                 ?>    
                                 <div class="row">                       
                                 <div class="col-md-10" style="color: red; font-weight: bold;">
@@ -148,12 +148,16 @@
                                  if($detail_item[11]==1)
                                 {
                                     $flag=1;
-                                    echo 'Người Thanh Toán Phí Ship: Khách Hàng ';
+                                    if($i==false)
+                                    {
+                                       echo 'Người Thanh Toán Phí Ship: Khách Hàng'; 
+                                       $i= true;
+                                    }
+                                    
                                 }
                                 else
                                 {
                                     $flag=0;
-                                    //echo 'Người Thanh Toán Phí Ship: Shop Thanh Toán ';
                                 }
                                 ?>
                                 </div>
@@ -179,12 +183,12 @@
                                     <?php echo $detail_item[7]; ?>%
                                 </td>
                                 <td style=" color: red; font-weight:bold">
-                                    <input type="text" name="phuthu<?php echo $detail_item[0]; ?>" value="<?php echo number_format($detail_item[8]); ?>" />
+                                    <input type="text" name="phuthu<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[8]; ?>" />
                                 </td>                             
                               
                                  <input type="hidden" name="detailID" value="<?php echo $detail_item[0]; ?>"/>
                                 <input type="hidden" name="gia<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[0][6]; ?>" />
-                                <td><?php echo number_format($detail_item[3]); ?></td>
+                                <td><?php echo number_format($detail_item[12]); ?></td>
                             </tr>
                            <?php }}} }?>
                              <td>Phí Ship</td>
@@ -203,23 +207,20 @@
                                 <div class="row">
                                 Chọn nhân viên:                             
                                     <select name="nhanvien">
-                                    <?php foreach($db[1] as $key=>$employee){                             
-                                    
-                                        if($key=='nhanvien')
-                                        {
-                                        foreach($employee as $nv){
-                                        print_r($nv);
-                                        if($db['thongtinbill'][6] == $nv[0]){
-                                            $shipper = $nv[2];  
+                                    <?php                       
+                                        foreach($rsEmploy as $nv){
+                                        //print_r($nv);
+                                        if($db['thongtinbill'][6] == $nv->idEm){
+                                            $shipper = $nv->employeeName;  
                                         ?>
-                                        <option value="<?php echo $nv[0]; ?>" selected/><?php echo $nv[2]; ?></option>
+                                        <option value="<?php echo $nv->idEm; ?>" selected/><?php echo $nv->employeeName; ?></option>
                                     <?php }
                                         else{
                                      ?>
-                                     <option value="<?php echo $nv[0]; ?>"><?php echo $nv[2]; ?></option>
+                                     <option value="<?php echo $nv->idEm; ?>"><?php echo $nv->employeeName; ?></option>
                                      <?php
-                                        }}
-                                     }}
+                                        }
+                                     }
                                      ?>
                                     </select>                            
                                 </div>

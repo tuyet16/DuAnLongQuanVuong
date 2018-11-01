@@ -42,22 +42,7 @@ $().ready(function() {
                     <div class="col-md-2"></div> 
                     <div class="col-md-4"> 
                     	<input type="submit" name="submit" class="btn btn-primary" value="Lưu"/>
-                    </div> 
-  <!--    <legend style="80%">Sửa đơn vị tính</legend>
-            <form id="formEditUnit" method="post" action="?action=edit_unit">
-            <input type="hidden" name="unitID" value="<?php echo $UnitByID[0]->unitID; ?>" />
-                <div class="row">
-                    <div class="col-md-2">Đơn vị tính </div> 
-                    <div class="col-md-4"> 
-                    	<input type="text" id="unit_name" name="unit_name" class="form-control" width="80%" 
-                        	value="<?php echo $UnitByID[0]->unitName; ?>"  required />
-                     	<label for="unit_name_error" class="form-error"></label>
                     </div>
-                    <div class="col-md-6">
-                        <button type="submit" class="btn" style="background-color:darkblue;color:#FFF"/> Lưu
-                    </div>
-                </div>
-            </form>-->
 </fieldset>
 
     <legend>Các loại đơn vị tính</legend>

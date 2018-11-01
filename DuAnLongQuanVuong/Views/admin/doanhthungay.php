@@ -15,7 +15,7 @@
             if($doanhthu == null){
                 echo ' <h1 class="text-center">Chưa có dữ liệu ngày này</h1>';
             }
-            else{ print_r($doanhthu);
+            else{ //print_r($doanhthu);
                 
         ?>      
       <div class="text-center" style="font-weight: bold;font-size: 17px; color: red;">THỐNG KÊ DOANH THU
@@ -29,18 +29,41 @@
       </div>
       <div class="row">
           <div class="col-md-12"  style="font-weight: bold;font-size: 17px; color: navy;">
-           Tổng Phí Ship : <?php echo number_format($doanhthu['tongship']); ?>
+           Tổng Phí Ship : <?php 
+		   				$tongship=0;$tongshipkh=0;$tongshipshop=0;
+						$tongluong=0;$loinhuan=0;
+		   			 foreach($doanhthu as $key=>$us){
+							$tongship += $us['tongshipshop'];
+							$tongship += $us['tongshipkh'];	
+							$tongshipkh+=$us['tongshipkh'];	
+							$tongshipshop+=$us['tongshipshop'];
+					 }
+					 $tongluong=$tongship*0.8;
+					 $loinhuan=$tongship-$tongluong;
+					 echo number_format($tongship);                    
+		   //echo number_format($doanhthu['tongship']); ?>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-12"  style="font-weight: bold;font-size: 17px; color: #0080FF;">
+           Tổng ship KH : <?php  echo number_format($tongshipkh);?>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-12"  style="font-weight: bold;font-size: 17px; color: #0080FF;">
+           Tổng ship shop : <?php  echo number_format($tongshipshop);?>
           </div>
       </div>
       <div class="row">
           <div class="col-md-12" style="font-weight: bold;font-size: 17px; color: #06710F;">
-            Lợi nhuận công ty (20% Phí Ship) : <?php $ln= $doanhthu['tongship']-$doanhthu['tongluong']; echo number_format($ln); ?>
+            Lợi nhuận công ty (20% Phí Ship) : <?php echo number_format($loinhuan);
+			//$ln = $doanhthu['tongship']-$doanhthu['tongluong']; echo number_format($ln); ?>
           </div>
       </div>
       
       <div class="row">
           <div class="col-md-12"  style="font-weight: bold;font-size: 17px; color: #FF0080;">      
-            Lương nhân viên (80% Phí Ship) : <?php echo number_format($doanhthu['tongluong']); ?>
+            Lương nhân viên (80% Phí Ship) : <?php echo number_format($tongluong);//echo number_format($doanhthu['tongluong']); ?>
           </div>
       </div>
       <div class="row">
@@ -69,11 +92,10 @@
              <!--Doanh thu của từng shop -->
              
             <?php 
-            //print_r($us);
             ?>
              <div style="font-weight: bold;">Tổng Tiền Hàng : <?php echo  number_format($us['tongdtshop']); ?></div>   
-              <div style="font-weight: bold;">Tổng Phí Ship : <?php echo  number_format($us['tongshipshop']); ?></div> 
-              <div style="font-weight: bold;">Tổng Phụ Thu : <?php echo  number_format($us['tongphuthushop']); ?></div>        
+              <div style="font-weight: bold;">Tổng Phí Ship : <?php echo  number_format($us['tongshipshop']); ?></div>  
+              <div style="font-weight: bold;">Tổng Phụ Thu : <?php echo  number_format($us['tongphuthushop']); ?></div>
             <!--Hoa đơn đã giao của từng shop-->
          <div class="row">
             <div class="col-md-12" style="color: darkblue;font-size: 18px;">Hóa Đơn Đã Giao</div>
@@ -90,7 +112,7 @@
                 <td>Phí Phụ thu</td>
             </tr>
             
-            <?php $i=1; $flag=0; foreach($us['thongtinshop'] as $k=>$dthu){               
+            <?php $i=1; $flag=0; foreach($us['thongtinshop'] as $k=>$dthu){   
                 if(is_array($dthu)== true ){
                    if($dthu[0][4]==2) {
                     ?>
@@ -98,10 +120,10 @@
                 <td><?php echo $i++;?></td>
                 <td><?php echo $dthu[0][0]; ?></td>
                 <td><?php echo $dthu[0][1]; ?></td>
-                <td><?php echo $dthu[0]['tongtientungbill']; ?></td>
+                <td><?php echo number_format($dthu[0]['tongtientungbill']); ?></td>
                 <td><?php echo $dthu[0][3]; ?></td>
-                <td><?php echo $dthu[0][5]; ?></td>
-                <td><?php echo $dthu[0]['tongphuthu']; ?></td>
+                <td><?php echo number_format($dthu[0]['shiptungshop']); ?></td>
+                <td><?php echo number_format($dthu[0]['tongphuthu']); ?></td>
             </tr>
             <?php }
                 else
@@ -139,7 +161,7 @@
                 <td><?php echo $dthu[0][1]; ?></td>
                 <td><?php echo $dthu[0]['tongtientungbill']; ?></td>
                 <td><?php echo $dthu[0][3]; ?></td>
-                <td><?php echo $dthu[0][5]; ?></td>
+                <td><?php echo $dthu[0]['shiptungshop']; ?></td>
                 <td><?php echo $dthu[0]['tongphuthu']; ?></td>
             </tr>
             <?php }} 

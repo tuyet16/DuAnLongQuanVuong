@@ -21,7 +21,7 @@
                         <div class="col-md-9"><?php echo $row['name']; ?></div>
                     </div>                
                 </td>
-                <td><input type="number" class="form-control" style="width: 60%;" min="1" max="20" name="<?php echo $row['masp']; ?>" value="<?php echo $row['soluong']; ?>"/></td>
+                <td><input type="text" class="form-control" style="width: 60%;" name="<?php echo $row['masp']; ?>" value="<?php echo $row['soluong']; ?>"/></td>
                 <td><?php echo number_format($row['gia']); ?></td>
                 <td><?php echo number_format($row['thanhtien']); ?></td>
                 <td><a href="../Controllers/shoppingcart_controller.php?action=deletecart&id=<?php echo $row['masp']; ?>">Xóa</a></td>

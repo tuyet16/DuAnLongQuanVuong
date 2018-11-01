@@ -125,6 +125,7 @@
                         $detail_id = $shopping_ml->addDetails($masp,$amount,$gia,$thanhtien,$bills_id);
                     }
                     unset($_SESSION['cart']); 
+                    //print_r($rsProducts[0]->price);
                     header('Location: home_controller.php');                   
                 }
             }

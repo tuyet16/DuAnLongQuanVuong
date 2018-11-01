@@ -1,7 +1,7 @@
 <?php 
     class ShoppingCart extends Database{
         private $total = 0;
-        private $tongsl =1;
+        private $tongsl =0;
         public function __construct(){
 			parent::__construct();
 		}
@@ -26,7 +26,7 @@
             }
         }
         //edit so lương hàng đã mua
-        public function UpdateCart($masp,$soluong)
+        public function UpdateCart($masp, $soluong)
         {
             $_SESSION['cart'][$masp] = $soluong;
         }
