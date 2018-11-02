@@ -17,14 +17,8 @@
         echo '<div class="text-center" style="font-size:140%;padding-top:10%;">Chưa có đơn hàng nào</div>';
     }
     else
-    {
-        foreach($DSdonhang as $user=>$us){ ?>
-        <div class="row">
-          <div class="col-md-12" style="color: blue; font-weight: bold; text-align: center;">
-            <h2>Tên Shop: <?php echo $us['thongtinshop'][0]; ?></h2> 
-          </div>
-        </div>                 
-                
+    { //print_r($DSdonhang);
+       ?>
     <table class="table table-bordered table-striped">
       <tr style="background-color:darkblue;color:#FFF">
         <td>&nbsp; STT</td>
@@ -45,19 +39,21 @@
       
       </tr>
             <?php $i=1; if($DSdonhang != null && $date != ""){ 
-              foreach($us as $billID=>$db){ 
-                if($db != $us['thongtinshop']){ ?>                     
+              foreach($DSdonhang as $billID=>$db){ 
+  
+                //print_r($db['thongtinbill'][3]);
+               // if($db != $us['thongtinshop']){ ?>                     
                     
           <tr style="background-color: #000; color: #FFF;">
             <td>&nbsp;<?php echo $i++; ?></td>
-            <td>&nbsp;<?php  echo $db[2][0];?></td>
-            <td>&nbsp;<?php if($db[0][2]==0) 
+            <td>&nbsp;<?php  echo $db['thongtinkh'][0];?></td>
+            <td>&nbsp;<?php if($db['thongtinbill'][2]==0) 
                             {
                                 echo 'Giao Thường';
                             }
                             else
                             {echo 'Giao Nhanh';}?></td>
-            <td>&nbsp;<?php echo $db[0][3]; $tong += $db[0][3];?></td>
+            <td>&nbsp;<?php echo $db['thongtinbill'][3];  $tong += $db['thongtinbill'][3];?></td>
             <td>&nbsp;<?php echo date_format($dt,'d-m-Y'); ?></td>
             <td>             
                 <a class="collapsed card-link" data-toggle="collapse" style="color: #fff;" 
@@ -65,8 +61,7 @@
                     Xem
                 </a>
             </td>            
-        </tr>
-        
+        </tr>               
         <tr>
             <td colspan="7">
              <div class="card">
@@ -89,31 +84,37 @@
              <?php
              }
              ?>
-                  <div class="card-body">
-                    <div class="container-fluid">
-                    <div class="row">                       
-                       <label>Số điện thoại: <?php echo $db[2][2]; ?></label>
-                     </div>
-                     <div class="row"> 
-                      <label>Địa chỉ:  <?php echo $db[2][1].', '. $db[2][3]; ?></label>
-                    </div>
-                    <div class="row">                           
-                        <div class="col-md-10" style="color: red; font-weight: bold;">
-                            <?php if($db[0][7]==1)
-                                {
-                                    echo 'Người Thanh Toán Phí Ship: Khách Hàng ';
-                                }
-                                ?>
-                        </div>
-                        </div>
+              <div class="card-body">
+                <div class="container-fluid">               
+                <div class="row">     
+                                                   
+                   <label>Số điện thoại: <?php echo $db['thongtinkh'][2]; ?></label>
+                 </div>
+                 <div class="row"> 
+                  <label>Địa chỉ:  <?php echo $db['thongtinkh'][1].', '. $db['thongtinkh'][3]; ?></label>
+                </div>
+                 <div class="row"> 
+                  <label>Phí Ship:  <?php echo $db['thongtinbill'][8]; ?></label>
+                </div>
+                
                     <?php if(isset($_POST['nhanvien'])){
                         $select = $_POST['nhanvien'];
                     } ?>
                     <div class="row">
-                         <form method="post" action="?action=editnhanvien">
+                     <?php
+                      foreach($db as $us=>$user){ 
+                    // print_r($user['sodetailshop']);
+                       //print_r($user);
+                      if(is_numeric($us))
+                      {    
+                        ?> <div class="col-md-2">Tên Shop:</div>
+                         <div class="col-md-10" style="color: blue;font-weight: bold;"> <?php  echo $db[$us]['tenshop'][0] ;?></div> 
+                         <div class="col-md-2">Số Điên Thoại:</div>
+                         <div class="col-md-10" style="color: blue; font-weight: bold;"> <?php  echo $db[$us]['tenshop'][1] ;?></div> 
+                
+                        <form method="post" action="?action=editnhanvien">
                         <table class="table table-bordered table-striped text-center">
-                         <input type="hidden" name="billID" value="<?php echo $billID; ?>"/>
-                        
+                         <input type="hidden" name="billID" value="<?php echo $billID; ?>"/>                        
                          <input type="hidden" name="ngay" value="<?php echo $date; ?>"/>
                             <tr style="background-color:green; color: white; ">
                                 <td>STT</td>
@@ -122,11 +123,45 @@
                                 <td>Đơn vị</td>
                                 <td>Giá</td>
                                 <td>Giảm giá</td>
-                                <td>Phí Phụ Thu</td>
+                                <td>Phí Phụ Thu</td>                                
                                 <td>Thành tiền</td>
-                            </tr>
-                            <?php $a=1; foreach($db[1] as $detail_item){ 
-                                if($detail_item != null){?>
+                            </tr>                            
+                            <?php $a=1;
+                            $i= false;
+                             foreach($user as $key=>$detail){
+                                //print_r($user);
+                                foreach($detail as $detail_item)
+                                {                                    
+                                if($key == 'detail')
+                                {
+                                    $masp=0;
+                                    $maphiship =0; 
+                                    if($detail_item != null){
+                                        $masp= $detail_item[1];
+                                        $maphiship = $detail_item[0];                                     
+                                ?>    
+                                <div class="row">                       
+                                <div class="col-md-10" style="color: red; font-weight: bold;">
+                                
+                                <?php
+                                $flag =0;
+                                 if($detail_item[11]==1)
+                                {
+                                    $flag=1;
+                                    if($i==false)
+                                    {
+                                       echo 'Người Thanh Toán Phí Ship: Khách Hàng'; 
+                                       $i= true;
+                                    }
+                                    
+                                }
+                                else
+                                {
+                                    $flag=0;
+                                }
+                                ?>
+                                </div>
+                            </div>                            
                             <tr>
                                 <td><?php echo $a++; ?></td>
                                 <td><?php echo $detail_item[4]; 
@@ -146,36 +181,43 @@
                                 <td><?php echo number_format($detail_item[6]); ?></td>
                                 <td>
                                     <?php echo $detail_item[7]; ?>%
-                                                                           
-                                    <?php  } ?>
-                                   
                                 </td>
                                 <td style=" color: red; font-weight:bold">
                                     <input type="text" name="phuthu<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[8]; ?>" />
-                                </td>
+                                </td>                             
+                              
                                  <input type="hidden" name="detailID" value="<?php echo $detail_item[0]; ?>"/>
-                                <input type="hidden" name="gia<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[6]; ?>" />
-                                <td><?php echo number_format($detail_item[3]); ?></td>
+                                <input type="hidden" name="gia<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[0][6]; ?>" />
+                                <td><?php echo number_format($detail_item[12]); ?></td>
                             </tr>
-                           <?php }?> 
+                           <?php }}} }?>
+                             <td>Phí Ship</td>
+                            <td style=" color: red; font-weight:bold">
+                                <input type="text" name="phiship<?php echo $maphiship.'_'.$flag; ?>" 
+                                    value="<?php echo number_format(ceil($db['thongtinbill'][8]/1000/$db['soshop']*1.0)*1000); ?>" />
+                            </td>                           
+                            <?php  ?>
                         </table>
-                        <?php 
+                        <?php }}
                         $shipper = '';
+                       
                         ?>                        
                         <div class="row">
                             <div class="col-md-3 text-right">
                                 <div class="row">
                                 Chọn nhân viên:                             
                                     <select name="nhanvien">
-                                    <?php foreach($db[3] as $employee){     
-                                        if($db[0][6] == $employee[0]){
-                                            $shipper = $employee[2];  
+                                    <?php                       
+                                        foreach($rsEmploy as $nv){
+                                        //print_r($nv);
+                                        if($db['thongtinbill'][6] == $nv->idEm){
+                                            $shipper = $nv->employeeName;  
                                         ?>
-                                        <option value="<?php echo $employee[0]; ?>" selected/><?php echo $employee[2]; ?></option>
+                                        <option value="<?php echo $nv->idEm; ?>" selected/><?php echo $nv->employeeName; ?></option>
                                     <?php }
                                         else{
                                      ?>
-                                     <option value="<?php echo $employee[0]; ?>"><?php echo $employee[2]; ?></option>
+                                     <option value="<?php echo $nv->idEm; ?>"><?php echo $nv->employeeName; ?></option>
                                      <?php
                                         }
                                      }
@@ -198,27 +240,38 @@
                                 ?>
                             </div>
                             <div class="col-md-4 text-right">
+                            <?php //if($db[0][4] !=2){ ?>
                                 <button type="submit" name="submit" class="btn btn-success">Cập nhật</button>
+                            <?php //}
+                            //else echo ''; 
+                            if($db['thongtinbill'][6]==0)
+                            {
+                                echo 'Vui lòng chọn người giao hàng';
+                            }
+                            else
+                            {?>
                                 <a href="?action=inhoadon&billID=<?php echo $billID; ?>" class="btn btn-danger">In Hóa Đơn</a>
+                                <?php } ?>
                             </div>
                         </div>
-                        
-                    </div>
-                    </form>
+                      </form>  
+                    </div>                    
                   </div>    
               </div>
+              
             </div>
           </div>
       </div>
       </div>
     </td>            
 </tr>
-      <?php }}
+</div>
+      <?php }
       }
        ?>  
 </table>
 
 <?php
-}}
+}
 	return ob_get_clean();
 ?>

@@ -12,6 +12,8 @@
 	$model = new Customers();
 	switch($action){
 		case 'index':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
 			$tableDB = new Database();
             $tables = $tableDB->getTables();
 			$dsCustomers=$model->getCustomersDistrict();
@@ -21,45 +23,85 @@
             $GLOBALS['template']['content'] = include_once $view;
             include_once('../template/index.php');
 		break;	
+        case 'add_customer':
+		   $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+			$name = filter_input(INPUT_POST, 'tenkh');
+			if($name == NULL)
+			{
+				try{
+					$view = Page::View();
+					if(file_exists($view) == false)
+						throw new MVCException('Tập tin không tồn tại' . $view);
+					else
+					{
+						$tablesDB = new Database();
+						$tables = $tablesDB->getTables();
+                        $distric = new districts();
+                        $dsDistrict =$distric->getDistrict();
+						$dsCustomers=$model->getCustomersDistrict();
+						//$GLOBALS['template']['menu'] = include_once '../template/menu.php';
+						$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+						$GLOBALS['template']['content'] = include_once $view;
+						$GLOBALS['template']['title'] = 'Sửa Thông Tin Khách Hàng';
+						include_once '../template/index.php';
+					}
+				}
+				catch(MVCException $e){	}
+			}
+			else
+			{
+			    $tenkh = $_POST['tenkh'];
+                $dc = $_POST['diachi'];
+                $sdt = $_POST['sdt'];
+                $quan = $_POST['maquan'];
+				$model->addCustomer($tenkh,$dc,$sdt,$quan);
+				header('Location: customers_controller.php');
+			}
+		break;
 		case 'edit_customer':
 		{
-				$name = filter_input(INPUT_POST, 'tenkh');
-				if($name == NULL)
-				{
-					try{
-						$view = Page::View();
-						if(file_exists($view) == false)
-							throw new MVCException('Tập tin không tồn tại' . $view);
-						else
-						{
-							$tablesDB = new Database();
-							$tables = $tablesDB->getTables();
-                            $distric = new districts();
-                            $dsDistrict =$distric->getDistrict();
-							$dsCustomers=$model->getCustomersDistrict();
-							$CustomerID = $model->getByIDCustomer($_GET['id']);
-							$GLOBALS['template']['menu'] = include_once '../template/menu.php';
-							$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
-							$GLOBALS['template']['content'] = include_once $view;
-							$GLOBALS['template']['title'] = 'Sửa Thông Tin Khách Hàng';
-							include_once '../template/index.php';
-						}
+		   $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+			$name = filter_input(INPUT_POST, 'tenkh');
+			if($name == NULL)
+			{
+				try{
+					$view = Page::View();
+					if(file_exists($view) == false)
+						throw new MVCException('Tập tin không tồn tại' . $view);
+					else
+					{
+						$tablesDB = new Database();
+						$tables = $tablesDB->getTables();
+                        $distric = new districts();
+                        $dsDistrict =$distric->getDistrict();
+						$dsCustomers=$model->getCustomersDistrict();
+						$CustomerID = $model->getByIDCustomer($_GET['id']);
+						$GLOBALS['template']['menu'] = include_once '../template/menu.php';
+						$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+						$GLOBALS['template']['content'] = include_once $view;
+						$GLOBALS['template']['title'] = 'Sửa Thông Tin Khách Hàng';
+						include_once '../template/index.php';
 					}
-					catch(MVCException $e){	}
 				}
-				else
-				{
-				    $tenkh = $_POST['tenkh'];
-                    $dc = $_POST['diachi'];
-                    $sdt = $_POST['sdt'];
-                    $quan = $_POST['maquan'];
-					$id = $_POST['customerID'];
-					$model->editCustomer($tenkh,$dc,$sdt,$quan,$id);
-					header('Location: customers_controller.php');
-				}
-				break;
+				catch(MVCException $e){	}
+			}
+			else
+			{
+			    $tenkh = $_POST['tenkh'];
+                $dc = $_POST['diachi'];
+                $sdt = $_POST['sdt'];
+                $quan = $_POST['maquan'];
+				$id = $_POST['customerID'];
+				$model->editCustomer($tenkh,$dc,$sdt,$quan,$id);
+				header('Location: customers_controller.php');
+			}
+		break;
 		}
 		case "delete_customer":
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
 			if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){
 					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);

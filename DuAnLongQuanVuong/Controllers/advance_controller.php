@@ -13,6 +13,8 @@
 	switch($action){
 		case 'add_advance':
 		{
+		   $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
 			$money = filter_input(INPUT_POST, 'money');
 			if($money == NULL)
 			{
@@ -44,6 +46,8 @@
 			break;
 		}
 		case 'edit_advance':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
 			if(isset($_GET['id']))
             {$id = $_GET['id'];
               try{
@@ -75,6 +79,8 @@
             }
 			break;
 		case 'delete_advance':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
 			if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){
 					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);

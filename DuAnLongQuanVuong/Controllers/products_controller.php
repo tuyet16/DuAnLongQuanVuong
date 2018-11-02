@@ -12,6 +12,8 @@
     
 	switch($action){
 		case 'index':  
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             if(!isset($_SESSION['userid'])){
                 $category = new Categories();
                 $dsCategories = $category->getCategories();
@@ -37,6 +39,8 @@
             include_once('../template/index.php');
 		break;
         case 'themsanpham':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             $tensp= $_POST['tensp'];
             $loaisp = $_POST['categoryID'];
             $donvi = $_POST['unitID'];
@@ -51,6 +55,8 @@
             header('Location: products_controller.php');
         break;	
         case 'suasanpham':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             if(isset($_GET['id']))
             {
                 $id = $_GET['id'];
@@ -95,6 +101,8 @@
             }
         break;
         case "xoasanpham":
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
 			if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){
 					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);

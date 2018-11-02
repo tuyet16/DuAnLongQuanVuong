@@ -13,6 +13,8 @@
 	switch($action){
 		case 'index':
 		{
+            $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
 			$tableDB = new Database();
             $tables = $tableDB->getTables();
 			$dsEmployees=$model->getEmployees();
@@ -23,19 +25,46 @@
             include_once('../template/index.php');
 			break;	
 		}
+		case 'xemchitiet':{
+			 $user = new Users();
+			$rsvitriquangcao1 = $user->carosoulpanel();
+			$tableDB = new Database();
+            $tables = $tableDB->getTables();
+			$view = Page::View();
+			if(isset($_GET['id'])){
+				$id = $_GET['id'];
+				$dsEmployees=$model->getEmployees();
+				$EmployeeByID = $model->getEmployeeByID($id);
+				$GLOBALS['template']['menu'] = include_once '../template/menu.php';
+				$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+				$GLOBALS['template']['content'] = include_once $view;
+				$GLOBALS['template']['title'] = 'Xem thông tin nhân viên';
+				include_once '../template/index.php';
+			}
+			break;
+				
+		}
 		case 'add_employee':
-		{					
-			$manv = $_POST['manv'];
-			$tennv=$_POST['tennv'];
-			$dc = $_POST['diachi'];
-			$dt = $_POST['sdt'];
-            $i = $_FILES['hinhanh'];
-            $img = Image::GetFile($i);
-			$model->insertNewEmployee($manv,$tennv,$dc,$dt,$img);
-			header('Location: employees_controller.php');
+		{	
+            $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+			$name = filter_input(INPUT_POST, 'manv');
+			if($name != NULL)
+			{
+				$tennv=$_POST['tennv'];
+				$dc = $_POST['diachi'];
+				$dt = $_POST['sdt'];
+				$i = $_FILES['hinhanh'];
+				$img = Image::GetFile($i);
+				$model = new Employees();
+				$model->insertNewEmployee($name,$tennv,$dc,$dt,$img);
+				header('Location: employees_controller.php');
+			}
 			break;
 		}
         case 'bangluong':
+            $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
 			$tableDB = new Database();
             $tables = $tableDB->getTables();
 			$view = Page::View();
@@ -46,27 +75,29 @@
 		break;
 		case 'edit_employee':
 		{
-				$name = filter_input(INPUT_POST, 'idem');
-				if($name == NULL)
-				{
-					try{
-						$view = Page::View();
-						if(file_exists($view) == false)
-							throw new MVCException('Tập tin không tồn tại' . $view);
-						else
-						{
-							$tablesDB = new Database();
-							$tables = $tablesDB->getTables();
-							$dsEmployees=$model->getEmployees();
-							$EmployeeByID = $model->getEmployeeByID($_GET['id']);
-							$GLOBALS['template']['menu'] = include_once '../template/menu.php';
-							$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
-							$GLOBALS['template']['content'] = include_once $view;
-							$GLOBALS['template']['title'] = 'Sửa thông tin nhân viên';
-							include_once '../template/index.php';
-						}
+		   $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+			$name = filter_input(INPUT_POST, 'idem');
+			if($name == NULL)
+			{
+				try{
+					$view = Page::View();
+					if(file_exists($view) == false)
+						throw new MVCException('Tập tin không tồn tại' . $view);
+					else
+					{
+						$tablesDB = new Database();
+						$tables = $tablesDB->getTables();
+						$dsEmployees=$model->getEmployees();
+						$EmployeeByID = $model->getEmployeeByID($_GET['id']);
+						$GLOBALS['template']['menu'] = include_once '../template/menu.php';
+						$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+						$GLOBALS['template']['content'] = include_once $view;
+						$GLOBALS['template']['title'] = 'Sửa thông tin nhân viên';
+						include_once '../template/index.php';
 					}
-					catch(MVCException $e){	}
+				}
+				catch(MVCException $e){	}
 				}
 				else
 				{
@@ -93,6 +124,8 @@
 		}
 		case "delete_employee":
 		{
+		   $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
 			if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){
 					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);

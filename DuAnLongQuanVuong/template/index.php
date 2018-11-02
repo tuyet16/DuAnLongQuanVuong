@@ -10,14 +10,18 @@
         } 
     ?>
     </title>
-    <link type="text/css" rel="stylesheet" href="../views/css/designer.css"/>
+   
+    <link rel="stylesheet" type="text/css" href="../Views/css/owl.carousel.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../Views/css/owl.theme.default.min.css"/>
    	<link type="text/css" rel="stylesheet" href="../views/css/bootstrap.min.css"/>
    	<link type="text/css" rel="stylesheet" href="../views/css/font-awesome.css"/>
     <link type="text/css" rel="stylesheet" href="../views/css/jquery-ui.min.css"/>
     <link type="text/css" rel="stylesheet" href="../views/css/jquery-ui.theme.min.css"/>
     <link type="text/css" rel="stylesheet" href="../views/css/froala_editor.min.css"/>
     <link type="text/css" rel="stylesheet" href="../views/css/froala_style.min.css"/>
-     <script src="../Views/js/jquery.min.js"> </script>
+	 <link type="text/css" rel="stylesheet" href="../views/css/designer.css"/>
+    <script src="../Views/js/jquery.min.js"> </script>
+    <script src="../Views/js/owl.carousel.min.js"></script>
     <script src="../Views/js/bootstrap.min.js"></script>  
     <script src="../Views/js/jquery.validate.min.js"></script>     
     <script src="../Views/js/jquery-ui.min.js"></script>
@@ -25,6 +29,7 @@
     <script src="../Views/js/pgwslideshow.min.js"></script>
     <script src="../views/js/froala_editor.min.js"></script>
     <script src="../views/js/script.js"></script>
+	
     <script>
       $( function() {
         

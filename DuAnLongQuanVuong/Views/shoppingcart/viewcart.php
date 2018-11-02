@@ -2,7 +2,7 @@
 ?>
     <fieldset>
         <legend><img src="../Views/img/cart.png" width="12%"/><b style="color: red;">GIỎ HÀNG</b></legend>
-        <h5>Bán từ Shop: Long Quân</h5>
+        <!--<h5>Bán từ Shop: Long Quân</h5>-->
         <form method="post" action="?action=updatecart">
         <table class="table table-hover">
             <tr>
@@ -10,6 +10,7 @@
                 <td>Số lượng</td>
                 <td>Giá Thành</td>
                 <td>Thành Tiền</td>
+                <td>Phí Ship</td>
                 <td></td>
             </tr>
             <?php foreach($rsCart as $row){ ?>            
@@ -20,7 +21,7 @@
                         <div class="col-md-9"><?php echo $row['name']; ?></div>
                     </div>                
                 </td>
-                <td><input type="number" class="form-control" style="width: 60%;" min="1" max="20" name="<?php echo $row['masp']; ?>" value="<?php echo $row['soluong']; ?>"/></td>
+                <td><input type="text" class="form-control" style="width: 60%;" name="<?php echo $row['masp']; ?>" value="<?php echo $row['soluong']; ?>"/></td>
                 <td><?php echo number_format($row['gia']); ?></td>
                 <td><?php echo number_format($row['thanhtien']); ?></td>
                 <td><a href="../Controllers/shoppingcart_controller.php?action=deletecart&id=<?php echo $row['masp']; ?>">Xóa</a></td>

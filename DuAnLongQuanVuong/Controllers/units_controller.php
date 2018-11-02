@@ -9,18 +9,12 @@
             $action ='index';
         }
 	}
-	$unit = new Units();
-	switch($action){
-	   case 'index':
-		{
-			$tableDB = new Database();
-            $tables = $tableDB->getTables();
-           	$dsUnit = $unit->getUnits();
-    }
     $units = new Units();
 	$model = new Categories(); 
 	switch($action){
 		case 'index':  
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             $dsUnit = $units->getUnits();
 			$dsCategories= $model->getCategories();   
 			$view = Page::View();
@@ -29,9 +23,11 @@
             $GLOBALS['template']['content'] = include_once $view;
             include_once('../template/index.php');
 			break;	
-		}
 		case 'add_unit':
 		{
+            $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+       
 			$ten = filter_input(INPUT_POST, 'ten');
 			if($ten == NULL)
 			{
@@ -84,6 +80,9 @@
 //			break;
 //		}
 		case 'edit_unit':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+      
 			if(isset($_GET['id']))
             {$id = $_GET['id'];
               try{
@@ -148,6 +147,8 @@
 //				break;
 //		}
 		case "delete_unit":
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
 			if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){
 					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);

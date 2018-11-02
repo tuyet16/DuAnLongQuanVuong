@@ -1,7 +1,7 @@
 <?php 
     class ShoppingCart extends Database{
         private $total = 0;
-        private $tongsl =1;
+        private $tongsl =0;
         public function __construct(){
 			parent::__construct();
 		}
@@ -25,8 +25,8 @@
                 }
             }
         }
-        
-        public function UpdateCart($masp,$soluong)
+        //edit so lương hàng đã mua
+        public function UpdateCart($masp, $soluong)
         {
             $_SESSION['cart'][$masp] = $soluong;
         }
@@ -34,6 +34,7 @@
         {
             unset($_SESSION['cart'][$masp]);
         }
+        //hiển thị số lượng hàng trong giỏ hàng
         public function ViewCart()
         {
             $cart_object = array();
@@ -53,7 +54,11 @@
                     foreach($_SESSION['cart'] as $masp=>$soluong)
                     {
                         $product_model = new products();
+                        $user = new Users();
+                                                
                         $rsProduct = $product_model->getByIDProduct($masp);
+                        //$phiship =  $user->tinhphidichvu();
+                       // $phiship = =>tinhphi();              
                         $thanhtien = $soluong * $rsProduct[0]->price;
                         $this->total += $thanhtien;
                         $cart_object[] = array('hinhanh'=>$rsProduct[0]->image,
@@ -61,7 +66,7 @@
                                               'soluong'=>$soluong,
                                               'gia'=>$rsProduct[0]->price,
                                               'thanhtien'=>$thanhtien,
-                                              'masp'=>$masp);                                                
+                                              'masp'=>$masp);                                                   
                     }                  
                 }
             }
@@ -104,13 +109,14 @@
             $con = $this->getconnect();
             return $con->lastInsertId('billID');
         }
-        public function addDetails($prodcutID,$amount,$price,$billID)
+        public function addDetails($prodcutID,$amount,$price,$thanhtien,$billID)
         {
-            $query ='insert into detailsbills(productID,amount,price,billID) values(?,?,?,?)';
+            $query ='insert into detailsbills(productID,amount,price,thanhtien,billID) values(?,?,?,?,?)';
             $param = array();
             $param[] = $prodcutID;
             $param[] = $amount;
             $param[] = $price;
+            $param[] = $thanhtien;
             $param[] = $billID;
             $this->doQuery($query,$param);
         }

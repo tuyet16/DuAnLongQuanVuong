@@ -1,17 +1,32 @@
 <?php
 	ob_start();
 ?> 
-<h4 style="color: red;"><b>* Lưu ý:</h4> </b>
-<h4 style="margin-left: 10%;">Thời Gian nhận hàng cho quý khách hàng: Từ 8 giờ đến 21 giờ mỗi ngày</h4>
-<h4><b style="margin-left: 17%;">(Từ 16 giờ đến 21 giờ phụ thu thêm 5.000đ/đơn tháng)</b></h4>
-<h4 style="margin-left: 20%;">Thời gian giao nhanh từ 16h - 21h là 120 phút </h4>
+<h4 style="color: red;"><b>* Lưu ý:</b></h4> 
+<div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+        <h4 style="margin-left: 10%;text-align: center;">
+            <?php  
+                 foreach($dsquydinh as $row){    
+                          echo $row->tentieude;
+                        }
+            ?>
+        </h4>
+        
+    </div>
+    <div class="col-md-2">
+    
+    </div>
+</div>
 
-<ul class="nav nav-tabs">
+
+<ul class="nav nav-tabs" style="padding-top: 30px;">
     <li class="active"><a data-toggle="tab" href="#menu1"> <b>Bảng giá dịch vụ</b></a></li>
     <li><a data-toggle="tab" href="#menu2"><b>Phí ứng trước</b></a></li>
     <li><a data-toggle="tab" href="#menu3"><b>Phụ thu phí ship</b></a></li>
 </ul>
- <div class="tab-content"> 
+ <div class="tab-content" > 
      <div id="menu1" class="tab-pane fade in active">   
         <div class="row" style="margin:2%">
         	<?php

@@ -40,6 +40,7 @@ class Database{
                 $rs->bindParam($i+1, $param[$i]);
             }
             $rs->execute();
+            //echo $strQuery;
         }
         return $rs->fetchAll(PDO::FETCH_OBJ);
     }

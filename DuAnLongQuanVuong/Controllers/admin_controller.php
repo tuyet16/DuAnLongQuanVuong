@@ -12,10 +12,13 @@ include_once('../config/bootload.php');
     switch($action)
     {
         case 'index':
+            $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
     	   header('Location: ?action=donhang');
         break;
         case 'dsshop':
             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             $dsUsers = $user->getUser();
             $view = Page::View();            
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
@@ -25,6 +28,8 @@ include_once('../config/bootload.php');
             include_once('../template/index.php');
         break;
         case 'suashop':
+        	$user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
         if(isset($_GET['id']))
         {
             $id = $_GET['id'];
@@ -56,6 +61,8 @@ include_once('../config/bootload.php');
         }            
         break; 
 		case 'delete_user':
+           $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
 		if(!isset($_GET['confirm'])){
 				if(isset($_GET['id'])){
 					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);
@@ -72,7 +79,10 @@ include_once('../config/bootload.php');
 			}
 			break; 
         break;
+         
         case 'donhang':
+           $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             $employ = new Employees();
             $rsEmploy = $employ->getEmployees();
             if(isset($_SESSION['userid']))
@@ -127,30 +137,42 @@ include_once('../config/bootload.php');
             {
                 $id= $_POST['billID'];
                 $nhanvien= $_POST['nhanvien'];
-                $detailID = $_POST['detailID'];
+                $phuthu = [];
+                $phiship =[];
                 $dt = date_create('');
-                $date = date_format($dt, 'Y-m-d');            
-                foreach($_POST as $detail_id=>$edit)
-                {
-                    if($detail_id != 'submit')
-                    {                      
-                        if(strpos($detail_id,'phuthu') === false )
-                        {
-                            $phuthu =$_POST['phuthu' . $detail_id];
-                            $user = new Users();
-                            $user->editnhanvien($date, $nhanvien,$phuthu,$detailID,$id); 
-                        }
+                $date = date_format($dt, 'Y-m-d');
+                  
+                 foreach($_POST as $k=>$value)
+                 {
+                    if(strpos($k,'phuthu') > -1 ){
+                        $t = trim(str_replace('phuthu','',$k));                       
+                        echo $t;                        
+                        $phuthu[$t] = $_POST[$k];                        
                     }
-                }
-               // print_r($_POST);
+                    if(strpos($k,'phiship')>-1){
+                        $ps = trim(str_replace('phiship','',$k));
+                        $psArr = explode('_',$ps);
+                        if($psArr[1]==1)
+                        {
+                            $phiship[$psArr[0]] = array(0,$_POST[$k]*1000);
+                        }
+                        else
+                        {
+                            $phiship[$psArr[0]] = array($_POST[$k]*1000,0);
+                        }
+                        
+                    }
+                 }                    
+                $user = new Users();
+                //print_r($phiship);                
+                $user->editnhanvien($date, $nhanvien,$phuthu,$phiship,$id);                                      
                 header('Location: ?action=donhang&BillID='. $id .'&chonngay='. $_POST['ngay']);
             }
-            
-            //header('Location:?action=donhang');
         break;
         case 'tinhtrang':
             $idnv=0;
-            $user = new Users();
+          	$user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             //$edittinhtrang = $user->getTinhtrang();
             if(isset($_POST['submit']))
             {
@@ -188,11 +210,11 @@ include_once('../config/bootload.php');
                 {
                     $date = $_GET['ngay'];
                     $edittinhtrang = $user->getTinhtrang($date);
-                    $DSdonhang = $edittinhtrang;
-                    
+                    $DSdonhang = $edittinhtrang;                    
                 }
                 else
                 {
+                    $date=null;
                     $dt = date_create($date);
                     $date = date_format($dt, 'Y-m-d');
                     $edittinhtrang = $user->getTinhtrang($date);
@@ -200,7 +222,7 @@ include_once('../config/bootload.php');
                     
                 } 
                 $view = Page::View();
-                $GLOBALS['template']['menu'] = include_once'../template/menu.php';
+               // $GLOBALS['template']['menu'] = include_once'../template/menu.php';
                 $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
                 $GLOBALS['template']['content'] = include_once $view;
                 include_once('../template/index.php');
@@ -208,7 +230,9 @@ include_once('../config/bootload.php');
            
         break;
         case 'doanhthungay':
+            $doanhthu=null;
             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             if(isset($_POST['chonngay']))
             {                
                 $date1 =  date_create($_POST['chonngay']);
@@ -216,12 +240,7 @@ include_once('../config/bootload.php');
                 $DSdonhang = $user->getthongkengay($date);
                 $doanhthu = $DSdonhang;
             }
-            else
-            {
-                $DSdonhang1 = $user->getthongkengay();
-                $doanhthu = $DSdonhang;
-                //$date=key($doanhthu);                
-            } 
+           
             $view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
             $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
@@ -229,8 +248,8 @@ include_once('../config/bootload.php');
             include_once('../template/index.php');
         break;
         case 'doanhthuthang':
-            $user = new Users();
-                        
+           $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             if(isset($_POST['chonthang']))
             {
                 $chon= explode(' ',$_POST['chonthang']);                
@@ -255,8 +274,8 @@ include_once('../config/bootload.php');
             include_once('../template/index.php');
         break;
         case 'doanhthunam':
-            $user = new Users();
-                                  
+           $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             if(isset($_POST['chonnam']))
             { 
                 $nam = $_POST['chonnam'];                  
@@ -277,35 +296,68 @@ include_once('../config/bootload.php');
             $GLOBALS['template']['content'] = include_once $view;
             include_once('../template/index.php');
         break;
+        //thay doi hinh panel
+        case 'doihinh':  
+            $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            $rsdoihinh = $user->hinhdoi();   
+			if(isset($_FILES['upimg'])){ 
+					 $i = $_FILES['upimg'];
+                    $img = Image::GetFile($i);
+                	$ngay=date('Y-m-d H:i:s');               
+                	$user->addhinhanh($img,$ngay);
+					header('Location:admin_controller.php?action=doihinh');
+			}
+			$view = Page::View();
+			$GLOBALS['template']['menu'] = include_once'../template/menu.php';
+			$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+			$GLOBALS['template']['content'] = include_once $view;
+			include_once('../template/index.php');
+           	
+        break;
+        case 'doiquangcao':
+            $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+			if(isset($_GET['id']))
+          	{	$id = $_GET['id'];
+				$ngay=date('Y-m-d H:i:s');
+				$user->doihinhpanel($ngay,$id);
+				header('Location:admin_controller.php?action=doihinh');
+			}
+        break;
+        case 'deletehinh':
+            $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+    		if(!isset($_GET['confirm'])){
+    				if(isset($_GET['id'])){
+    					MessageBox::Show('Bạn có muốn xóa không?', MB_CONFIRM);
+    				}
+            	}
+    			else
+    			{
+    				if($_GET['confirm'] == true){
+    					$id = $_GET['id'];
+                    	$user->deleteHinh($id);
+    					header('Location:admin_controller.php?action=doihinh');
+    				}
+    			}
+        break;
+        
+        //In hóa đơn
         case 'inhoadon':
             if(isset($_GET['billID']))
             {
-                $id = $_GET['billID'];
+                 $id = $_GET['billID'];
                 $user = new Users();                   
                 $thongtin = $user->getHDAdminByID($id) ;
-                $header = array('STT','Tên Hàng','ĐVT','SL','Đơn Giá','Thành Tiền');
-                //print_r($thongtin);             
+                $header = array('STT','Tên Hàng','ĐVT','SL','Đơn Giá','Thành Tiền');        
                 $in = $thongtin;
-                $header = array('STT','Tên Hàng','ĐVT','SL','Đơn Giá','Thành Tiền');
-                //print_r($thongtin);             
-                $in = $thongtin;
+                //print_r($in);
                     $flag = false;
-                        //print_r($billID);
-                        //print_r($in);
                         $ngay =$in[$id][0][3];
-                        //echo $time;
-                        //$chon = explode('-',$ngay);
-                        //$nam = $chon[0];
-                        //$thang = $chon[1];
-                        //$filename = "D:/donhang/".$nam.'/'.'Thang_'.$thang.'/'.$ngay.'/'.$ngay.'_'.$id.".xls";
                         $tem = date_create($ngay);
                         $ngay = date_format($tem, 'd-m-Y');
                         $filename = $ngay . '_' . $id . '.pdf';
-                        //header("Content-type: application/x-msdownload");
-                        //header("Content-Disposition: csv; filename=\"$filename\"");
-                        //header("Content-Disposition: attachment; filename=\"$filename\"");
-                        //header("Content-Type: application/vnd.ms-excel");
-                        //print_r($in[$id][1]);
                         
                         $pdf = new tFPDF('P', 'mm', 'A6');
                         $pdf->AddPage();
@@ -314,49 +366,45 @@ include_once('../config/bootload.php');
                         
                         if($flag == false)
                         {   
-                            $pdf->Write(4, "Chủ Hàng: ". $in[$id][0][0]);
+                            $pdf->Write(6, "Chị Hàng: ". $in[$id][0][0]);
                             $pdf->Ln();
-                            $pdf->Write(4, "Địa Chỉ: ". $in[$id][0][1]);
+                            $pdf->Write(6, "Ðịa Chỉ: ". $in[$id][0][1]);
                             $pdf->Ln();
-                            $pdf->Write(4, "Đơn vị vận chuyển : SEVEN SHIPPER");
+                            $pdf->Write(6, "Ðơn vị vận chuyển : SEVEN SHIPPER");
                             $pdf->Ln();
                             $pdf->SetTextColor(0);
                             $pdf->SetFillColor(255,255,255);
-                            $pdf->Cell(40,4,"Shipper : " . $in[$id][0][4],0,0,'L',true);
-                            $pdf->Cell(40,4,"Điện thoại Shipper : " . $in[$id][0][5],0,0,'L',true);
-                            //$pdf->Write(8, "SHIPPER : " . $in[$id][0][4]);
+                            $pdf->Cell(40,6,"Shipper : " . $in[$id][0][4],0,0,'L',true);
+                            $pdf->Cell(40,6,"Ðiện thoại Shipper : " . $in[$id][0][5],0,0,'L',true);
                             $pdf->Ln();
-                            
-                            //$w_2_u = mb_convert_encoding($in[0][4], 'CP1252', 'UTF-8');
-                            //$u8_2_u16 = chr(255).chr(254) . mb_convert_encoding($in[0][4], 'UTF-16LE', 'UTF-8');
                             
                             $str = $in[$id][0][6];
-                            $pdf->Cell(40,4,"Tên khách hàng : " . $in[$id][0][6],0,0,'L',true);
+                            $pdf->Cell(40,6,"Tên khách hàng : " . $in[$id][0][6],0,0,'L',true);
                             $pdf->Ln();
-                            $pdf->Cell(40,4,"Địa chỉ : " . $in[$id][0][2],0,0,'L',true);
+                            $pdf->Cell(40,6,"Ðịa chỉ : " . $in[$id][0][2],0,0,'L',true);
                             $pdf->Ln();
                             
-                            $pdf->Write(4, "Điện thoại khách hàng : " . $in[$id][0][7]);
+                            $pdf->Write(6, "Ðiện thoại khách hàng : " . $in[$id][0][7]);
                             $pdf->Ln();
                             $pdf->SetFillColor(120,120,120);
                             $pdf->SetTextColor(255);
                             $pdf->SetDrawColor(0,0,0);
                             $pdf->SetLineWidth(.3);
-                            //$pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
-                            //$pdf->SetFont('DejaVu','B',12);
-                            // Header
+                        
                             $w = array(5, 28, 10, 10, 17, 20);
                             for($i=0;$i<count($header);$i++)
                                 $pdf->Cell($w[$i],7,$header[$i],1,0,'C',true);
                             $pdf->Ln();
-                            // Color and font restoration
+                             //Color and font restoration
                             $pdf->SetFillColor(224,235,255);
                             $pdf->SetTextColor(0);
                             $i = 0;
                             $fill = false;
                             $tong = 0;
-                           // print_r($in[$id][1][0][10]);
+                            $tongshipkh=0;
+                            $tongpt= 0;
                             foreach($in[$id][1] as $row){
+                                //print_r($row);
                                 $pdf->Cell($w[0], 6, ++$i, 'LR', 0, 'C',$fill);
                                 $pdf->Cell($w[1], 6, $row[4], 'LR', 0, 'L', $fill);
                                 $pdf->Cell($w[2], 6, $row[5], 'LR', 0, 'C', $fill);
@@ -364,26 +412,33 @@ include_once('../config/bootload.php');
                                 $pdf->Cell($w[4], 6, number_format($row[6]), 'LR', 0, 'R', $fill);
                                 $pdf->Cell($w[5], 6, number_format($row[3]), 'LR', 0, 'R', $fill);
                                 $tong += $row[3];
+                                if($row[13]==1)
+                                {
+                                    $tongshipkh += $row[12];
+                                    $tongpt += $row[10];
+                                }
+                                
                                 $pdf->Ln();
                                 $fill = !$fill;                                
                             }
-                            if($in[$id][0][10]==1)
+                            
+                            if($tongshipkh >0)
                             {   
-                                if($in[$id][1][0][10]==0)
+                                if($tongpt==0)
                                 {
                                     $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
                                     $pdf->Cell($w[1], 6, 'Phí Ship', 'LR', 0, 'L', $fill);
                                     $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[4], 6, '', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[5], 6,  number_format($in[$id][0][8]),'LR', 0, 'R', $fill);
+                                    $pdf->Cell($w[5], 6,  number_format($in[$id]['shipshop']),'LR', 0, 'R', $fill);
                                     $pdf->Ln();
                                     $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
                                     $pdf->Cell($w[1], 6, '', 'LR', 0, 'L', $fill);
                                     $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[4], 6, 'TỔNG CỘNG', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[5], 6, number_format($tong+$in[$id][0][8]), 'LR', 0, 'R', $fill);
+                                    $pdf->Cell($w[5], 6, number_format($tong+$in[$id]['shipshop']), 'LR', 0, 'R', $fill);
                                     $pdf->Ln();
                                 }
                                 else
@@ -393,59 +448,74 @@ include_once('../config/bootload.php');
                                     $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[4], 6, '', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[5], 6,  number_format($in[$id][0][8]),'LR', 0, 'R', $fill);
+                                    $pdf->Cell($w[5], 6,  number_format($in[$id]['shipshop']),'LR', 0, 'R', $fill);
                                     $pdf->Ln();
                                     $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
                                     $pdf->Cell($w[1], 6, 'Phí Phụ Thu', 'LR', 0, 'L', $fill);
                                     $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[4], 6, '', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[5], 6,  number_format($in[$id][1][0][10]),'LR', 0, 'R', $fill);
+                                    $pdf->Cell($w[5], 6,  number_format($in[$id]['tongphuthu']),'LR', 0, 'R', $fill);
                                     $pdf->Ln();
                                     $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
                                     $pdf->Cell($w[1], 6, '', 'LR', 0, 'L', $fill);
                                     $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[4], 6, 'TỔNG CỘNG', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[5], 6, number_format($tong+$in[$id][0][8]+$in[$id][1][0][10]), 'LR', 0, 'R', $fill);
+                                    $pdf->Cell($w[5], 6, number_format($tong+$in[$id]['shipshop']+$in[$id]['tongphuthu']), 'LR', 0, 'R', $fill);
                                     $pdf->Ln();
                                 }
                             }
                             else
                             {
-                                $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
-                                $pdf->Cell($w[1], 6, '', 'LR', 0, 'L', $fill);
-                                $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
-                                $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
-                                $pdf->Cell($w[4], 6, 'TỔNG CỘNG', 'LR', 0, 'C', $fill);
-                                $pdf->Cell($w[5], 6, number_format($tong), 'LR', 0, 'R', $fill);
-                                $pdf->Ln();
+                                if($tongpt==0)
+                                {                                   
+                                    $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
+                                    $pdf->Cell($w[1], 6, '', 'LR', 0, 'L', $fill);
+                                    $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[4], 6, 'TỔNG CỘNG', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[5], 6, number_format($tong), 'LR', 0, 'R', $fill);
+                                    $pdf->Ln();
+                                }
+                                else
+                                {
+                                    $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
+                                    $pdf->Cell($w[1], 6, 'Phí Phụ Thu', 'LR', 0, 'L', $fill);
+                                    $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[4], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[5], 6,  number_format($in[$id]['tongphuthu']),'LR', 0, 'R', $fill);
+                                    $pdf->Ln();
+                                    $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
+                                    $pdf->Cell($w[1], 6, '', 'LR', 0, 'L', $fill);
+                                    $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[4], 6, 'TỔNG CỘNG', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[5], 6, number_format($tong+$in[$id]['tongphuthu']), 'LR', 0, 'R', $fill);
+                                    $pdf->Ln();
+                                }
                             }
-                        
-                             //Closing line
+                           //print_r($in);
+//                        
+//                             //Closing line
                             $pdf->Cell(array_sum($w),0,'','T');
                            
                             $pdf->Ln();
                             $pdf->SetTextColor(0);
                             $pdf->SetFillColor(255,255,255);
-                            $pdf->Cell(40,15,"     NGƯỜI NHẬN HÀNG " ,0,0,'L',true);
-                            $pdf->Cell(40,15,"         NGƯỜI LẬP BẢNG " ,0,0,'L',true);
+                            $pdf->Cell(40,15,"     NGU?I NH?N " ,0,0,'L',true);
+                            $pdf->Cell(40,15,"         NGU?I L?P B?NG " ,0,0,'L',true);
                             
                             $pdf->Ln();
                             $pdf->Ln();
-                            $pdf->Output('C',$filename);
-                            
-                           // echo "Shipper: \t". chr(255).chr(254) . mb_convert_encoding($in[0][4] ,'UTF-16LE','UTF-8' )."\t"."ÐT: \t".$in[0][5]."\n";
-//                            echo "Tên Khách Hàng: \t". $in[0][6]."\n";
-//                            echo "Ð?a Ch?: \t". $in[0][2]."\t \t"."ÐT: \t".$in[0][7];
-//                            $temp = implode("\t", $ar);
-//                            echo chr(255).chr(254).mb_convert_encoding($temp ,'UTF-16BE','UTF-8' )."\r\n";
-//                $ar = array('STT','Tên Hàng','Ðon V?','S? lu?ng','Ðon Giá','Thành Ti?n');
-//                print_r($thongtin);   
-//                $data = "Some utf-8 characters d?a ch?";          
+                            $pdf->Output($filename,'D');
+                            //print_r($filename);                           
                         
              }    
             }
         break;
+       
+
 }
 ?>

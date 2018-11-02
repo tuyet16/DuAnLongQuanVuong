@@ -12,6 +12,8 @@
     switch($action)
     {
         case 'add':
+         $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             if(isset($_GET['id']))
             {
                 $masp = $_GET['id'];
@@ -23,15 +25,20 @@
             }
         break;
         case 'viewcart':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             $category = new Categories();
+            
             $dsCategories = $category->getCategories();
             if(isset($_SESSION['userid']))
             {
                 $id = $_SESSION['userid'];
-                $rsCategories = $category->getDScategory($id);                  
+                $rsCategories = $category->getDScategory($id);                
             }  
-            $view = Page::View();
             $shoppingcart = new ShoppingCart();
+            
+            $view = Page::View();
+            
             $rsCart = $shoppingcart->ViewCart();
             $tongtien = $shoppingcart->getTotal();
             $category = new Categories();
@@ -44,6 +51,9 @@
             
         break;
         case 'updatecart':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+
             $shopcart = new ShoppingCart();
             $_SESSION['sosl'] = $shopcart->getTongsl();
             if(isset($_POST['submit'])){
@@ -56,6 +66,9 @@
             header('Location: shoppingcart_controller.php?action=viewcart');
         break;
         case 'deletecart':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+
             if(isset($_GET['id']))
             {
                 $masp = $_GET['id'];
@@ -66,6 +79,9 @@
             header('Location: shoppingcart_controller.php?action=viewcart');            
         break;
         case 'muahang':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+
             $view = Page::View();
             $dt_model = new districts();
             $DSdistrict = $dt_model->getDistrict();
@@ -77,6 +93,8 @@
             include_once('../template/index.php');
         break;
         case 'dathang':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
             $hoten = $_POST['hoten'];
             $dienthoai = $_POST['dienthoai'];
             $quan = $_POST['quan'];
@@ -85,9 +103,9 @@
             $DSdistrict = $district->getByIDDistrict($quan);
             $shopping_ml = new ShoppingCart();  
             $shopping_ml->ViewCart(); 
-            $tongtien = $shopping_ml->getTotal();
+            //$tongtien = $shopping_ml->getTotal();
             $customer_id = $shopping_ml->addCustomer($hoten,$diachi,$dienthoai,$quan);
-            $nguoitra = $_POST['nguoitraship'];
+            $nguoitra = $_POST['nguoitraship'];           
             if($customer_id !=Null)
             {
                 $thoigian = date("Y-m-d H:i:s");
@@ -95,17 +113,19 @@
                 $address = $diachi.' '.$DSdistrict[0]->districtName;
                 $ship = $shopping_ml->tinhphidichvu($quan,$giaohang);
                // echo $ship;
-                $bills_id = $shopping_ml->addBills($customer_id,$address,$thoigian,$giaohang,$tongtien,$ship,$nguoitra);                 
+                $bills_id = $shopping_ml->addBills($customer_id,$address,$thoigian,$giaohang,0,$ship,$nguoitra);                 
                 if($bills_id !=null)
                 {
                     foreach($_SESSION['cart'] as $masp=>$amount)
                     {
                         $model_pr = new products();
                         $rsProducts = $model_pr->getByIDProduct($masp);
+                        $gia = $rsProducts[0]->price;
                         $thanhtien = $amount * $rsProducts[0]->price;
-                        $detail_id = $shopping_ml->addDetails($masp,$amount,$thanhtien,$bills_id);
+                        $detail_id = $shopping_ml->addDetails($masp,$amount,$gia,$thanhtien,$bills_id);
                     }
                     unset($_SESSION['cart']); 
+                    //print_r($rsProducts[0]->price);
                     header('Location: home_controller.php');                   
                 }
             }
@@ -115,8 +135,13 @@
             } 
         break;
         case "timkiem":
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
                 $shopcarts = new ShoppingCart();
                 $tk = $shopcarts->timkiem($_POST['sdt']);
+                $tt = $shopcarts->ViewCart();
+                $tongtien = $shopcarts->getTotal();
+                
                 if($tk !=null)
                 {
                     $Arrtimkiem = array();
@@ -126,16 +151,21 @@
                         $Arrtimkiem['quan'] = $sdt->districtID;
                         $Arrtimkiem['diachi'] = $sdt->address;                        
                     }
+                    $phiship  = $shopcarts->tinhphidichvu($Arrtimkiem['quan'],$_POST['ghthuong']);
+                    $Arrtimkiem['phiship'] = number_format($phiship);
+                    $Arrtimkiem['tongtien'] = number_format($tongtien+$phiship);
                 }
                 else
                 {
                     $Arrtimkiem['ten'] = " ";
                     $Arrtimkiem['quan'] = " ";
                     $Arrtimkiem['diachi'] = "";
-                   
+                    $Arrtimkiem['phiship'] = "";
+                   $Arrtimkiem['tongtien'] = "";
                 }
                  echo json_encode($Arrtimkiem);
         break;
+        
         
     }
 
