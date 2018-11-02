@@ -373,6 +373,7 @@ class Users extends Database{
             $tongshipshop =0;
             $tongluongshop =0;
             $tongdoanhthushop=0;
+            $tongtientungshop=0;
             $thongkeArr[$user->userid]['thongtinshop'][0]= $user->fullname;    
                            
             $sql = 'select distinct bi.*,cs.customerName,ep.employeeName
@@ -387,7 +388,7 @@ class Users extends Database{
             {                
                 $thongkeArr[$user->userid]['thongtinshop'][$tt->billID][0]= array($tt->billID,$tt->customerName,$tt->totalPrice,$tt->employeeName,
                                         $tt->tinhtrang,$tt->phiship,$tt->luongnv,'tongphuthu'=>0);     
-                 $sql1 = 'select dt.detailID,dt.phuthu,dt.price from detailsbills dt, products pr, users us
+                 $sql1 = 'select dt.detailID,dt.phuthu,dt.amount, dt.price from detailsbills dt, products pr, users us
                                  where dt.productID= pr.productID and us.userid = pr.userid and dt.billID=? and us.userid=?';
                  $param = array();
                  $param[] = $tt->billID;
@@ -398,7 +399,7 @@ class Users extends Database{
                  {
                     $thongkeArr[$user->userid]['thongtinshop'][$tt->billID][1][]=array($detail->detailID,$detail->phuthu,$detail->price);
                     $tongphuthu += $detail->phuthu;
-                    $tongtientungshop +=$detail->price;
+                    $tongtientungshop +=($detail->price * $detail->amount);
                  }      
                  $thongkeArr[$user->userid]['thongtinshop'][$tt->billID][0]['tongphuthu']=$tongphuthu;
                   $thongkeArr[$user->userid]['thongtinshop'][$tt->billID][0]['tongtientungshop']=$tongtientungshop;
