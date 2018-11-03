@@ -156,8 +156,9 @@ function __construct($orientation='P', $unit='mm', $size='A4')
 	$this->wPt = $this->w*$this->k;
 	$this->hPt = $this->h*$this->k;
 	// Page margins (1 cm)
-	$margin = 28.35/$this->k;
-	$this->SetMargins($margin,$margin);
+	//$margin = 28.35/$this->k;
+    $margin = 2.35/$this->k;
+	$this->SetMargins($margin,$margin,20);
 	// Interior cell margin (1 mm)
 	$this->cMargin = $margin/10;
 	// Line width (0.2 mm)

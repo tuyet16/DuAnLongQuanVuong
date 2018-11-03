@@ -357,41 +357,55 @@ include_once('../config/bootload.php');
                         $ngay =$in[$id][0][3];
                         $tem = date_create($ngay);
                         $ngay = date_format($tem, 'd-m-Y');
-                        $filename = $ngay . '_' . $id . '.pdf';
+                        $filename = $ngay . '_' . $in[$id][0][0] . '_' . $id . '.pdf';
                         
                         $pdf = new tFPDF('P', 'mm', 'A6');
                         $pdf->AddPage();
                         $pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
-                        $pdf->SetFont('DejaVu','',8);
+                        $pdf->SetFont('DejaVu','',9);
                         
                         if($flag == false)
                         {   
-                            $pdf->Write(6, "Chị Hàng: ". $in[$id][0][0]);
+                            $pdf->AddFont('DejaVuBold','','DejaVuSansCondensed-Bold.ttf',true);
+                            $pdf->SetFont('DejaVuBold','',14);
+                            $pdf->Cell(0, 6, "PHIẾU GIAO HÀNG", 0, 0, 'C', false );
                             $pdf->Ln();
-                            $pdf->Write(6, "Ðịa Chỉ: ". $in[$id][0][1]);
+                            //$pdf->Write(6, "Ðơn Vị Vận Chuyển SEVEN SHIPPER");
+                            $pdf->SetFontSize(10);
+                            $pdf->Cell(0, 6, "Ðơn Vị Vận Chuyển SEVEN SHIPPER", 0, 0, 'C', false );
                             $pdf->Ln();
-                            $pdf->Write(6, "Ðơn vị vận chuyển : SEVEN SHIPPER");
+                            $pdf->SetFontSize(9);
+                            $pdf->Cell(0, 6, "Ngày giao : " . $ngay, 0, 0, 'C', false );
                             $pdf->Ln();
+                            $pdf->SetFont('DejaVu','',9);
                             $pdf->SetTextColor(0);
                             $pdf->SetFillColor(255,255,255);
-                            $pdf->Cell(40,6,"Shipper : " . $in[$id][0][4],0,0,'L',true);
-                            $pdf->Cell(40,6,"Ðiện thoại Shipper : " . $in[$id][0][5],0,0,'L',true);
-                            $pdf->Ln();
-                            
+                            //$pdf->Write(6, "Chủ Hàng: ". $in[$id][0][0]);
+//                            $pdf->Ln();
+//                            $pdf->Write(6, "Ðịa Chỉ: ". $in[$id][0][1]);
+//                            $pdf->Ln();
                             $str = $in[$id][0][6];
                             $pdf->Cell(40,6,"Tên khách hàng : " . $in[$id][0][6],0,0,'L',true);
                             $pdf->Ln();
-                            $pdf->Cell(40,6,"Ðịa chỉ : " . $in[$id][0][2],0,0,'L',true);
+                            $pdf->Cell(40,6,"Ðịa chỉ : " . ucwords($in[$id][0][2]) ,0,0,'L',true);
                             $pdf->Ln();
                             
                             $pdf->Write(6, "Ðiện thoại khách hàng : " . $in[$id][0][7]);
                             $pdf->Ln();
+                            
+                            
+                            $pdf->Cell(40,6,"Shipper : " . $in[$id][0][4],0,0,'L',true);
+                            $pdf->Ln();
+                            $pdf->Cell(40,6,"Ðiện thoại Shipper : " . $in[$id][0][5],0,0,'L',true);
+                            $pdf->Ln();
+                            
+                            
                             $pdf->SetFillColor(120,120,120);
                             $pdf->SetTextColor(255);
                             $pdf->SetDrawColor(0,0,0);
                             $pdf->SetLineWidth(.3);
                         
-                            $w = array(5, 28, 10, 10, 17, 20);
+                            $w = array(6, 28, 10, 10, 16, 18);
                             for($i=0;$i<count($header);$i++)
                                 $pdf->Cell($w[$i],7,$header[$i],1,0,'C',true);
                             $pdf->Ln();
@@ -409,8 +423,8 @@ include_once('../config/bootload.php');
                                 $pdf->Cell($w[1], 6, $row[4], 'LR', 0, 'L', $fill);
                                 $pdf->Cell($w[2], 6, $row[5], 'LR', 0, 'C', $fill);
                                 $pdf->Cell($w[3], 6, $row[2], 'LR', 0, 'C', $fill);
-                                $pdf->Cell($w[4], 6, number_format($row[6]), 'LR', 0, 'R', $fill);
-                                $pdf->Cell($w[5], 6, number_format($row[3]), 'LR', 0, 'R', $fill);
+                                $pdf->Cell($w[4], 6, number_format($row[6]). ' ', 'LR', 0, 'R', $fill);
+                                $pdf->Cell($w[5], 6, number_format($row[3]). ' ', 'LR', 0, 'R', $fill);
                                 $tong += $row[3];
                                 if($row[13]==1)
                                 {
@@ -431,15 +445,17 @@ include_once('../config/bootload.php');
                                     $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[4], 6, '', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[5], 6,  number_format($in[$id]['shipshop']),'LR', 0, 'R', $fill);
+                                    $pdf->Cell($w[5], 6,  number_format($in[$id]['shipshop']) . ' ','LR', 0, 'R', $fill);
                                     $pdf->Ln();
                                     $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
                                     $pdf->Cell($w[1], 6, '', 'LR', 0, 'L', $fill);
                                     $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[4], 6, 'TỔNG CỘNG', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[5], 6, number_format($tong+$in[$id]['shipshop']), 'LR', 0, 'R', $fill);
+                                    $pdf->SetFont('DejaVuBold','',9);
+                                    $pdf->Cell($w[4], 6, 'TỔNG', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[5], 6, number_format($tong+$in[$id]['shipshop']) . ' ', 'LR', 0, 'R', $fill);
                                     $pdf->Ln();
+                                    $pdf->SetFont('DejaVu','',9);
                                 }
                                 else
                                 {
@@ -448,22 +464,24 @@ include_once('../config/bootload.php');
                                     $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[4], 6, '', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[5], 6,  number_format($in[$id]['shipshop']),'LR', 0, 'R', $fill);
+                                    $pdf->Cell($w[5], 6,  number_format($in[$id]['shipshop']) . ' ','LR', 0, 'R', $fill);
                                     $pdf->Ln();
                                     $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
                                     $pdf->Cell($w[1], 6, 'Phí Phụ Thu', 'LR', 0, 'L', $fill);
                                     $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[4], 6, '', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[5], 6,  number_format($in[$id]['tongphuthu']),'LR', 0, 'R', $fill);
+                                    $pdf->Cell($w[5], 6,  number_format($in[$id]['tongphuthu']) . ' ','LR', 0, 'R', $fill);
                                     $pdf->Ln();
                                     $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
                                     $pdf->Cell($w[1], 6, '', 'LR', 0, 'L', $fill);
                                     $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[4], 6, 'TỔNG CỘNG', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[5], 6, number_format($tong+$in[$id]['shipshop']+$in[$id]['tongphuthu']), 'LR', 0, 'R', $fill);
+                                    $pdf->SetFont('DejaVuBold','',9);
+                                    $pdf->Cell($w[4], 6, 'TỔNG', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[5], 6, number_format($tong+$in[$id]['shipshop']+$in[$id]['tongphuthu']) . ' ', 'LR', 0, 'R', $fill);
                                     $pdf->Ln();
+                                    $pdf->SetFont('DejaVu','',9);
                                 }
                             }
                             else
@@ -474,9 +492,11 @@ include_once('../config/bootload.php');
                                     $pdf->Cell($w[1], 6, '', 'LR', 0, 'L', $fill);
                                     $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[4], 6, 'TỔNG CỘNG', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[5], 6, number_format($tong), 'LR', 0, 'R', $fill);
+                                    $pdf->SetFont('DejaVuBold','',9);
+                                    $pdf->Cell($w[4], 6, 'TỔNG', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[5], 6, number_format($tong) . ' ', 'LR', 0, 'R', $fill);
                                     $pdf->Ln();
+                                    $pdf->SetFont('DejaVu','',9);
                                 }
                                 else
                                 {
@@ -485,15 +505,17 @@ include_once('../config/bootload.php');
                                     $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[4], 6, '', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[5], 6,  number_format($in[$id]['tongphuthu']),'LR', 0, 'R', $fill);
+                                    $pdf->Cell($w[5], 6,  number_format($in[$id]['tongphuthu']) . ' ','LR', 0, 'R', $fill);
                                     $pdf->Ln();
                                     $pdf->Cell($w[0], 6, '', 'LR', 0, 'C',$fill);
                                     $pdf->Cell($w[1], 6, '', 'LR', 0, 'L', $fill);
                                     $pdf->Cell($w[2], 6, '', 'LR', 0, 'C', $fill);
                                     $pdf->Cell($w[3], 6, '', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[4], 6, 'TỔNG CỘNG', 'LR', 0, 'C', $fill);
-                                    $pdf->Cell($w[5], 6, number_format($tong+$in[$id]['tongphuthu']), 'LR', 0, 'R', $fill);
+                                    $pdf->SetFont('DejaVuBold','',9);
+                                    $pdf->Cell($w[4], 6, 'TỔNG', 'LR', 0, 'C', $fill);
+                                    $pdf->Cell($w[5], 6, number_format($tong+$in[$id]['tongphuthu']) . ' ', 'LR', 0, 'R', $fill);
                                     $pdf->Ln();
+                                    $pdf->SetFont('DejaVu','',9);
                                 }
                             }
                            //print_r($in);
@@ -504,8 +526,8 @@ include_once('../config/bootload.php');
                             $pdf->Ln();
                             $pdf->SetTextColor(0);
                             $pdf->SetFillColor(255,255,255);
-                            $pdf->Cell(40,15,"     NGU?I NH?N " ,0,0,'L',true);
-                            $pdf->Cell(40,15,"         NGU?I L?P B?NG " ,0,0,'L',true);
+                            $pdf->Cell(40,15,"     NGƯỜI NHẬN " ,0,0,'L',true);
+                            $pdf->Cell(40,15,"         NGUỜI LẬP BẢNG " ,0,0,'L',true);
                             
                             $pdf->Ln();
                             $pdf->Ln();

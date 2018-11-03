@@ -432,7 +432,7 @@ class Users extends Database{
         }
         $tongluong =0;
         foreach($dtngay as $user)
-<<<<<<< HEAD
+
         {
             $tongship =0;
             $tongluong =0;
@@ -441,9 +441,9 @@ class Users extends Database{
             $tongluongshop =0;
             $tongdoanhthushop=0;
             $tongtientungshop=0;
-=======
+
         {  
->>>>>>> refs/remotes/origin/master
+
             $thongkeArr[$user->userid]['thongtinshop'][0]= $user->fullname;    
                            
             $sql = 'select distinct bi.*,cs.customerName,ep.employeeName
@@ -465,15 +465,15 @@ class Users extends Database{
              //lấy thông tin bill
             foreach($thongtin as $tt)
             {                
-<<<<<<< HEAD
+
                 $thongkeArr[$user->userid]['thongtinshop'][$tt->billID][0]= array($tt->billID,$tt->customerName,$tt->totalPrice,$tt->employeeName,
                                         $tt->tinhtrang,$tt->phiship,$tt->luongnv,'tongphuthu'=>0);     
-                 $sql1 = 'select dt.detailID,dt.phuthu,dt.amount, dt.price from detailsbills dt, products pr, users us
-=======
+                 
+
                 $thongkeArr[$user->userid]['thongtinshop'][$i][0]= array($tt->billID,$tt->customerName,$tt->totalPrice,$tt->employeeName,
                                         $tt->tinhtrang,$tt->phiship,$tt->luongnv);     
                  $sql1 = 'select dt.* from detailsbills dt, products pr, users us
->>>>>>> refs/remotes/origin/master
+
                                  where dt.productID= pr.productID and us.userid = pr.userid and dt.billID=? and us.userid=?';
                  $param = array();
                  $param[] = $tt->billID;
@@ -496,7 +496,7 @@ class Users extends Database{
                                     $detail->nguoitraship);
                                     
                     $tongphuthu += $detail->phuthu;
-<<<<<<< HEAD
+
                     $tongtientungshop +=($detail->price * $detail->amount);
                  }      
                  $thongkeArr[$user->userid]['thongtinshop'][$tt->billID][0]['tongphuthu']=$tongphuthu;
@@ -512,7 +512,7 @@ class Users extends Database{
                 $thongkeArr[$user->userid]['tongdoanhthu'] = $tongdoanhthu;
                 
                 
-=======
+
                     $tongtientungbill += $detail->price * $detail->amount;
                     $shiptungshop += $detail->phishipshop;
                     
@@ -536,7 +536,7 @@ class Users extends Database{
                  $thongkeArr[$user->userid]['thongtinshop'][$i][0]['tongphuthu']=$tongphuthu;
                   $thongkeArr[$user->userid]['thongtinshop'][$i][0]['shiptungshop']=$shiptungshop;                 
                   
->>>>>>> refs/remotes/origin/master
+
                 //tinh so hoa don da giao va chua giao
                 $tongchuagiao = 0;
                 $tongdagiao =0;                                
