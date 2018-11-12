@@ -18,6 +18,7 @@
         </div> 
          <div class="list-group-item list-group-item-action"><a href="../Controllers/admin_controller.php?action=doihinh">THAY ĐỔI QUẢNG CÁO</a>
         </div>
+        <div class="list-group-item list-group-item-action"><a href="../Controllers/admin_controller.php?action=xemdhshop">XEM ĐƠN HÀNG SHOP</a></div>
     </div>
     <div class="list-group" style="padding-top: 3%;">
         <div class="list-title text-center">

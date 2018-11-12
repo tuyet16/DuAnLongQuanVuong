@@ -255,6 +255,51 @@ class Users extends Database{
               
         return $donhangarr;
     }
+      //Xem danh sách đơn hàng shop chưa gửi
+    public function Xemdonhangshop($ngay)
+    {
+        $donhangarr = array();
+         if($ngay != null)
+        {
+            $query ='select distinct us.userid,us.fullname from bills bi,products pr, detailsbills dt,users us
+                where bi.billID = dt.billID and dt.productID = pr.productID and us.userid=pr.userid
+                        and dt.shop_acceptance=0 and bi.PurchaseDate=? order by bi.PurchaseDate desc';
+            $param = array();
+            $param[] = $ngay;
+            $rs = $this->doQuery($query,$param); 
+        }
+        else
+        {        
+            $query ='select distinct us.userid,us.fullname from bills bi,products pr, detailsbills dt ,users us
+                    where bi.billID = dt.billID and dt.productID = pr.productID and us.userid=pr.userid and dt.shop_acceptance=0 
+                    order by bi.PurchaseDate';
+            $param = array();
+            $rs = $this->doQuery($query); 
+        }
+        foreach($rs as $user)
+        {
+            $donhangarr[$user->userid]['thongtinshop']= array($user->fullname);
+            $query1 = 'select distinct bi.*,us.userid,us.fullname from bills bi,products pr, detailsbills dt ,users us
+                    where bi.billID = dt.billID and dt.productID = pr.productID and dt.shop_acceptance=0 and us.userid =pr.userid 
+                    and us.userid=? and bi.PurchaseDate=? order by bi.PurchaseDate ';
+            $param = array();
+            $param[] = $user->userid;
+            $param[] = $ngay;
+            $bi = $this->doQuery($query1,$param);                    
+            foreach($bi as $bill)
+            {
+                $donhangarr[$user->userid][$bill->billID][0]= array($bill->customerID,$bill->billingAddress,$bill->delivery
+                                        ,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck,$bill->idEm,$bill->nguoitraship);
+                $sql = 'select * from customers cs, districts dt where cs.districtID = dt.districtID and customerID=?';
+                $param =array();
+                $param[]=$bill->customerID;
+                $cs = $this->doQuery($sql,$param);
+                $donhangarr[$user->userid][$bill->billID][2] = array($cs[0]->customerName
+                                    ,$cs[0]->address,$cs[0]->phone,$cs[0]->districtName);                                 
+            } 
+        }
+        return $donhangarr;
+    }
     //đơn hàng mà admin nhận mỗi ngày
     public function gethoadonAmin($ngay=null)
     {
@@ -276,8 +321,8 @@ class Users extends Database{
                     order by bi.PurchaseDate';
             $param = array();
             $bi = $this->doQuery($query); 
-        }    
-                          
+        }  
+                         
         foreach($bi as $bill)
         {
             $donhangarr[$bill->billID]['thongtinbill']= array($bill->customerID,$bill->billingAddress,$bill->delivery
@@ -443,7 +488,6 @@ class Users extends Database{
             $tongtientungshop=0;
 
         {  
-
             $thongkeArr[$user->userid]['thongtinshop'][0]= $user->fullname;    
                            
             $sql = 'select distinct bi.*,cs.customerName,ep.employeeName

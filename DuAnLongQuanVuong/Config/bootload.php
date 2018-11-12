@@ -3,7 +3,7 @@ session_start();
 date_default_timezone_set("Asia/Ho_Chi_Minh");
 include_once '../Errors/mvcexception.php';
 
-define('FPDF_FONTPATH','C:/xampp/htdocs/DuAnLongQuanVuong/DuAnLongQuanVuong/Libs/font');
+//define('FPDF_FONTPATH','D:/xampp/htdocs/DuAnLongQuanVuong/DuAnLongQuanVuong/Libs/font');
 
 //define('FPDF_FONTPATH','.');
 /**

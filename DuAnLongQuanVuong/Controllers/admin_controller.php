@@ -79,7 +79,23 @@ include_once('../config/bootload.php');
 			}
 			break; 
         break;
-         
+         case 'xemdhshop':
+            $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            
+            if(isset($_POST['chonngay'])){
+                $date = $_POST['chonngay'];
+                $dt = date_create($date);
+                $date = date_format($dt, 'Y-m-d');
+                $dsdonhangshop = $user->Xemdonhangshop($date);
+            }
+            $view = Page::View();
+            $GLOBALS['template']['menu'] = include_once'../template/menu.php';
+            $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+            $GLOBALS['template']['content'] = include_once $view;
+            include_once('../template/index.php');
+            
+         break;
         case 'donhang':
            $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
