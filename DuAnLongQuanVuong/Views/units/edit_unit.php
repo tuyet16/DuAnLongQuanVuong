@@ -53,9 +53,10 @@ $().ready(function() {
             <td>&nbsp; Thao tác</td>
           </tr>
      <?php  
+        $i=1;
          foreach($dsUnit as $row){    
              echo'<tr>
-                <td>&nbsp; '.$row->unitID.'</td>
+                <td>&nbsp; '.$i++.'</td>
                 <td>&nbsp; '.$row->unitName.'</td>
                 <td><a href="../Controllers/units_controller.php?action=edit_unit&id='.$row->unitID.'">
 					<span class="glyphicon glyphicon-pencil" data-toggle="tooltip" title="Sửa"></span></a> 

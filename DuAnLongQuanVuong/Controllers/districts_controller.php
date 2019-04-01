@@ -14,7 +14,7 @@
 		case 'index':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $dt_model = new districts();
+            $dt_model = new Districts();
             $DSdistrict = $dt_model->getDistrict();
 			$tableDB = new Database();
             $tables = $tableDB->getTables();
@@ -28,24 +28,48 @@
         case 'add':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-			$GLOBALS['template']['menu'] = include_once '../template/menu.php';
-			$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
-			$GLOBALS['template']['content'] = include_once $view;
-			$GLOBALS['template']['title'] = 'Thêm Quận/Huyện';
-            $dt_model = new districts();
-            $dt_model->addDistricts($_POST['tenquan'],$_POST['slKV']);
-            header('Location:districts_controller.php');
+            $name = filter_input(INPUT_POST, 'tenquan');
+			if($name==NULL){
+				try{
+					$tablesDB = new Database();
+					$tables = $tablesDB->getTables();				
+					$distric_model = new Districts();
+					$DSdistrict = $distric_model->getDistrict();
+					$district = $distric_model->getByIDDistrict($_GET['id']);
+					$dsAreas = $areas->getAreas();
+					$view = Page::View();
+					if(file_exists($view) == false)
+						throw new MVCException('Không tồn tại tập tin ' . $view);
+					else
+					{
+						$GLOBALS['template']['menu'] = include_once '../template/menu.php';
+						$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+						$GLOBALS['template']['content'] = include_once $view;
+						$GLOBALS['template']['title'] = 'Sửa Quận/Huyện';
+						include_once '../template/index.php';
+					} 				  
+				}catch(MVCException $e)
+				{
+					
+				}
+			}
+			else
+			{
+                $dt_model = new Districts();
+                $dt_model->addDistricts($_POST['tenquan'],$_POST['slKV']);
+                header('Location: districts_controller.php');
+            }
         break;
         case "edit":
 		{	
-             $user = new Users();
+            $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
             $name = filter_input(INPUT_POST, 'tenquan');
 			if($name==NULL){
 				try{
 					$tablesDB = new Database();
 					$tables = $tablesDB->getTables();				
-					$distric_model = new districts();
+					$distric_model = new Districts();
 					$DSdistrict = $distric_model->getDistrict();
 					$district = $distric_model->getByIDDistrict($_GET['id']);
 					$dsAreas = $areas->getAreas();
@@ -71,7 +95,7 @@
 				$id = $_POST['id_dis'];
 				$areas= $_POST['slKV'];
 				//print_r($_POST);
-				$distric_model = new districts();
+				$distric_model = new Districts();
 				$distric_model->editDistricts($name,$areas,$id);
 				header('Location: districts_controller.php');    
 			}
@@ -83,7 +107,7 @@
         if(isset($_GET['id']))
         {
             $id = $_GET['id'];
-            $dt_model = new districts();
+            $dt_model = new Districts();
             $dt_model->deleteDistrict($id);
             header('Location:districts_controller.php');
         }

@@ -98,7 +98,7 @@ $().ready(function() {
 					<td>&nbsp;'.$i++.'</td>
 					<td>&nbsp;'.$row->employeeID.'</td>
 					<td>&nbsp;'.ucfirst($row->employeeName).'</td>
-					<td>&nbsp;'.$row->address.'</td>
+					<td>&nbsp;'.strip_tags($row->address).'</td>
 					<td>&nbsp;'.$row->phone.'</td>
                     <td style="width:35%"><img src="../Views/img/'.$row->hinhanh.'" width="30%"/></td>
 					<td>

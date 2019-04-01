@@ -30,6 +30,7 @@
       <div id="accordion">
       <?php //foreach($DSdonhang as $date=>$billIDs) {
             $tong =0;
+            $tongphiship = 0;
             $thongke = array();
         ?>    
       <tr>
@@ -149,7 +150,7 @@
                               ?>
                             </td>
                             <td><?php echo $detail_item[4]; ?></td>
-                            <td><?php echo number_format($detail_item[5]); ?></td>
+                            <td><?php echo number_format($detail_item[2]); ?></td>
                             <td>
                             <?php if($check_product_acceptance == false){?>
                                 <select name="giamgia<?php echo $detail_item[0]; ?>">
@@ -171,7 +172,7 @@
                                 </select>
                             </td>
                             <input type="hidden" name="gia<?php echo $detail_item[0]; ?>" value="<?php echo $detail_item[5]; ?>" />
-                            <td><?php echo number_format($detail_item[2]); ?></td>
+                            <td><?php echo number_format($detail_item[5]); ?></td>
                             <td><?php if($db[0][4]==2){
                                         echo 'Đã Giao';
                                     }
@@ -198,7 +199,23 @@
                         } ?>
                     </table>
                     
-                    <div class="col-md-12"><label class="control-label">Phí Giao Hàng</label><br /></div>
+                    <div class="col-md-12"><label class="control-label">Phí Giao Hàng:
+                                                        <?php 
+                                                            $phi = 0;
+                                                            if($detail_item[8] == 0){
+                                                                echo $detail_item[9];
+                                                                $phi = $detail_item[9];
+                                                                $tongphiship += $phi;
+                                                                echo '<input type="hidden" name="phishipshop" value="' . $phi . '"/>';
+                                                                echo '<input type="hidden" name="phishipkh" value="0"/>';
+                                                            }
+                                                            else{
+                                                                echo $detail_item[10];
+                                                                $phi = $detail_item[10];
+                                                                echo '<input type="hidden" name="phishipkh" value="' . $phi . '"/>';
+                                                                echo '<input type="hidden" name="phishipshop" value="0"/>';
+                                                            }        
+                                                        ?></label><br /></div>
                     <div class="col-md-12">
                         <div class="col-md-3">
                             <input type="radio" name="nguoitraship" value="0" <?php if($detail_item[8]==0)
@@ -251,10 +268,13 @@
         <?php }  ?> 
        <tr style="margin-top: 20px;">
             <td colspan="4" style="color: red; text-align: center;font-weight: bolder;font-size: 130%;">Tổng tiền</td>
-            <td style="color: blue;background-color: #FDE1FD;"><b><?php echo number_format($tong); ?></b></td>
-            <td colspan="2"></td>
+            <td colspan="3" style="color: blue;background-color: #FDE1FD;"><b><?php echo number_format($tong); ?></b></td>
+            
         </tr>
-        
+        <tr>
+            <td colspan="4" style="text-align: center;font-weight: bolder;font-size: 130%;">Tổng phí ship</td>
+            <td colspan="3" style="font-weight: bold;"><?php echo number_format($tongphiship);?></td>
+        </tr>
         <!-- bảng thống kê số lượng -->
         
         <tr>

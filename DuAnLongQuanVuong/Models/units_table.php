@@ -7,7 +7,7 @@ class Units extends Database{
         
     }   
     public function getUnits(){
-        $query = 'SELECT * FROM units';
+        $query = 'SELECT * FROM units ORDER BY unitName ASC';
         $rs = $this->doQuery($query);
         return $rs;
     }

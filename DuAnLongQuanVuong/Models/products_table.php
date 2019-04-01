@@ -1,5 +1,5 @@
 <?php
-	class products extends Database {
+	class Products extends Database {
 		public function __construct(){
 			parent::__construct();
 		}
@@ -19,23 +19,99 @@
         }
         public function getProductByuserid($id)
         {
-            $query= 'select p.*, c.categoryName, u.unitName from products p, categories c, units u 
-                        where p.categoryID = c.categoryID and p.unitID = u.unitID and 
-                             userid =?
-                    order by p.created desc, p.productID desc
-                    
+            $productByCate = [];
+            $query= 'select DISTINCT c.categoryID, c.categoryName 
+                    FROM products p, categories c 
+                    WHERE p.categoryID = c.categoryID AND p.userid=?
+                    Order by c.categoryName ASC
                     ';
             $param = array();
             $param[] = $id;
             $rs= $this->doQuery($query,$param);
-            return $rs;
+            foreach($rs as $category):
+                $productByCate['cateInfo'][$category->categoryID] = ['cateId'=>$category->categoryID, 
+                                                                    'cateName'=>$category->categoryName,
+                                                                    'productCategory'=>[]];
+                $sql = "
+                        SELECT productID, productName, price, PromotionPrice, StartDate, EndDate, image 
+                        FROM products
+                        WHERE userid = ? AND categoryID = ?
+                        "; 
+                $param = [];
+                $param[] = $id;
+                $param[] = $category->categoryID;
+                $rsProduct = $this->doQuery($sql, $param);
+                foreach($rsProduct as $product):
+                    $productByCate['cateinfo'][$category->categoryID]['productCategory'][] = ['productID'=>$product->productID,
+                                                                            'productName'=>$product->productName,
+                                                                            'price'=>$product->price,
+                                                                            'PromotionPrice'=>$product->PromotionPrice,
+                                                                            'StartDate'=>$product->StartDate,
+                                                                            'EndDate'=>$product->EndDate,
+                                                                            'image'=>$product->image
+                                                                            ]; 
+                endforeach;
+            endforeach;
+            return $productByCate;
         }
         public function getByIDProduct($id)
         {
-            $query ='select * from products where productID=?';
+            $query ='select p.*, u.unitName, c.categoryName  
+                    from products p, units u, categories c 
+                    where p.productID=? AND p.unitID = u.unitID AND p.categoryID = c.categoryID';
             $param= array();
             $param[]=$id;
             $rs = $this->doQuery($query,$param);
+            return $rs;
+        }
+        public function countViewProduct($id)
+        {
+            $sql = "SELECT viewnumber
+                    FROM products
+                    WHERE productID = ?
+                    ";
+            $param = [];
+            $param[] = $id;
+            $rs = $this->doQuery($sql, $param);
+            $views = $rs[0]->viewnumber + 1;
+            $sql = "UPDATE products SET viewnumber = ? WHERE productID = ?";
+            $param = [];
+            $param[] = $views;
+            $param[] = $id;
+            $this->doQuery($sql, $param);
+        }
+        public function getMostView(){
+            $c = parse_ini_file('../Config/config.ini', true);
+            $sql = "SELECT p.productID, p.productName, p.price, p.PromotionPrice, p.image, u.unitName, c.categoryID, c.categoryName  
+                    FROM  products p, units u, categories c
+                    WHERE p.unitID = u.unitID AND p.categoryID = c.categoryID
+                    ORDER BY p.viewnumber DESC 
+                    LIMIT 0," . $c['mostviewproduct']['quantity'];
+            $rs = $this->doQuery($sql);
+            return $rs;
+        }
+        public function getNewProducts()
+        {
+            $c = parse_ini_file('../Config/config.ini', true);
+            $sql = "SELECT p.productID, p.productName, p.price, p.PromotionPrice, p.image, u.unitName, c.categoryID, c.categoryName  
+                    FROM  products p, units u, categories c
+                    WHERE p.unitID = u.unitID AND p.categoryID = c.categoryID AND DATEDIFF(NOW(), p.created) < 30
+                    ORDER BY p.created DESC 
+                    LIMIT 0," . $c['newproduct']['quantity'];
+            $rs = $this->doQuery($sql);
+            return $rs;
+        }
+        public function getProductsOfShop($productID)
+        {
+            $sql = "SELECT p.productID, p.productName, p.price, p.PromotionPrice, p.image, u.unitName  
+                    FROM products p, units u
+                    WHERE userid = (SELECT userid FROM products WHERE productID=?)
+                            AND p.unitID = u.unitID
+                    ORDER BY p.productName ASC
+                    ";
+            $param = [];
+            $param[] = $productID;
+            $rs = $this->doQuery($sql, $param);
             return $rs;
         }
         public function phantrang($id,$userid,$start=-1,$limit=12)
@@ -73,42 +149,53 @@
         {
             if($start==-1)
             {
-                $query = 'select *from products where categoryID = ?';                    
+                $query = 'select p.*, u.unitName from products p, units u where p.categoryID = ? AND p.unitID = u.unitID';                    
             }
             else
             {
-                $query = 'select * from products where categoryID = ? LIMIT '.$start.','.$limit;
+                $query = 'select p.*, u.unitName from products p, units u where p.categoryID = ? AND p.unitID = u.unitID LIMIT '.$start.','.$limit;
             }
             $param = array();
             $param[] = $id;   
             $rs = $this->doQuery($query,$param);
             return $rs;
         }
-        public function addProduct($name,$categoryID,$userid,$unit,$price,$hinhanh, $description)
+        public function addProduct($name,$categoryID,$userid,$unit,$price,$khuyenmai, $hinhanh, $subImageArr, $description)
         {
-            $query = 'insert into products(productName,categoryID,userid,unitID,price,image, description, created) 
-                        values(?,?,?,?,?,?,?, ?)';
+            
+            $query = 'insert into products(productName,categoryID,userid,unitID,price, PromotionPrice, image, image1, image2, image3, image4, image5, description, created) 
+                        values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
             $param = array();
             $param[]=$name;
             $param[]= $categoryID;
             $param[] = $userid;
             $param[] = $unit;
             $param[] = $price;
+            $param[] = $khuyenmai;
             $param[] = $hinhanh;
+            for($i = 0 ; $i < 5; $i++){
+                $param[] = $subImageArr[$i];
+            }
             $param[] = $description;
             $dt = date_create('');
             $date = date_format($dt,'Y-m-d');
             $param[] = $date;
             $this->doQuery($query,$param);
         }
-        public function editProduct($name,$categoryID,$unit,$price,$hinhanh,$description, $id)
+        public function editProduct($name,$categoryID,$unit,$price,$promotionPrice, $hinhanh,$description, $subImageArr, $id)
         {
             $query = 'update products set 
                                 productName=?,
                                 categoryID=?,
                                 unitID=?,
                                 price=?,
+                                PromotionPrice=?,
                                 image=?,
+                                image1=?,
+                                image2=?,
+                                image3=?,
+                                image4=?,
+                                image5=?,
                                 description=? 
                                 where productID=?';
             $param = array();
@@ -116,7 +203,11 @@
             $param[]= $categoryID;
             $param[] = $unit;
             $param[] = $price;
+            $param[] = $promotionPrice;
             $param[] = $hinhanh;
+            for($i = 0; $i < 5; $i++ ){
+                $param[] = $subImageArr[$i];
+            }
             $param[] = $description;
             $param[]=$id;
             $this->doQuery($query,$param);

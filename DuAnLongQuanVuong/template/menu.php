@@ -1,94 +1,39 @@
  <?php
-ob_start(); //Bien luu = chuoi
+ob_start(); 
 ?>
-<style>
-#owl-demo .item img{
-  display: block;
-  width: 100%;
-  height:250px;
-}
-.owl-nav{
-	display:none;	
-}
-.owl-dots{
-	display:none;	
-}
-</style>
-<!--Script run carousel-->
-<script>
-	$(document).ready(function() {
- 
-  $(".owl-carousel").owlCarousel({
-		loop:true,
-		margin:10,
-		//responsiveClass:true,
-		autoplay:true,
-		autoplayTimeout:1000,
-		autoplayHoverPause:true,
-		autoPlay: 3000, //Set AutoPlay to 3 seconds
-		responsive:{
-			0:{
-				items:1,
-				nav:true
-			},
-			600:{
-				items:3,
-				nav:false,
-			},
-		}
-  });
- 
-});
-</script>
-<div id="demo" >
-        <div class="container">
-          <div class="row" style="margin-top:80px">
-              <div id="owl-demo" class="owl-carousel" style="display:block">
-                <?php foreach($rsvitriquangcao1 as $vt1)
-                	{	echo '<div class="item">
-								<img src="../Views/img/'.$vt1->hinh1.'" alt="Owl Image" width="100%"></div>';
-                
-					}
-				?>
-              </div
-          </div>
-        </div>
-
-    </div>
 <!--Menu -->
 <div class="row">
     <div class="col-md-12" >
-    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: darkblue;color: yellow;border: 1px solid darkblue;">
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #FE840E; border: none;">
         <div class="navbar-header">
         	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar btn-navmenu"></span>
                 <span class="icon-bar btn-navmenu"></span>
                 <span class="icon-bar btn-navmenu"></span>                        
              </button>
-           <a class="navbar-brand" href="home_controller.php" style="color: white;">Trang Chủ</a>
-            <form class="navbar-form navbar-left">
-                <div class="row">
-                  <div class="col-md-9 col-xs-9">                
-                    <input type="text" class="form-control" width="85%" placeholder="Tìm Kiếm"/>
-                  </div>
-                  <div class="col-md-1 col-xs-1">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                  </div>
-                  </div>
-            </form>         
+           <a class="navbar-brand" href="home_controller.php" style="color: white;">
+            <span class="glyphicon glyphicon-home"></span> Trang Chủ</a>
+            <a class="navbar-brand" href="home_controller.php?action=nhanship" style="color: white;">
+            <i class="fas fa-shipping-fast"></i> Nhận ship</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-          <li><a href="#">Liên hệ</a></li>
+        <ul class="nav navbar-nav" style="background-color: #FE840E;">
+          <li><a href="#" style="color: #fff;" data-toggle="modal" data-target="#infoFindCustomer">
+                <span class="glyphicon glyphicon-list-alt"></span> Khách Tra Cứu Đơn Hàng
+            </a></li>
+          <li><a href="#" style="color: #fff;">
+                  <span class="glyphicon glyphicon-info-sign"></span> Liên hệ
+                </a>
+          </li>
           <?php 
             if(isset($_SESSION['role'])){
                 if($_SESSION['role']==0)
                 {
-                    echo '<li><a href="../Controllers/admin_controller.php?action=index">Quản Lý</a></li>';
+                    echo '<li><a href="../Controllers/admin_controller.php?action=index" style="color:#fff;">Quản Lý</a></li>';
                 }
                 else
                 {
-                    echo '<li><a href="../Controllers/shop_controller.php?action=index">Quản Lý</a></li>';
+                    echo '<li><a href="../Controllers/shop_controller.php?action=index" style="color:#fff;">Quản Lý</a></li>';
                 }
             }?>            
            
@@ -96,32 +41,43 @@ ob_start(); //Bien luu = chuoi
             { 
 				 if($_SESSION['role']==0)
                 {
-                   echo '<li><a href="#" data-toggle="modal" data-target="#mySignup"><span class="glyphicon glyphicon-user"></span>Đăng Ký</a></li>';
+                   echo '<li><a href="#" data-toggle="modal" data-target="#mySignup" style="color:#fff;">
+                            <span class="glyphicon glyphicon-user"></span>Đăng Ký</a></li>';
                 }
-               echo '<li><a>Xin chào '. $_SESSION['fullname'].'</a></li>';
-               echo '<li><a href="../Controllers/users_controller.php?action=logout">Đăng Xuất</a></li>';
+               echo '<li><a style="color:#fff;">Xin chào '. $_SESSION['fullname'].'</a></li>';
+               echo '<li><a href="../Controllers/users_controller.php?action=logout" style="color:#fff;">Đăng Xuất</a></li>';
             } else{?>     
      
-            <li><a href="#" data-toggle="modal" data-target="#myLogin">
-            <span class="glyphicon glyphicon-log-in"></span> Đăng Nhập</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#myLogin" style="color: #fff;">
+                    <span class="glyphicon glyphicon-log-in"></span> Đăng Nhập
+                </a>
+            </li>
             
         <?php }?>
         
         </ul>
          <!-- <div class="col-md-2 col-sm-2 col-xs-4">-->
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="../Controllers/shoppingcart_controller.php?action=viewcart">
-                            <img src='../Views/img/cart3.png' width="25%"/>
-                            Giỏ Hàng<?php if(isset($_SESSION['cart']))
-                            {
+         <?php if(isset($_SESSION['cart']))
+                {
+                    if($_SESSION['sosl'] > 0):
+            ?>
+                <ul class="nav navbar-nav navbar-right" style="background-color: #FE840E;" >
+                    <li>
+                        <a href="../Controllers/shoppingcart_controller.php?action=viewcart" style="color: #fff;">
+                        <img src='../Views/img/cart6.png' width="25%" data-html="true" data-toggle="popover" data-trigger="focus" data-placement="bottom" data-content="<b>Giỏ hàng có <?php echo $_SESSION['sosl'];?> sản phẩm</b>"/>
+                            Giỏ Hàng
+                            <?php
                                 echo '                            
                                      <span class="badge" style="font-size:120%">
                                         '.$_SESSION['sosl'].'';
-                            } ?>                   
-                            </span>
-                    </a></li>
+                                endif;
+                            ?>                                    
+                           </span>
+                        </a>
+                    </li>
                 
                 </ul>
+            <?php } ?>
              <!-- </div>-->
         </div>
     </nav>
@@ -162,6 +118,35 @@ ob_start(); //Bien luu = chuoi
 		});*/
 	//});
     </script>
+    <!-- Information fiding customer-->
+    <div class="modal fade" id="infoFindCustomer" role="dialog">
+         <div class="col-md-4 col-sm-4 col-xs-1"></div>
+        <div class="col-md-5 col-sm-6 col-xs-10 modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none;text-align: center;background-color: #FE840E;padding: 22px 12px; color:#FFF">
+              <button type="button" class="close" data-dismiss="modal">x</button>
+              <h3 class="modal-title">Tra Cứu Đơn Hàng</h3>
+            </div>
+            <div class="modal-body" style="padding: 30px 35px 35px;">
+                <div class="login-form">
+                    <form action="../Controllers/users_controller.php?action=tra_cuu_don_hang" method="post" id="signin">
+                        <input type="text" class="form-control" id="phone" 
+                                name="phone" placeholder="Nhập số điện thoại" required=""/>
+                        <label for="phone_error" class="form-error"></label>
+                            <div class="clear"></div>
+                </div>
+                <input type="submit" name="dangnhap" class="form-control" 
+                                style="background-color: #FE840E; color: #fff;" value="Tra cứu"/>
+            </form>
+                   
+                </div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <!-- End of Information finding customer-->
    		<!--Login-->
     <div class="modal fade" id="myLogin" role="dialog">
          <div class="col-md-4 col-sm-4 col-xs-1"></div>
@@ -169,7 +154,7 @@ ob_start(); //Bien luu = chuoi
         
           <!-- Modal content-->
           <div class="modal-content">
-            <div class="modal-header" style="border-bottom: none;text-align: center;background-color: #314D68;padding: 22px 12px; color:#FFF">
+            <div class="modal-header" style="border-bottom: none;text-align: center;background-color: #FE840E;padding: 22px 12px; color:#FFF">
               <button type="button" class="close" data-dismiss="modal">x</button>
               <h4 class="modal-title">Đăng nhập</h4>
             </div>
@@ -190,7 +175,8 @@ ob_start(); //Bien luu = chuoi
                         <label style="color: red;">
                             <?php if(isset($_SESSION['erro'])) echo $_SESSION['erro']; ?>
                             </label>
-                       <input type="submit" name="dangnhap" class="btn btn-primary" value="Đăng nhập"/>
+                       <input type="submit" name="dangnhap" class="btn btn-primary" 
+                                style="background-color: #FE840E;" value="Đăng nhập"/>
                     </form>
                    
                 </div>
@@ -240,6 +226,7 @@ $().ready(function() {
 			}
   		}	
 	});
+    $('[data-toggle="popover"]').popover('show');
 });
 </script>
         <!--Sign up-->
@@ -319,6 +306,7 @@ $().ready(function() {
           </div>
           </div>
         </div>
+      
 <?php
 return ob_get_clean();
 ?>

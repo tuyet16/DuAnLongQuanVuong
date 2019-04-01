@@ -37,7 +37,7 @@
 					{
 						$tablesDB = new Database();
 						$tables = $tablesDB->getTables();
-                        $distric = new districts();
+                        $distric = new Districts();
                         $dsDistrict =$distric->getDistrict();
 						$dsCustomers=$model->getCustomersDistrict();
 						//$GLOBALS['template']['menu'] = include_once '../template/menu.php';
@@ -74,7 +74,7 @@
 					{
 						$tablesDB = new Database();
 						$tables = $tablesDB->getTables();
-                        $distric = new districts();
+                        $distric = new Districts();
                         $dsDistrict =$distric->getDistrict();
 						$dsCustomers=$model->getCustomersDistrict();
 						$CustomerID = $model->getByIDCustomer($_GET['id']);

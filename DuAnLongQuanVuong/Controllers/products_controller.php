@@ -19,8 +19,6 @@
                 $dsCategories = $category->getCategories();
                 $unit = new Units();
                 $dsUnits = $unit->getUnits();
-                $product_model = new products();
-                $dsProducts = $product_model->getProduct();
             }
             else{
                 $id = $_SESSION['userid'];
@@ -28,33 +26,14 @@
                 $dsCategories = $category->getCategories();
                 $unit = new Units();
                 $dsUnits = $unit->getUnits();
-                $product_model = new products();
-                $dsProducts = $product_model->getProductByuserid($id);
             }
             //$pt = $product_model->phantrang();
 			$view = Page::View();
-            $GLOBALS['template']['menu'] = include_once'../template/menu.php';
-            $GLOBALS['template']['leftmenu'] = include_once'../template/shopleftmenu.php';
+            $GLOBALS['template']['menu'] = include_once'../template/shopmenu.php';
             $GLOBALS['template']['content'] = include_once $view;
             include_once('../template/index.php');
 		break;
         case 'themsanpham':
-             $user = new Users();
-            $rsvitriquangcao1 = $user->carosoulpanel();
-            $tensp= $_POST['tensp'];
-            $loaisp = $_POST['categoryID'];
-            $donvi = $_POST['unitID'];
-            $gia = $_POST['gia'];
-            $description = $_POST['description'];
-            $userid = $_SESSION['userid'];
-            $hinhanh = $_FILES['hinhanh'];
-            $img = Image::GetFile($hinhanh);
-            $product_model = new products();
-            $product_model->addProduct($tensp,$loaisp,$userid,$donvi,$gia,$img, $description);
-            print_r($_POST);
-            header('Location: products_controller.php');
-        break;	
-        case 'suasanpham':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
             if(isset($_GET['id']))
@@ -64,12 +43,58 @@
                 $dsCategories = $category->getDScategory($_SESSION['userid']);
                 $unit = new Units();
                 $dsUnits = $unit->getUnits();
-                $product_model = new products();
+                $product_model = new Products();
                 $dsProducts = $product_model->getProductByuserid($_SESSION['userid']);
                 $rsProducts = $product_model->getByIDProduct($id);
                	$view = Page::View();
                 $GLOBALS['template']['menu'] = include_once'../template/menu.php';
                 $GLOBALS['template']['leftmenu'] = include_once'../template/shopleftmenu.php';
+                $GLOBALS['template']['content'] = include_once $view;
+                include_once('../template/index.php');
+            }
+            else
+            {
+                $tensp= $_POST['tensp'];
+                $loaisp = $_POST['categoryID'];
+                $donvi = $_POST['unitID'];
+                $gia = $_POST['gia'];
+                $khuyenmai = $_POST['giakhuyenmai'];
+                $description = $_POST['description'];
+                $userid = $_SESSION['userid'];
+                $hinhanh = $_FILES['hinhanh'];
+                $img = Image::GetFile($hinhanh);
+                $subImageArr = [];
+                for($i = 0; $i < 5; $i++){
+                    if(is_uploaded_file($_FILES['hinhanhphu']['tmp_name'][$i])){
+                        
+                        $img_name = Image::GetFile($_FILES['hinhanhphu'], $i);
+                        $subImageArr[] = $img_name;
+                    }
+                    else{
+                        $subImageArr[] = '';
+                    }
+                }
+                
+                $product_model = new Products();
+                $product_model->addProduct($tensp,$loaisp,$userid,$donvi,$gia,$khuyenmai, $img, $subImageArr, $description);
+                //print_r($_POST);
+                header('Location: shop_controller.php?action=xemdanhmucsanpham');
+            }
+        break;	
+        case 'suasanpham':
+             $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            if(isset($_GET['id']))
+            {
+                $id = $_GET['id'];
+                $category = new Categories();
+                $dsCategories = $category->getCategories();
+                $unit = new Units();
+                $dsUnits = $unit->getUnits();
+                $product_model = new Products();
+                $rsProducts = $product_model->getByIDProduct($id);
+               	$view = Page::View();
+                $GLOBALS['template']['menu'] = include_once'../template/shopmenu.php';
                 $GLOBALS['template']['content'] = include_once $view;
                 include_once('../template/index.php');
             }
@@ -82,6 +107,7 @@
                     $loaisp = $_POST['categoryID'];
                     $donvi = $_POST['unitID'];
                     $gia = $_POST['gia'];
+                    $gia_khuyen_mai = $_POST['giakhuyenmai'];
                     $description = $_POST['description'];
                     $userid = $_SESSION['userid'];
                     if(is_uploaded_file($_FILES['hinhanh']['tmp_name']))
@@ -93,10 +119,20 @@
                     {
                         $img = $_POST['hinhcu'];
                     }
-                    
-                    $product_model = new products();
-                    $product_model->editProduct($tensp,$loaisp,$donvi,$gia,$img,$description, $id);
-                    header('Location:shop_controller.php');
+                    $subImageArr = [];
+                    for($i = 0; $i < 5; $i++){
+                        if(is_uploaded_file($_FILES['hinhanhphu']['tmp_name'][$i])){
+                        
+                            $img_name = Image::GetFile($_FILES['hinhanhphu'], $i);
+                            $subImageArr[] = $img_name;
+                        }
+                        else{
+                            $subImageArr[] = $_POST['hinhphucu'][$i];
+                        }
+                    }
+                    $product_model = new Products();
+                    $product_model->editProduct($tensp,$loaisp,$donvi,$gia,$gia_khuyen_mai, $img,$description, $subImageArr, $id);
+                    header('Location: shop_controller.php?action=xemdanhmucsanpham');
                 }
             }
         break;
@@ -112,9 +148,9 @@
 			{
 				if($_GET['confirm'] == true){
 					$id = $_GET['id'];
-					$product_model = new products();
+					$product_model = new Products();
                     $product_model->deleteProduct($id);
-					header('Location: shop_controller.php');
+					 header('Location: products_controller.php');
 				}
 			}
 			break;

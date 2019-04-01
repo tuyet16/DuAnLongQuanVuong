@@ -1,16 +1,22 @@
 <?php
 	ob_start();
 ?>
-    	<fieldset>
-        	<legend style="80%">Thêm sản phẩm</legend>
-                <form method="post" action="?action=themsanpham" enctype="multipart/form-data">
+
+    	<div class="row" style="margin: 60px 0;">
+            <div class="col-xs-12">
+        	   <div  class="product-information">Thêm sản phẩm</div>
+                <form method="post" action="?action=themsanpham" enctype="multipart/form-data" style="padding-top: 15px;">
                     <div class="row">
-                    	<div class="col-md-2">Tên sản phẩm</div> 
-                       	<div class="col-md-5"> <input type="text" name="tensp" class="form-control" width="60%"/></div>
+                    	<label class="control-label col-md-2">
+                            Tên sản phẩm
+                        </label> 
+                       	<div class="col-md-7"> 
+                           <input type="text" name="tensp" class="form-control"/>
+                        </div>
                     </div>
-                     <div class="row" style="margin-top:2px">
-                    	<div class="col-md-2">Loại sản phẩm</div> 
-                       	<div class="col-md-5">
+                     <div class="row" style="padding-top:15px">
+                    	<label class="control-label col-md-2">Loại sản phẩm</label> 
+                       	<div class="col-md-3">
                             <select name="categoryID" class="form-control">
                             <?php foreach($dsCategories as $product)
                             {
@@ -20,9 +26,9 @@
                             </select>
                         </div>
                     </div>
-                     <div class="row" style="margin-top:2px">
-                    	<div class="col-md-2">Đơn vị tính</div> 
-                       	<div class="col-md-5">
+                     <div class="row" style="padding-top:15px">
+                    	<label class="control-label col-md-2">Đơn vị tính</label> 
+                       	<div class="col-md-3">
                             <select name="unitID" class="form-control">
                             <?php foreach($dsUnits as $unit)
                             {
@@ -32,16 +38,40 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row" style="margin-top:2px">
-                    	<div class="col-md-2">Giá</div> 
-                       	<div class="col-md-5"> <input type="text" name="gia" class="form-control" width="60%"/></div>
+                    <div class="row" style="padding-top:15px">
+                    	<label class="control-label col-md-2">Giá</label> 
+                       	<div class="col-md-3"> <input type="text" name="gia" class="form-control" width="60%"/></div>
                     </div>
-                    <div class="row" style="margin-top:2px">
-                    	<div class="col-md-2">Hình ảnh</div> 
-                       	<div class="col-md-5"><input type="file" name="hinhanh" class="form-control"/></div>
+                    <div class="row" style="padding-top:15px">
+                    	<label class="control-label col-md-2">Giá Khuyến Mãi</label> 
+                       	<div class="col-md-3"> <input type="text" name="giakhuyenmai" class="form-control" width="60%"/></div>
                     </div>
-                    <div class="row" style="margin-top:2px">
-                    	<div class="col-md-2">Mô tả</div> 
+                    <div class="row" style="padding-top:15px">
+                    	<label class="control-label col-md-2">Hình ảnh chính</label> 
+                       	<div class="col-md-3"><input type="file" name="hinhanh" class="form-control"/></div>
+                    </div>
+                    <div class="row" style="padding-top:15px">
+                    	<label class="control-label col-md-2">Hình ảnh phụ 1</label> 
+                       	<div class="col-md-3"><input type="file" name="hinhanhphu[]" class="form-control"/></div>
+                    </div>
+                    <div class="row" style="padding-top:15px">
+                    	<label class="control-label col-md-2">Hình ảnh phụ 2</label> 
+                       	<div class="col-md-3"><input type="file" name="hinhanhphu[]" class="form-control"/></div>
+                    </div>
+                    <div class="row" style="padding-top:15px">
+                    	<label class="control-label col-md-2">Hình ảnh phụ 3</label> 
+                       	<div class="col-md-3"><input type="file" name="hinhanhphu[]" class="form-control"/></div>
+                    </div>
+                    <div class="row" style="padding-top:15px">
+                    	<label class="control-label col-md-2">Hình ảnh phụ 4</label> 
+                       	<div class="col-md-3"><input type="file" name="hinhanhphu[]" class="form-control"/></div>
+                    </div>
+                    <div class="row" style="margin-top:15px">
+                    	<label class="col-md-2">Hình ảnh phụ 5</label> 
+                       	<div class="col-md-3"><input type="file" name="hinhanhphu[]" class="form-control"/></div>
+                    </div>
+                    <div class="row" style="padding-top:15px">
+                    	<label class="control-label col-md-2">Mô tả</label> 
                        	<div class="col-md-8">
                            <textarea name="description" rows="25" cols="55" class="mota" class="form-control"></textarea>
                         </div>
@@ -50,37 +80,9 @@
                     	<button type="submit" class="btn" style="background-color:darkblue;color:#FFF"> Lưu </button> 
                    	</div>
                 </form>
-        </fieldset>
-        <fieldset>
-        	<legend>Danh sách sản phẩm của shop</legend>
-                <table class="table table-bordered table-striped">
-                  <tr style="background-color:darkblue;color:#FFF">
-                    <td>&nbsp; STT</td>
-                    <td>&nbsp; Tên sản phẩm</td>
-                    <td>&nbsp; Loại sản phẩm</td>
-                    <td>&nbsp; Đơn vị tính</td>
-                    <td>&nbsp; Giá </td>
-                    <td>&nbsp; Hình ảnh </td>
-                    <td>&nbsp; Thao tác</td>
-                  </tr>
-                  
-                  <?php
-		  	   $i=1;
-				foreach($dsProducts as $row){
-					echo '<tr>
-					<td>&nbsp;'.$i++.'</td>
-					<td>&nbsp;'.ucfirst($row->productName).'</td>
-					<td>&nbsp;'.$row->categoryName.'</td>
-					<td>&nbsp;'.$row->unitName.'</td>
-                    <td>&nbsp;'.number_format($row->price).'</td>
-                    <td><img src="../Views/img/'.$row->image.'" width="30%"/></td>
-					<td><a href="../Controllers/products_controller.php?action=suasanpham&id='.$row->productID.'"><span class="glyphicon glyphicon-pencil"></span></a> &nbsp; 
-						<a href="../Controllers/products_controller.php?action=xoasanpham&id='.$row->productID.'"><span class="glyphicon glyphicon-remove"></span></a></td>
-				  </tr>';
-			}
-		  ?>
-                </table>
-        </fieldset>
+            </div>
+        </div>
+        
 
 <?php
 	return ob_get_clean();

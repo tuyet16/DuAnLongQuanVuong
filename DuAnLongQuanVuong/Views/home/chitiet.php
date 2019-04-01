@@ -1,150 +1,136 @@
-<?php ob_start(); 
-?>
+<?php ob_start(); ?>
+<link type="text/css" rel="stylesheet" href="../Views/css/pgwslideshow.min.css"/>
+<script src="../Views/js/jquery.min.js"> </script>
+<script src="../Views/js/pgwslideshow.min.js"></script>
 <script>
-    $(document).ready(function(){
-        $('.pgwSlideshow').pgwSlideshow();
-    });
+$(document).ready(function(){
+    $('.pgwSlideshow').pgwSlideshow({
+            transitionEffect : 'fading',
+            displayControls : false,
+            autoSlide: true
+        }); 
+});
 </script>
-<div class="row">
-    <div class="col-md-4">
-        <img src="../Views/img/<?php echo $rs_chi_tiet_san_pham[0]->image; ?>" width="100%" alt=""/>
-        <!--
-        <div class="row">
+<div class="container-fluid" style="margin: 60px 0;">
+    <div class="row">
+        <div class="col-xs-12 col-md-5">
+        <div class="slides">
             <ul class="pgwSlideshow">
-                <li><img src="../Views/images/q1.jpg" alt="" data-description=""/></li>
-                <li><img src="../Views/images/q1.jpg" /></li>
-               <li><img src="../Views/images/q1.jpg" alt="" data-large-src="london.jpg"/></li>
-                <li><img src="../Views/images/q1.jpg" alt=""/></li>
-                <li><img src="../Views/images/q1.jpg" alt=""/></li>               
+                <li><img src="../Views/img/thumb/medium_<?php echo $rs_chi_tiet_san_pham[0]->image; ?>"/></li>
+                <?php if($rs_chi_tiet_san_pham[0]->image1 != ""){ ?>
+                <li><img src="../Views/img/<?php echo $rs_chi_tiet_san_pham[0]->image1; ?>"/></li>
+                <?php }?>
+                <?php if($rs_chi_tiet_san_pham[0]->image2 != ""){ ?>
+                <li><img src="../Views/img/thumb/medium_<?php echo $rs_chi_tiet_san_pham[0]->image2; ?>"/></li>
+                <?php }?>
+                <?php if($rs_chi_tiet_san_pham[0]->image3 != ""){ ?>
+                <li><img src="../Views/img/thumb/medium_<?php echo $rs_chi_tiet_san_pham[0]->image3; ?>"/></li>
+                <?php }?>
+                <?php if($rs_chi_tiet_san_pham[0]->image4 != ""){ ?>
+                <li><img src="../Views/img/thumb/medium_<?php echo $rs_chi_tiet_san_pham[0]->image4; ?>"/></li>
+                <?php }?>
+                <?php if($rs_chi_tiet_san_pham[0]->image5 != ""){ ?>
+                <li><img src="../Views/img/thumb/medium_<?php echo $rs_chi_tiet_san_pham[0]->image5; ?>"/></li>
+                <?php }?>               
             </ul>
+            </div>
         </div>
-        -->
-    </div>
-    <form method="post">
-    <div class="col-md-7">
-        <h4 style="color: red;">CHI TIẾT SẢN PHẨM</h4>
-        <h5>Tình trạng: còn hàng</h5>
-        <h5 style="color: red;"><?php echo number_format($rs_chi_tiet_san_pham[0]->price);?> vnđ</h5>
-        <h5 style="color: blue;">THÔNG TIN SẢN PHẨM</h5>
-        <h5>
-        <?php echo $rs_chi_tiet_san_pham[0]->description;?>
-        </h5>
-        <!--
-		<ul class="size">
-			<h3>Length</h3>
-			<li><a href="#">32</a></li>
-			<li><a href="#">34</a></li>
-		</ul>
-        <h5>SỐ LƯỢNG :
-        <input type="number" name="soluong" min="1" max="20"/> <h6 style="font-family: sans-serif;">Tối đa 20 sản phẩm</h6>
-        -->
-        <h5><a href="shoppingcart_controller.php?action=add&id=<?php echo $rs_chi_tiet_san_pham[0]->productID;?>" class="btn btn-danger">Mua sản phẩm</a></h5>
+        <form method="post">
+        <div class="col-xs-12 col-md-7">
         
+           <div class="product-title">
+               <?php echo ucwords($rs_chi_tiet_san_pham[0]->productName); ?>
+          </div>
+          <?php if($rs_chi_tiet_san_pham[0]->PromotionPrice > 0):?>
+                    <div class="product-price-with-promotion">
+                         <?php echo number_format($rs_chi_tiet_san_pham[0]->price);?> đ
+                    </div>
+                    <div class="product-promotion-price">
+                         <?php echo number_format($rs_chi_tiet_san_pham[0]->PromotionPrice);?> đ/<?php echo $rs_chi_tiet_san_pham[0]->unitName;?>
+                    </div>
+            <?php else:?>
+                    <div class="product-price">
+                         <?php echo number_format($rs_chi_tiet_san_pham[0]->price);?> đ/<?php echo $rs_chi_tiet_san_pham[0]->unitName;?>
+                    </div>
+            <?php endif; ?>
+            <p class="button">
+                <a href="shoppingcart_controller.php?action=add&id=<?php echo $rs_chi_tiet_san_pham[0]->productID;?>" 
+                    >
+                    Mua sản phẩm
+                </a>
+            </p>
+            <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="product-information">THÔNG TIN SẢN PHẨM</div>
+                <p>
+                    <?php echo $rs_chi_tiet_san_pham[0]->description;?>
+                </p>
+            </div>
+        </div>
+        </div>
+        </form>
     </div>
-    </form>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <h3 class="product-information">SẢN PHẨM KHÁC CỦA SHOP</h3>
+        </div>
+    </div>
+        <?php $number = 0;
+         foreach($rsOtherProductShop as $item):
+            if($number == 0){
+         ?>
+         <div class="row most-view-product">
+            <div class="col-xs-12 col-sm-3 col-md-2">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <a href="home_controller.php?action=chitiet&id=<?php echo $item->productID;?>">
+                    <img src="../Views/img/thumb/x_small_<?php echo $item->image;?>"  class="img-responsive" style="margin: 0 auto;"/> 
+                    <h5><?php echo ucwords($item->productName);?></h5>
+                    </a>
+                    <?php 
+                    if($item->PromotionPrice > 0):
+                                echo '<p class="origin-price-with-promotion">'. number_format($item->price) .'đ</p>
+                                <p class="promotion-price">'. number_format($item->PromotionPrice) .'đ/'. $item->unitName.'</p>';
+                            else:
+                                echo ' <p class="origin-price-not-promotion">'. number_format($item->price) .'đ/'.$item->unitName .'</p>';
+                            endif;
+                    ?>
+                  </div>
+                </div>
+            </div>
+            <?php }else{?>
+                    <div class="col-xs-12 col-sm-3 col-md-2">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <a href="home_controller.php?action=chitiet&id=<?php echo $item->productID;?>">
+                    <img src="../Views/img/thumb/x_small_<?php echo $item->image;?>"  class="img-responsive" style="margin: 0 auto;"/> 
+                    <h5><?php echo ucwords($item->productName);?></h5>
+                    </a>
+                    <?php 
+                    if($item->PromotionPrice > 0):
+                                echo '<p class="origin-price-with-promotion">'. number_format($item->price) .'đ</p>
+                                    <p class="promotion-price">'. number_format($item->PromotionPrice) .'đ/'. $item->unitName.'</p>';
+                            else:
+                                echo ' <p class="origin-price-not-promotion">'. number_format($item->price) .'đ/'.$item->unitName .'</p>';
+                            endif;
+                    ?>
+                  </div>
+                </div>
+            </div>
+            <?php } 
+            if($number > 4){
+                $number = 0;
+                echo '</div>';
+            }
+            else
+                $number++;
+            ?>
+        <?php endforeach; ?> 
+    </div>
 </div>
-<!--
-<div class="row well well-sm" style="margin-top:20px;">SẢN PHẨM LIÊN QUAN</div>
- <div class="row" style="padding-top: 10px;">        
-        <div class="col-md-3">
-            <div class="card" style="border: 1px solid silver;">
-                <div class="card-header">
-                   <a href="../Controllers/home_controller.php?action=chitiet" style="color: white;"><img src="../Views/images/q1.jpg" width="100%"/></a> 
-                </div>
-                <div class="card-body" style="padding: 20px;text-align: center;">
-                    <h4>Set đồ đẹp</h4>
-                    <h4 style="color: #D52072;">500.000 vnđ</h4>
-                    <button class="btn btn-danger">Mua hàng</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card" style="border: 1px solid silver;text-align: center;">
-                <div class="card-header">
-                   <img src="../Views/images/q1.jpg" width="100%" /> 
-                </div>
-                <div class="card-body" style="padding: 20px;">
-                    <h4>Set đồ đẹp</h4>
-                    <h4 style="color: #D52072;">500.000 vnđ</h4>
-                    <button class="btn btn-danger">Mua hàng</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card" style="border: 1px solid silver;text-align: center;">
-                <div class="card-header">
-                   <img src="../Views/images/q1.jpg" width="100%" /> 
-                </div>
-                <div class="card-body" style="padding: 20px;">
-                    <h4>Set đồ đẹp</h4>
-                    <h4 style="color: #D52072;">500.000 vnđ</h4>
-                    <button class="btn btn-danger">Mua hàng</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card" style="border: 1px solid silver;text-align: center;">
-                <div class="card-header">
-                   <img src="../Views/images/q1.jpg" width="100%" /> 
-                </div>
-                <div class="card-body" style="padding: 20px;">
-                    <h4>Set đồ đẹp</h4>
-                    <h4 style="color: #D52072;">500.000 vnđ</h4>
-                    <button class="btn btn-danger">Mua hàng</button>
-                </div>
-            </div>
-        </div>        
-    </div>
-    <div class="row" style="padding-top: 10px;">        
-        <div class="col-md-3">
-            <div class="card" style="border: 1px solid silver;">
-                <div class="card-header">
-                   <a href="../Controllers/home_controller.php?action=chitiet" style="color: white;"><img src="../Views/images/q1.jpg" width="100%"/></a> 
-                </div>
-                <div class="card-body" style="padding: 20px;text-align: center;">
-                    <h4>Set đồ đẹp</h4>
-                    <h4 style="color: #D52072;">500.000 vnđ</h4>
-                    <button class="btn btn-danger">Mua hàng</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card" style="border: 1px solid silver;text-align: center;">
-                <div class="card-header">
-                   <img src="../Views/images/q1.jpg" width="100%" /> 
-                </div>
-                <div class="card-body" style="padding: 20px;">
-                    <h4>Set đồ đẹp</h4>
-                    <h4 style="color: #D52072;">500.000 vnđ</h4>
-                    <button class="btn btn-danger">Mua hàng</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card" style="border: 1px solid silver;text-align: center;">
-                <div class="card-header">
-                   <img src="../Views/images/q1.jpg" width="100%" /> 
-                </div>
-                <div class="card-body" style="padding: 20px;">
-                    <h4>Set đồ đẹp</h4>
-                    <h4 style="color: #D52072;">500.000 vnđ</h4>
-                    <button class="btn btn-danger">Mua hàng</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card" style="border: 1px solid silver;text-align: center;">
-                <div class="card-header">
-                   <img src="../Views/images/q1.jpg" width="100%" /> 
-                </div>
-                <div class="card-body" style="padding: 20px;">
-                    <h4>Set đồ đẹp</h4>
-                    <h4 style="color: #D52072;">500.000 vnđ</h4>
-                    <button class="btn btn-danger">Mua hàng</button>
-                </div>
-            </div>
-        </div>
-        
-    </div>
--->
+  
+
+
+
+
 <?php return ob_get_clean(); ?>

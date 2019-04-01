@@ -1,5 +1,4 @@
-﻿<?php 
-include_once('../config/bootload.php');
+<?php include_once('../Config/bootload.php');
     $action = filter_input(INPUT_POST,'action');
     if($action == Null)
     {
@@ -12,10 +11,10 @@ include_once('../config/bootload.php');
     switch($action)
     {
         case 'index':
-            $user = new Users();
-            $rsvitriquangcao1 = $user->carosoulpanel();
-    	   header('Location: ?action=donhang');
-        break;
+            ob_clean();
+            header('Location: ?action=donhang' , true, 301);
+            
+            break;
         case 'dsshop':
             $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
@@ -57,6 +56,7 @@ include_once('../config/bootload.php');
                 $user = new Users();
                 $user->editUsers($hoten,$email,$diachi,$sdt,$tenshop,$id);
                 header('Location:admin_controller.php?action=dsshop');
+                
             }            
         }            
         break; 
@@ -75,6 +75,7 @@ include_once('../config/bootload.php');
 					 $user = new Users();
                 	$user->deleteUsers($user_id);
 					header('Location:admin_controller.php?action=dsshop');
+                    
 				}
 			}
 			break; 
@@ -97,8 +98,6 @@ include_once('../config/bootload.php');
             
          break;
         case 'donhang':
-           $user = new Users();
-            $rsvitriquangcao1 = $user->carosoulpanel();
             $employ = new Employees();
             $rsEmploy = $employ->getEmployees();
             if(isset($_SESSION['userid']))
@@ -118,7 +117,7 @@ include_once('../config/bootload.php');
                     $date = $ngay;
                     
                 }
-                if(isset($_GET['chonngay']))
+                else if(isset($_GET['chonngay']))
                 {
                     
                     $ngay = $_GET['chonngay'];
@@ -129,13 +128,12 @@ include_once('../config/bootload.php');
                     $date = $ngay;
                     
                 }
-//                //else
-//                {
-//                    $DSdonhang1 = $user->gethoadonAmin();
-//                    $DSdonhang = $DSdonhang1;
-//                    $date=key($DSdonhang);
-//                    
-//                }
+                else
+                {
+                    $date=$user->getNewestDay();
+                    $DSdonhang1 = $user->gethoadonAmin($date);
+                    $DSdonhang = $DSdonhang1; 
+                }
                	$GLOBALS['template']['menu'] = include_once'../template/menu.php';
                 $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
                 $GLOBALS['template']['content'] = include_once $view;
@@ -145,6 +143,7 @@ include_once('../config/bootload.php');
             else
             {
                 header('Location:home_controller.php');
+                exit;
             }                    
         break;
         //Edit nhan vien và phí phụ thu của khách hàng
@@ -161,8 +160,7 @@ include_once('../config/bootload.php');
                  foreach($_POST as $k=>$value)
                  {
                     if(strpos($k,'phuthu') > -1 ){
-                        $t = trim(str_replace('phuthu','',$k));                       
-                        echo $t;                        
+                        $t = trim(str_replace('phuthu','',$k));                                             
                         $phuthu[$t] = $_POST[$k];                        
                     }
                     if(strpos($k,'phiship')>-1){
@@ -182,7 +180,7 @@ include_once('../config/bootload.php');
                 $user = new Users();
                 //print_r($phiship);                
                 $user->editnhanvien($date, $nhanvien,$phuthu,$phiship,$id);                                      
-                header('Location: ?action=donhang&BillID='. $id .'&chonngay='. $_POST['ngay']);
+                header('Location: ?action=donhang&BillID='. $id .'&chonngay='. $_POST['ngay']);  
             }
         break;
         case 'tinhtrang':
@@ -212,7 +210,8 @@ include_once('../config/bootload.php');
                         $luongnv = $phiship * 0.8;
                         $user = new Users();
                         $edithoadon = $user->edittinhtrang($tinhtrang,$ghichu,$phiship,$luongnv,$id);
-                        header('Location: ?action=tinhtrang&idnv='.$idnv.'&ngay=' . $date);                        
+                        header('Location: ?action=tinhtrang&idnv='.$idnv.'&ngay=' . $date);
+                                               
                 } 
                 $view = Page::View();
                 $GLOBALS['template']['menu'] = include_once'../template/menu.php';
@@ -323,6 +322,7 @@ include_once('../config/bootload.php');
                 	$ngay=date('Y-m-d H:i:s');               
                 	$user->addhinhanh($img,$ngay);
 					header('Location:admin_controller.php?action=doihinh');
+                    
 			}
 			$view = Page::View();
 			$GLOBALS['template']['menu'] = include_once'../template/menu.php';
@@ -339,6 +339,7 @@ include_once('../config/bootload.php');
 				$ngay=date('Y-m-d H:i:s');
 				$user->doihinhpanel($ngay,$id);
 				header('Location:admin_controller.php?action=doihinh');
+                
 			}
         break;
         case 'deletehinh':
@@ -355,6 +356,7 @@ include_once('../config/bootload.php');
     					$id = $_GET['id'];
                     	$user->deleteHinh($id);
     					header('Location:admin_controller.php?action=doihinh');
+                        
     				}
     			}
         break;
@@ -439,9 +441,15 @@ include_once('../config/bootload.php');
                                 $pdf->Cell($w[1], 6, $row[4], 'LR', 0, 'L', $fill);
                                 $pdf->Cell($w[2], 6, $row[5], 'LR', 0, 'C', $fill);
                                 $pdf->Cell($w[3], 6, $row[2], 'LR', 0, 'C', $fill);
-                                $pdf->Cell($w[4], 6, number_format($row[6]). ' ', 'LR', 0, 'R', $fill);
-                                $pdf->Cell($w[5], 6, number_format($row[3]). ' ', 'LR', 0, 'R', $fill);
-                                $tong += $row[3];
+                                if($row[14] > 0):
+                                    $pdf->Cell($w[4], 6, number_format($row[14]). ' ', 'LR', 0, 'R', $fill);
+                                    $total = $row[14]*$row[2];
+                                else:
+                                    $pdf->Cell($w[4], 6, number_format($row[6]). ' ', 'LR', 0, 'R', $fill);
+                                    $total = $row[6]*$row[2];
+                                endif;
+                                $pdf->Cell($w[5], 6, number_format($total). ' ', 'LR', 0, 'R', $fill);
+                                $tong += $total;
                                 if($row[13]==1)
                                 {
                                     $tongshipkh += $row[12];
@@ -553,7 +561,134 @@ include_once('../config/bootload.php');
              }    
             }
         break;
-       
-
+        case 'xemhdnhanship':
+            $ship_invoices = new ShipServiceInvoice();
+            $rsShipInvoices = $ship_invoices->listShipInvoices();
+            $employeeObj = new Employees();
+            $rsEmployee = $employeeObj->getEmployees(); 
+            $view = Page::View();
+            $GLOBALS['template']['menu'] = include_once'../template/menu.php';
+            $GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
+            $GLOBALS['template']['content'] = include_once $view;
+            $GLOBALS['template']['footer'] = include_once'../template/footer.php';
+            include_once('../template/index.php');
+        break;
+       case 'capnhathdnhanship':
+            if(isset($_POST['submit'])){
+                $ship_id = $_POST['ship_id'];
+                $surcharge = $_POST['surcharge'];
+                $surcharge_reason = $_POST['surcharge_reason'];
+                $employee = $_POST['employee'];
+                $tienhang = $_POST['tienhang'];
+                $date = date_create();
+                $delivery_date = $date->format('Y-m-d h:i:s');
+                
+                $ship_invoices = new ShipServiceInvoice();
+                $ship_invoices->updateShipInvoices($tienhang, $surcharge, $surcharge_reason, $employee, $delivery_date, $ship_id);
+                MessageBox::Show("Cập Nhật Thành Công", MB_SHOPPINGCART);
+            }
+       break;
+         //In hóa đơn ship ngoai
+        case 'in_hd_nhan_ship':
+            if(isset($_GET['shipID']))
+            {
+                $tong = 0;
+                 $id = $_GET['shipID'];
+                $ship_invoices = new ShipServiceInvoice();
+            $rsShipInvoices = $ship_invoices->listShipInvoices($id);
+                $header = array('STT','Tên Hàng','ĐVT','SL','Đơn Giá','Thành Tiền');        
+                
+                //print_r($in);
+                    $flag = false;
+                        $ngay =$rsShipInvoices[0]->delivery_date;
+                        $tem = date_create($ngay);
+                        $ngay = date_format($tem, 'd-m-Y');
+                        $filename = $ngay . '_' . $rsShipInvoices[0]->customer_shop . '_' . $id . '.pdf';
+                        
+                        $pdf = new tFPDF('P', 'mm', 'A6');
+                        $pdf->AddPage();
+                        $pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+                        $pdf->SetFont('DejaVu','',9);
+                        
+                        if($flag == false)
+                        {   
+                            $pdf->AddFont('DejaVuBold','','DejaVuSansCondensed-Bold.ttf',true);
+                            $pdf->SetFont('DejaVuBold','',14);
+                            $pdf->Cell(0, 6, "PHIẾU GIAO HÀNG", 0, 0, 'C', false );
+                            $pdf->Ln();
+                            //$pdf->Write(6, "Ðơn Vị Vận Chuyển SEVEN SHIPPER");
+                            $pdf->SetFontSize(10);
+                            $pdf->Cell(0, 6, "Ðơn Vị Vận Chuyển SEVEN SHIPPER", 0, 0, 'C', false );
+                            $pdf->Ln();
+                            $pdf->SetFontSize(9);
+                            $pdf->Cell(0, 6, "Ngày giao : " . $ngay, 0, 0, 'C', false );
+                            $pdf->Ln();
+                            $pdf->SetFont('DejaVuBold','',9);
+                            $pdf->SetTextColor(0);
+                            $pdf->SetFillColor(255,255,255);
+                            
+                            $pdf->Cell(40,6,"Tên chủ hàng : " . $rsShipInvoices[0]->customer_shop ,0,0,'L',true);
+                            $pdf->Ln();
+                            $pdf->SetFont('DejaVu','',9);
+                            $pdf->Cell(40,6,"Địa chỉ : " . $rsShipInvoices[0]->shopaddress . ', ' . $rsShipInvoices[0]->shopDistrict ,0,0,'L',true);
+                            $pdf->Ln();
+                            $pdf->Cell(40,6,"Điện thoại : " . $rsShipInvoices[0]->shopphone ,0,0,'L',true);
+                            $pdf->Ln();
+//                            $pdf->Write(6, "Ðịa Chỉ: ". $in[$id][0][1]);
+                            $pdf->SetFont('DejaVuBold','',9);
+                            $pdf->Cell(40,6,"Tên khách hàng : " . $rsShipInvoices[0]->customer_client,0,0,'L',true);
+                            $pdf->Ln();
+                            $pdf->SetFont('DejaVu','',9);
+                            $pdf->Cell(40,6,"Ðịa chỉ : " . ucwords($rsShipInvoices[0]->customer_address. ', ' . $rsShipInvoices[0]->clientDistrictName) ,0,0,'L',true);
+                            $pdf->Ln();
+                            if($rsShipInvoices[0]->customer_require != ""){
+                                $pdf->Cell(40,6,"Yêu cầu riêng : " . $rsShipInvoices[0]->customer_require, 0, 0, 'L',true);
+                                $pdf->Ln();
+                            }
+                            $pdf->Cell(40, 6, "Ðiện thoại : " . $rsShipInvoices[0]->clientphone);
+                            $pdf->Ln();
+                            
+                            $pdf->SetFont('DejaVuBold','',10);
+                            $pdf->Cell(0, 6, "CHI TIẾT PHIẾU GIAO HÀNG", 0, 0, 'C', false );
+                            $pdf->Ln();
+                            
+                            $pdf->SetFont('DejaVu','',9);
+                            $pdf->Cell(40,6,"Tên Shipper : " . $rsShipInvoices[0]->employeeName, 0,0,'L',true);
+                            $pdf->Ln();
+                            $pdf->Cell(40,6,"Ðiện thoại Shipper : " . $rsShipInvoices[0]->employeePhone,0,0,'L',true);
+                            $pdf->Ln();
+                            $tong+= $rsShipInvoices[0]->total;
+                            $pdf->Cell(40,6,"Tiền hàng : " . number_format($rsShipInvoices[0]->total) . ' VND', 0,0,'L',true);
+                            $pdf->Ln();
+                            $tong+= $rsShipInvoices[0]->ship_fee;
+                            $pdf->Cell(40,6,"Phí ship : " . number_format($rsShipInvoices[0]->ship_fee) . ' VND', 0,0,'L',true);
+                            $pdf->Ln();
+                            if($rsShipInvoices[0]->surcharge > 0){
+                                $tong+= $rsShipInvoices[0]->surcharge;
+                                $pdf->Cell(40,6,"Phụ thu : " . number_format($rsShipInvoices[0]->surcharge) . ' VND', 0,0,'L',true);
+                                $pdf->Ln();
+                                $pdf->Cell(40,6,"Diễn giải phụ thu: " . $rsShipInvoices[0]->surcharge_reason, 0,0,'L',true);
+                                $pdf->Ln();
+                            }
+                          
+                            $pdf->SetFont('DejaVuBold','',10);
+                            $pdf->Cell(0, 6, "TỔNG CỘNG: " . number_format($tong) . ' VND', 0, 0, 'L', false );
+                            $pdf->Ln();
+                            
+                            $pdf->SetFont('DejaVu','',9);
+                            $pdf->Ln();
+                            $pdf->SetTextColor(0);
+                            $pdf->SetFillColor(255,255,255);
+                            $pdf->Cell(40,15,"     NGƯỜI NHẬN " ,0,0,'L',true);
+                            $pdf->Cell(40,15,"         NGUỜI LẬP BẢNG " ,0,0,'L',true);
+                            
+                            $pdf->Ln();
+                            $pdf->Ln();
+                            $pdf->Output($filename,'D');
+                            //print_r($filename);                           
+                        
+             }    
+            }
+        break;
 }
-?>
+

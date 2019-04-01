@@ -19,7 +19,7 @@ class Categories extends Database{
         return $this->categoryName;
     }
     public function getCategories(){
-        $query = 'SELECT * FROM categories';
+        $query = 'SELECT * FROM categories ORDER BY categoryName ASC';
         $rs = $this->doQuery($query);
         return $rs;
     }
@@ -37,11 +37,12 @@ class Categories extends Database{
         $rs = $this->doQuery($query, $param);
         return $rs;
     }
-    public function insertNewCategory($category_name){
-        $query = 'INSERT INTO categories(categoryName)';
-        $query.= ' VALUES(?)';
+    public function insertNewCategory($category_name, $cate_img=null){
+        $query = 'INSERT INTO categories(categoryName, cate_img)';
+        $query.= ' VALUES(?, ?)';
         $param = array();
         $param[] = $category_name;
+        $param[] = $cate_img;
         $this->doQuery($query, $param);
     }
     public function deleteCategory($category_id){
@@ -50,11 +51,22 @@ class Categories extends Database{
         $param[]= $category_id;
         $this->doQuery($query, $param);
     }
-    public function editCategory($category_name, $category_id){
-        $query = 'UPDATE categories SET categoryName=? WHERE categoryID=?';
-        $param = array();
-        $param[] = $category_name;
-        $param[] = $category_id;
+    public function editCategory($category_name, $cate_img, $category_id){
+        if($cate_img != null)
+        {
+            $query = 'UPDATE categories SET categoryName=?, cate_img = ?  WHERE categoryID=?';
+            $param = array();
+            $param[] = $category_name;
+            $param[] = $cate_img;
+            $param[] = $category_id;
+        }
+        else
+        {
+            $query = 'UPDATE categories SET categoryName=? WHERE categoryID=?';
+            $param = array();
+            $param[] = $category_name;
+            $param[] = $category_id;
+        }
         $this->doQuery($query, $param);
     }
 }

@@ -20,33 +20,27 @@
                 $shoppingcart = new ShoppingCart();
                 $shoppingcart->cart($masp);
                 $_SESSION['sosl'] = $shoppingcart->getTongsl();
-                //MessageBox::Show('Giỏ hàng có sản phẩm');
-                header('Location: home_controller.php');
+                header('Location: home_controller.php?' . base64_decode($_GET['q']));
+                
             }
         break;
         case 'viewcart':
-             $user = new Users();
-            $rsvitriquangcao1 = $user->carosoulpanel();
             $category = new Categories();
-            
-            $dsCategories = $category->getCategories();
             if(isset($_SESSION['userid']))
             {
                 $id = $_SESSION['userid'];
                 $rsCategories = $category->getDScategory($id);                
             }  
             $shoppingcart = new ShoppingCart();
-            
             $view = Page::View();
-            
             $rsCart = $shoppingcart->ViewCart();
             $tongtien = $shoppingcart->getTotal();
             $category = new Categories();
             $dsCategories = $category->getCategories();
             $_SESSION['sosl'] = $shoppingcart->getTongsl();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
-            $GLOBALS['template']['leftmenu'] = include_once'../template/leftmenu.php';
             $GLOBALS['template']['content'] = include_once $view;
+            $GLOBALS['template']['footer'] = include_once'../template/footer.php';
             include_once('../template/index.php');
             
         break;
@@ -79,54 +73,68 @@
             header('Location: shoppingcart_controller.php?action=viewcart');            
         break;
         case 'muahang':
-             $user = new Users();
-            $rsvitriquangcao1 = $user->carosoulpanel();
-
             $view = Page::View();
-            $dt_model = new districts();
+            $dt_model = new Districts();
             $DSdistrict = $dt_model->getDistrict();
             $shoppingcart = new ShoppingCart();
             $rsCart = $shoppingcart->ViewCart();
             $tongtien = $shoppingcart->getTotal();
-            $GLOBALS['template']['menu'] = include_once'../template/menu.php';
+            $GLOBALS['template']['menu'] = include_once '../template/menu.php';
+            //$GLOBALS['template']['footer'] = include_once '../template/footer.php';
             $GLOBALS['template']['content'] = include_once $view;
             include_once('../template/index.php');
         break;
         case 'dathang':
-             $user = new Users();
-            $rsvitriquangcao1 = $user->carosoulpanel();
             $hoten = $_POST['hoten'];
             $dienthoai = $_POST['dienthoai'];
             $quan = $_POST['quan'];
             $diachi = $_POST['diachi'];
-            $district = new districts();
+            $district = new Districts();
             $DSdistrict = $district->getByIDDistrict($quan);
             $shopping_ml = new ShoppingCart();  
             $shopping_ml->ViewCart(); 
-            //$tongtien = $shopping_ml->getTotal();
+            $tongtien = $shopping_ml->getTotal();
             $customer_id = $shopping_ml->addCustomer($hoten,$diachi,$dienthoai,$quan);
             $nguoitra = $_POST['nguoitraship'];           
-            if($customer_id !=Null)
+            if($customer_id != Null)
             {
                 $thoigian = date("Y-m-d H:i:s");
                 $giaohang= $_POST['giaohang'];
                 $address = $diachi.' '.$DSdistrict[0]->districtName;
                 $ship = $shopping_ml->tinhphidichvu($quan,$giaohang);
-               // echo $ship;
-                $bills_id = $shopping_ml->addBills($customer_id,$address,$thoigian,$giaohang,0,$ship,$nguoitra);                 
-                if($bills_id !=null)
+                
+                $bills_id = $shopping_ml->addBills($customer_id, $address, $thoigian, $giaohang, 0, $ship,$nguoitra);                 
+                if($bills_id != null)
                 {
+                    $numberShop = $shopping_ml->countShopsFromSession($_SESSION['cart']);
+                    $feePerShop = ceil($ship/$numberShop);
+                    if($feePerShop%1000 != 0 ){
+                        $feePerShop = intval($feePerShop/1000) * 1000 + 1000;
+                    }
+                    $checkShop = [];
                     foreach($_SESSION['cart'] as $masp=>$amount)
                     {
-                        $model_pr = new products();
+                        $model_pr = new Products();
                         $rsProducts = $model_pr->getByIDProduct($masp);
-                        $gia = $rsProducts[0]->price;
-                        $thanhtien = $amount * $rsProducts[0]->price;
-                        $detail_id = $shopping_ml->addDetails($masp,$amount,$gia,$thanhtien,$bills_id);
+                        if($rsProducts[0]->PromotionPrice > 0):
+                            $gia = $rsProducts[0]->PromotionPrice;
+                            $thanhtien = $amount * $rsProducts[0]->PromotionPrice;
+                        else:
+                            $gia = $rsProducts[0]->price;
+                            $thanhtien = $amount * $rsProducts[0]->price;
+                        endif;
+                        if(!in_array($rsProducts[0]->userid, $checkShop)){
+                            array_push($checkShop, $rsProducts[0]->userid);
+                            $detail_id = $shopping_ml->addDetails($masp, $amount, $gia, $thanhtien,  $nguoitra, $feePerShop, $bills_id);
+                        }
+                        else
+                        {
+                            
+                            $detail_id = $shopping_ml->addDetails($masp, $amount, $gia, $thanhtien,  $nguoitra, 0, $bills_id);
+                        }
                     }
                     unset($_SESSION['cart']); 
-                    //print_r($rsProducts[0]->price);
-                    header('Location: home_controller.php');                   
+                    MessageBox::Show("Đặt hàng thành công", MB_SHOPPINGCART);                   
                 }
             }
             else
@@ -135,16 +143,13 @@
             } 
         break;
         case "timkiem":
-             $user = new Users();
-            $rsvitriquangcao1 = $user->carosoulpanel();
                 $shopcarts = new ShoppingCart();
                 $tk = $shopcarts->timkiem($_POST['sdt']);
                 $tt = $shopcarts->ViewCart();
                 $tongtien = $shopcarts->getTotal();
-                
+                $Arrtimkiem = array();
                 if($tk !=null)
                 {
-                    $Arrtimkiem = array();
                     foreach($tk as $sdt)
                     {
                         $Arrtimkiem['ten'] = $sdt->customerName;
@@ -153,19 +158,34 @@
                     }
                     $phiship  = $shopcarts->tinhphidichvu($Arrtimkiem['quan'],$_POST['ghthuong']);
                     $Arrtimkiem['phiship'] = number_format($phiship);
-                    $Arrtimkiem['tongtien'] = number_format($tongtien+$phiship);
+                    $Arrtimkiem['tongtien'] = number_format($tongtien);
                 }
                 else
                 {
-                    $Arrtimkiem['ten'] = " ";
-                    $Arrtimkiem['quan'] = " ";
+                    
+                    $Arrtimkiem['ten'] = "";
                     $Arrtimkiem['diachi'] = "";
-                    $Arrtimkiem['phiship'] = "";
-                   $Arrtimkiem['tongtien'] = "";
                 }
                  echo json_encode($Arrtimkiem);
         break;
-        
+        case 'timphiship':
+            $maquan = $_POST['maquan'];
+            $shopcartObj = new ShoppingCart();
+            $phi = $shopcartObj->timphiship($maquan);
+            $jsonPhiship = [];
+            $jsonPhiship['phiship'] = number_format($phi);
+            echo json_encode($jsonPhiship);
+        break;
+        case 'changequantity':
+            $productID = $_POST['productID'];
+            $quantity = $_POST['quantity'];
+            $shopcartObj = new ShoppingCart();
+            $newprice = $shopcartObj->changeQuantity($productID, $quantity);
+            $shopcartObj->ViewCart();
+            $tongtien = $shopcartObj->getTotal();
+            $newprice['tongcong'] = number_format($tongtien) . ' đ';
+            echo json_encode($newprice);
+        break;
         
     }
 

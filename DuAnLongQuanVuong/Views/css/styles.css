@@ -1,3 +1,125 @@
+/*-------Carousel--------------*/
+#owl-demo .item img{
+  display: block;
+  width: 100%;
+  height:250px;
+}
+.owl-nav{
+	display:none;	
+}
+.owl-dots{
+	display:none;	
+}
+/*---------End carousel---------*/
+/*-------Edit PgwSlideSow------*/
+.slides {
+  margin: 0 auto;
+}
+
+.slides ul {
+  list-style: inside none disc;
+  margin: 0;
+  padding: 0;
+}
+/*----End PgwSlideShow-------*/
 .form-error{
     color: red;
+}
+.popover{
+    background-color: #000;
+    color : #fff;
+}
+.ngaymoisaigon{
+    position: absolute;
+    left: -1000px;
+}
+.product-price{
+    color: red;
+    padding: 10px 0;
+    font-size: 120%;
+}
+.product-price-with-promotion{
+    padding: 10px 0;
+    text-decoration: line-through;
+}
+.product-promotion-price{
+    
+    font-size: 120%;
+    color: #DD4132;
+    padding: 10px 0;
+}
+.product-title{
+    color: #4B0082;
+    font-weight: bold;
+    font-size: 200%;
+}
+.product-information{
+    background-color: #F7F7F7 ;
+    padding: 10px 0;
+    color: #E50914;
+    font-size: 160%;
+    
+}
+.footer-section-title{
+    color: #343148;
+    font-weight: bold;
+}
+
+p.button{
+    padding: 15px 0 ;
+}
+p.button a{
+    background-color: #FE840E;
+    color: #fff;
+    padding : 15px;
+}
+p.button  a:hover{    
+    text-decoration: none;
+}
+table tr th{
+    text-align: center;
+}
+tr.undelivery{
+    background-color: #FE840E;
+}
+tr.undilivery th{
+    color: #fff;
+}
+.modal-body table thead{
+    background-color: #000;
+    color: #fff;
+}
+ul.pgwSlideshow li img{
+    margin-left: 15px;
+}
+.most-view-product h1 {
+    text-align: center;
+    text-transform: capitalize;
+    color: #BD3D3A;
+}
+.most-view-product h5 {
+    font-weight: bold;
+    text-align: center;
+    text-transform: capitalize;
+}
+.most-view-product p {
+    text-align: center;
+}
+.most-view-product .origin-price-not-promotion {
+    text-align: center;
+    color: #f00;
+    font-size: 120%;
+}
+.most-view-product .origin-price-with-promotion {
+    text-align: center;
+    text-decoration: line-through;
+}
+.most-view-product .promotion-price {
+    font-size: 120%;
+    color: #00F;
+    text-align: center;   
+}
+.most-view-product a{
+    text-decoration: none;
+    color: #616247;
 }

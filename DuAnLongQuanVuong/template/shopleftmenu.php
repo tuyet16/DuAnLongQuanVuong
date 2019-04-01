@@ -1,27 +1,44 @@
-<?php ob_start(); ?>
-    <div class="list-group" style="background-color: #F3F3F3;">
-        <div class="list-title ">DANH MUC SẢN PHẨM</div>
-        <?php foreach($dsCategories as $row){ ?>
-            <div class="list-group-item list-group-item-action">
-            <a href="../Controllers/shop_controller.php?action=xemsanpham&id=<?php echo $row->categoryID; ?>"><?php echo $row->categoryName; ?></a>
+<?php ob_start(); ?> 
+    <ul class="nav nav-tabs nav-justified" style="margin: 60px 0;">
+      <li><a href="#categories" data-toggle="tab"><h4>QUẢN LÝ DANH MỤC SẢN PHẨM</h4></a></li>
+      <li class="active"><a href="#invoices" data-toggle="tab"><h4>QUẢN LÝ ĐƠN HÀNG</h4></a></li>
+      <li><a href="#functions" data-toggle="tab"><h4>CHỨC NĂNG</h4></a></li>
+    </ul>
+    <div class="container-fluid">
+        <div class="tab-content">
+          <div id="categories" class="tab-pane fade">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <?php if(isset($GLOBALS['template']['shopcategories'])):
+                         echo $GLOBALS['template']['shopcategories'];
+                        endif;
+                     ?>
+                </div>
+            </div>
+          </div>
+          
+          <div id="invoices" class="tab-pane fade in active">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <?php if(isset($GLOBALS['template']['shopinvoices'])):
+                        echo $GLOBALS['template']['shopinvoices'];
+                        endif;    
+                    ?>
+                </div>
+            </div>
+          </div>
+          
+          <div id="functions" class="tab-pane fade">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <h3>chức năng</h3>
+                    <?php if(isset($GLOBALS['template']['shopfunctions'])):
+                        echo $GLOBALS['template']['shopfunctions'];
+                            endif;    
+                    ?>
+                </div>
+            </div>
+          </div>
         </div>
-        <?php } ?>
-    </div>
-    <div class="list-group" style="padding-top: 3%;">
-        <div class="list-title">
-           DANH MỤC ĐƠN HÀNG
-        </div>
-        <div class="list-group-item list-group-item-action">
-            <a href="../Controllers/users_controller.php?action=donhang">Đơn hàng</a>
-        </div>
-    </div>
-     <div class="list-group" style="padding-top: 3%;">
-        <div class="list-title">
-           CHỨC NĂNG
-        </div>
-        <div class="list-group-item list-group-item-action">
-            <a href="../Controllers/products_controller.php?action=index"><i class="fa fa-plus-circle"></i> Thêm Sản Phẩm</a><br />
-            <a href="../Controllers/users_controller.php?action=changepass"><i class="fa fa-key" aria-hidden="true"></i> Đổi mật khẩu</a>
-        </div>  
     </div>
 <?php return ob_get_clean(); ?>

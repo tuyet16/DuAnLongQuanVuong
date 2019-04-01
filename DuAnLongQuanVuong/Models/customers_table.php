@@ -12,7 +12,7 @@ class Customers extends Database {
         }
         public function getCustomersDistrict()
         {
-            $query = 'select * from customers cs, districts dt where cs.districtID = dt.districtID';
+            $query = 'select cs.*, dt.districtName from customers cs, districts dt where cs.districtID = dt.districtID';
             $rs = $this->doQuery($query);
             return $rs;
         }

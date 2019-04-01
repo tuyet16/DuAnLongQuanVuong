@@ -9,13 +9,13 @@
             $action ='index';
         }
 	}
-    $units = new Units();
+    $unit = new Units();
 	$model = new Categories(); 
 	switch($action){
 		case 'index':  
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $dsUnit = $units->getUnits();
+            $dsUnit = $unit->getUnits();
 			$dsCategories= $model->getCategories();   
 			$view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';

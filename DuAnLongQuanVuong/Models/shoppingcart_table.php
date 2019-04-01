@@ -53,20 +53,30 @@
                     
                     foreach($_SESSION['cart'] as $masp=>$soluong)
                     {
-                        $product_model = new products();
+                        $product_model = new Products();
                         $user = new Users();
                                                 
                         $rsProduct = $product_model->getByIDProduct($masp);
-                        //$phiship =  $user->tinhphidichvu();
-                       // $phiship = =>tinhphi();              
-                        $thanhtien = $soluong * $rsProduct[0]->price;
-                        $this->total += $thanhtien;
-                        $cart_object[] = array('hinhanh'=>$rsProduct[0]->image,
+                        if($rsProduct[0]->PromotionPrice > 0):            
+                            $thanhtien = $soluong * $rsProduct[0]->PromotionPrice;
+                            $this->total += $thanhtien;
+                            $cart_object[] = array('hinhanh'=>$rsProduct[0]->image,
+                                              'name'=>$rsProduct[0]->productName,
+                                              'soluong'=>$soluong,
+                                              'gia'=>$rsProduct[0]->PromotionPrice,
+                                              'thanhtien'=>$thanhtien,
+                                              'masp'=>$masp);                 
+                       else:
+                            $thanhtien = $soluong * $rsProduct[0]->price;
+                            $this->total += $thanhtien;
+                            $cart_object[] = array('hinhanh'=>$rsProduct[0]->image,
                                               'name'=>$rsProduct[0]->productName,
                                               'soluong'=>$soluong,
                                               'gia'=>$rsProduct[0]->price,
                                               'thanhtien'=>$thanhtien,
-                                              'masp'=>$masp);                                                   
+                                              'masp'=>$masp);
+                                                              
+                       endif;                                                                                   
                     }                  
                 }
             }
@@ -109,34 +119,69 @@
             $con = $this->getconnect();
             return $con->lastInsertId('billID');
         }
-        public function addDetails($prodcutID,$amount,$price,$thanhtien,$billID)
+        public function addDetails($prodcutID, $amount , $price, $thanhtien,$nguoitraship, $phiship, $billID)
         {
-            $query ='insert into detailsbills(productID,amount,price,thanhtien,billID) values(?,?,?,?,?)';
+            if($nguoitraship == 0){
+                $query ='insert into detailsbills(productID,amount,price,thanhtien,billID, phishipshop, nguoitraship) 
+                        values(?, ?, ?, ?, ?, ?, ?)';
+            }
+            else{
+                $query ='insert into detailsbills(productID,amount,price,thanhtien,billID, phishipkh, nguoitraship) 
+                        values(?, ?, ?, ?, ?, ?, ?)';
+            }
             $param = array();
             $param[] = $prodcutID;
             $param[] = $amount;
             $param[] = $price;
             $param[] = $thanhtien;
             $param[] = $billID;
+            $param[] = $phiship;
+            $param[] = $nguoitraship;
             $this->doQuery($query,$param);
+        }
+        public function countShopsFromSession($cart)
+        {
+            $number = [];
+            $productObj = new Products();
+            foreach($cart as $productID=>$quanity){
+                $rs = $productObj->getByIDProduct($productID);
+                if(!in_array($rs[0]->userid, $number))
+                {
+                    array_push($number, $rs[0]->userid);
+                }
+            }
+            return count($number);
         }
         //ham tinh phi dich vu
         public function tinhphidichvu($quan,$giaohang)
         {
             if($giaohang == 0)
             {
-               $sql ='select distinct ar.often as phiship from customers cs, districts ds ,areas ar where cs.districtID=ds.districtID
-                     and ar.areasID =ds.areasID and ds.districtID=?';           
+               $sql ='select distinct ar.often as phiship 
+                    from customers cs, districts ds ,areas ar 
+                    where cs.districtID=ds.districtID
+                        and ar.areasID =ds.areasID and ds.districtID=?';           
             }
             else
             {
-                $sql ='select distinct ar.fast as phiship from customers cs, districts ds ,areas ar where cs.districtID = ds.districtID
+                $sql ='select distinct ar.fast as phiship 
+                    from customers cs, districts ds ,areas ar 
+                        where cs.districtID = ds.districtID
                      and ar.areasID =ds.areasID and ds.districtID=?';                
             }
             $param = array();
             $param[] = $quan;
             $rs = $this->doQuery($sql,$param);
             return $rs[0]->phiship;
+        }
+        public function getFirstDistrict()
+        {
+            $sql ='select districtID, districtName
+                    FROM districts 
+                    ORDER BY districtID ASC 
+                    LIMIT 0,1';           
+            $rs = $this->doQuery($sql);
+            return $rs;
         }
         //ham tim kiem dia chi khach hang bang sdt
         public function timkiem($sdt)
@@ -147,17 +192,29 @@
             $rs =$this->doQuery($query,$param);    
             return $rs;       
         }
-        
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+        public function timphiship($maquan)
+        {
+            $sql = "SELECT a.often FROM districts d, areas a
+                    WHERE d.areasID = a.areasID AND d.districtID=?
+                ";
+            $param = [];
+            $param[] = $maquan;
+            $rs = $this->doQuery($sql, $param);
+            return $rs[0]->often;
+        }
+        public function changeQuantity($productID, $quantity)
+        {
+            $result = [];
+            if(isset($_SESSION['cart'])){
+                $_SESSION['cart'][$productID] = $quantity;
+                $product_model = new Products();
+                $rsProduct = $product_model->getByIDProduct($productID);
+                $thanhtien = $quantity * $rsProduct[0]->price;
+                
+                $result['total'] = number_format($thanhtien) . ' đ';
+            }
+            return $result;    
+        }
       
     }
     

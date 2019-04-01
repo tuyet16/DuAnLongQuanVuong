@@ -16,7 +16,7 @@ $().ready(function() {
 		messages: {
 					tenkh:{
 						required: " (Không được để trống)",
-						minlength: " (Độ dài từ 6 ký tự trở lên)",
+						minlength: " (Độ dài từ 2 ký tự trở lên)",
 						maxLength: "(Độ dài nhỏ hơn 50 ký tự)"
 					},
 					diachi:{
@@ -48,7 +48,7 @@ $().ready(function() {
             <div class="row">
                 <div class="col-md-2">Tên Khách Hàng</div> 
                 <div class="col-md-5"><input type="text" id="tenkh" name="tenkh" value="<?php echo $CustomerID[0]->customerName; ?>" class="form-control" width="60%" 
-                	required minLength='6' maxlength="50"/>
+                	required minLength='2' maxlength="50"/>
                     <label for="tenkh_error" class="form-error"></label>
                 </div>
             </div>

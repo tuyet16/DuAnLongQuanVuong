@@ -1,6 +1,7 @@
 <?php
 define('MB_ALERT',2);
 define('MB_CONFIRM',3);
+define('MB_SHOPPINGCART',4);
 class MessageBox{    
     public static function Show($str='Message Box', $type = MB_ALERT){
         echo "<script type='text/javascript'>";
@@ -21,6 +22,14 @@ class MessageBox{
                 else
                     window.location.href = '<?php echo $_SERVER['PHP_SELF']; ?>';
                 
+                <?php
+            break;
+            case MB_SHOPPINGCART:
+                ?>
+                if(!alert('<?php echo $str;?>')){
+                    //window.location.reload();
+                    window.location.href = "<?php echo $_SERVER['PHP_SELF']; ?>";   
+                }
                 <?php
             break;
         }

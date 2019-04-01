@@ -62,7 +62,8 @@ class Users extends Database{
         $param[] = $id;
         $this->doQuery($query, $param);
     }
-    //Hoa don cho cac chu shop
+    
+    //Hoa don cho cac chu shop theo ngày
     public function getHoadon($id, $date)
     {
         $tongtien =0;
@@ -80,7 +81,7 @@ class Users extends Database{
             $donhangarr[$bill->PurchaseDate][$bill->billID][0]= array($bill->customerID,$bill->billingAddress
                                                                     ,$bill->delivery,$bill->totalPrice,
                                                                     $bill->tinhtrang,$bill->shopcheck, 
-                                                                    $bill->PurchaseDate);
+                                                                    $bill->PurchaseDate,$bill->billID);
             $tongtien += $bill->totalPrice;
             $sql = 'select * from customers cs, districts dt where cs.districtID = dt.districtID and customerID=?';
             $param =array();
@@ -104,10 +105,13 @@ class Users extends Database{
                                                                     $detail->price,
                                                                     $detail->productName,
                                                                     $detail->unitName,
-                                                                    $detail->gia,
+                                                                    $detail->thanhtien,
                                                                     $detail->discount,
                                                                     $detail->shop_acceptance,
-                                                                    $detail->nguoitraship);
+                                                                    $detail->nguoitraship,
+                                                                    $detail->phishipshop,
+                                                                    $detail->phishipkh
+                                                                    );
                 if($detail->discount != 0){
                     $tong_dt += $detail->amount * $detail->gia * ((100-$detail->discount)/100);
                 }
@@ -127,9 +131,9 @@ class Users extends Database{
         $this->doQuery($sql,$param);
     }
     //cập nhật số tiền mà shop đã trao đổi với khách hàng về đơn hàng và thay đổi phí ship là do ai trả khách hay shop
-    public function editDetailPriceByID($soluong,$gia,$giamgia,$nguoitra,$detailID)
+    public function editDetailPriceByID($soluong,$gia,$giamgia,$nguoitra, $detailID)
     {
-        $sql ='update detailsbills set amount=?,price=?,discount=?, nguoitraship=? where detailID =?';
+        $sql ='update detailsbills set amount=?, thanhtien=?, discount=?, nguoitraship=? where detailID =?';
         $param = array();
         $param[]=$soluong;
         $param[]= $gia;
@@ -144,6 +148,18 @@ class Users extends Database{
 //        $param[] =$billID;
 //        $this->doQuery($sql1,$param);
     }
+    public function editShipFee($shipFee, $detailID, $type = 0){
+        if($type == 0){
+            $sql = 'UPDATE detailsbills SET phishipshop=?, phishipkh=0, nguoitraship=0 WHERE detailID=?';
+        }
+        else{
+            $sql = 'UPDATE detailsbills SET phishipshop=0, phishipkh=?, nguoitraship=1 WHERE detailID=?';
+        }
+        $param = array();
+        $param[] = $shipFee;
+        $param[] = $detailID;
+        $this->doQuery($sql, $param);
+    }
     public function editBillByID($price,$billID)
     {
         $sql ='update bills set totalPrice=? where billID=? ';
@@ -157,7 +173,7 @@ class Users extends Database{
     {
         $detail_id_arr = explode('_', $id);
         $questions = str_repeat('?,', count($detail_id_arr)-1) . '?';
-        print_r($detail_id_arr);
+        //print_r($detail_id_arr);
         $query = "update detailsbills set shop_acceptance=1 where detailID IN ($questions)";
         $param = array();
         foreach($detail_id_arr as $detail_id){
@@ -183,7 +199,7 @@ class Users extends Database{
            // echo $rs1[0]->thanhtien.'<br/>';
             //echo $totalprice.'<br/>';
         }
-        echo $totalprice;
+        //echo $totalprice;
         $sql1 ='update bills set totalPrice=? where billID=? ';
         $param = array();
         $param[]= $totalprice;
@@ -220,7 +236,8 @@ class Users extends Database{
         {
             $donhangarr[$bill->billID][0]= array($bill->fullname,$bill->address,$bill->billingAddress,$bill->setDate,$bill->employeeName
                            ,$bill->sdtNV,$bill->customerName,$bill->sdtkh,$bill->phiship,$bill->totalPrice,$bill->nguoitraship,$bill->idEm);
-            $sql1 = 'select dt.*,pr.productName, pr.unitID,un.unitName,pr.price as gia from detailsbills dt,products pr,units un             
+            $sql1 = 'select dt.*,pr.productName, pr.unitID,un.unitName,pr.price as gia, pr.PromotionPrice as khuyenmai 
+                        from detailsbills dt,products pr,units un             
                                 where dt.productID=pr.productID and pr.unitID=un.unitID and dt.billID=? and dt.ProductID=?';
             $param = array();
             $param[] = $id;
@@ -242,7 +259,8 @@ class Users extends Database{
                                                         $detail->phuthu,                                                        
                                                         $detail->phishipshop,
                                                         $detail->phishipkh,
-                                                        $detail->nguoitraship);
+                                                        $detail->nguoitraship,
+                                                        $detail->khuyenmai);
                 $tongphuthu += $detail->phuthu;
                 if($detail->nguoitraship ==1)
                 {
@@ -261,42 +279,59 @@ class Users extends Database{
         $donhangarr = array();
          if($ngay != null)
         {
-            $query ='select distinct us.userid,us.fullname from bills bi,products pr, detailsbills dt,users us
+            $query ='select distinct bi.* from bills bi,products pr, detailsbills dt,users us
                 where bi.billID = dt.billID and dt.productID = pr.productID and us.userid=pr.userid
-                        and dt.shop_acceptance=0 and bi.PurchaseDate=? order by bi.PurchaseDate desc';
+                     and bi.PurchaseDate=? order by bi.PurchaseDate desc';
             $param = array();
             $param[] = $ngay;
-            $rs = $this->doQuery($query,$param); 
+            $bi = $this->doQuery($query,$param); 
         }
         else
         {        
-            $query ='select distinct us.userid,us.fullname from bills bi,products pr, detailsbills dt ,users us
-                    where bi.billID = dt.billID and dt.productID = pr.productID and us.userid=pr.userid and dt.shop_acceptance=0 
+            $query ='select distinct bi.* from bills bi,products pr, detailsbills dt ,users us
+                    where bi.billID = dt.billID and dt.productID = pr.productID and us.userid=pr.userid
                     order by bi.PurchaseDate';
             $param = array();
-            $rs = $this->doQuery($query); 
-        }
-        foreach($rs as $user)
+            $bi = $this->doQuery($query); 
+        }                          
+        foreach($bi as $bill)
         {
-            $donhangarr[$user->userid]['thongtinshop']= array($user->fullname);
-            $query1 = 'select distinct bi.*,us.userid,us.fullname from bills bi,products pr, detailsbills dt ,users us
-                    where bi.billID = dt.billID and dt.productID = pr.productID and dt.shop_acceptance=0 and us.userid =pr.userid 
-                    and us.userid=? and bi.PurchaseDate=? order by bi.PurchaseDate ';
+            $donhangarr[$bill->billID]['thongtinbill']= array($bill->customerID,$bill->billingAddress,$bill->delivery
+                ,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck,$bill->idEm,$bill->nguoitraship,$bill->phiship,$bill->billID);
+            $tongtien += $bill->totalPrice;
+            //khach hangf
+            $sql = 'select cs.*, dt.districtName  from customers cs, districts dt where cs.districtID = dt.districtID and cs.customerID=?';
+            $param =array();
+            $param[]=$bill->customerID;
+            $cs = $this->doQuery($sql,$param);
+            
+            $donhangarr[$bill->billID]['thongtinkh'] = array($cs[0]->customerName
+                                ,$cs[0]->address,$cs[0]->phone,$cs[0]->districtName); 
+              //cacs shop                      
+            $query1 = 'select distinct bi.*,us.userid,us.fullname,us.phone from bills bi,products pr, detailsbills dt ,users us
+                    where bi.billID = dt.billID and dt.productID = pr.productID and us.userid =pr.userid 
+                  and bi.billID=? order by bi.PurchaseDate ';
             $param = array();
-            $param[] = $user->userid;
-            $param[] = $ngay;
-            $bi = $this->doQuery($query1,$param);                    
-            foreach($bi as $bill)
+            $param[] =$bill->billID;
+            $rs = $this->doQuery($query1,$param);              
+            foreach($rs as $user)
             {
-                $donhangarr[$user->userid][$bill->billID][0]= array($bill->customerID,$bill->billingAddress,$bill->delivery
-                                        ,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck,$bill->idEm,$bill->nguoitraship);
-                $sql = 'select * from customers cs, districts dt where cs.districtID = dt.districtID and customerID=?';
-                $param =array();
-                $param[]=$bill->customerID;
-                $cs = $this->doQuery($sql,$param);
-                $donhangarr[$user->userid][$bill->billID][2] = array($cs[0]->customerName
-                                    ,$cs[0]->address,$cs[0]->phone,$cs[0]->districtName);                                 
-            } 
+                $donhangarr[$bill->billID][$user->userid]['tenshop']= array($user->fullname,$user->phone);        
+                $soshop ++; 
+                $sql1 = 'select dt.*,pr.productName, pr.unitID,un.unitName,pr.price as gia ,dt.phuthu  
+                            from detailsbills dt , users us ,products pr,units un where dt.productID=pr.productID 
+                            and pr.userid= us.userid and pr.unitID=un.unitID and dt.billID=? and us.userid =?';
+                $param = array();
+                $param[]= $bill->billID;
+                $param[]= $user->userid;
+                $dt = $this->doQuery($sql1,$param);         
+                foreach($dt as $detail)
+                {
+                    $donhangarr[$bill->billID][$user->userid]['detail'][]=array($detail->detailID,$detail->productID,$detail->amount
+                                        ,$detail->price,$detail->productName,$detail->unitName,$detail->gia,$detail->discount,
+                                        $detail->phuthu,$detail->thanhtien,$detail->shop_acceptance);            
+                }                                                   
+            }      
         }
         return $donhangarr;
     }
@@ -309,7 +344,7 @@ class Users extends Database{
         {
             $query ='select distinct bi.* from bills bi,products pr, detailsbills dt,users us
                 where bi.billID = dt.billID and dt.productID = pr.productID and us.userid=pr.userid
-                        and dt.shop_acceptance=1 and bi.PurchaseDate=? order by bi.PurchaseDate desc';
+                        and dt.shop_acceptance=1 and Date(bi.PurchaseDate)=? order by bi.PurchaseDate desc';
             $param = array();
             $param[] = $ngay;
             $bi = $this->doQuery($query,$param); 
@@ -326,7 +361,7 @@ class Users extends Database{
         foreach($bi as $bill)
         {
             $donhangarr[$bill->billID]['thongtinbill']= array($bill->customerID,$bill->billingAddress,$bill->delivery
-                ,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck,$bill->idEm,$bill->nguoitraship,$bill->phiship);
+                ,$bill->totalPrice,$bill->tinhtrang,$bill->shopcheck,$bill->idEm,$bill->nguoitraship,$bill->phiship,$bill->billID);
             $tongtien += $bill->totalPrice;
             //khach hangf
             $sql = 'select cs.*, dt.districtName  from customers cs, districts dt where cs.districtID = dt.districtID and cs.customerID=?';
@@ -349,7 +384,7 @@ class Users extends Database{
             {
                 $donhangarr[$bill->billID][$user->userid]['tenshop']= array($user->fullname,$user->phone);        
                 $soshop ++; 
-                $sql1 = 'select dt.*,pr.productName, pr.unitID,un.unitName,pr.price as gia ,dt.phuthu  
+                $sql1 = 'select dt.*,pr.productName, pr.unitID,un.unitName,pr.price as gia,pr.PromotionPrice ,dt.phuthu  
                             from detailsbills dt , users us ,products pr,units un where dt.productID=pr.productID 
                             and pr.userid= us.userid and pr.unitID=un.unitID and dt.billID=? and us.userid =?';
                 $param = array();
@@ -360,7 +395,8 @@ class Users extends Database{
                 {
                     $donhangarr[$bill->billID][$user->userid]['detail'][]=array($detail->detailID,$detail->productID,$detail->amount
                                             ,$detail->price,$detail->productName,$detail->unitName,$detail->gia,$detail->discount,
-                                            $detail->phuthu,$detail->phishipshop,$detail->phishipkh,$detail->nguoitraship,$detail->thanhtien);
+                                            $detail->phuthu,$detail->phishipshop,$detail->phishipkh,
+                                            $detail->nguoitraship,$detail->thanhtien, $detail->PromotionPrice);
                     //$tongtien = sum($detail->thanhtien); 
             
                 }                                                   
@@ -369,6 +405,11 @@ class Users extends Database{
         }
         return $donhangarr;
     } 
+     public function getNewestDay(){
+        $sql = "SELECT PurchaseDate FROM bills ORDER BY PurchaseDate DESC LIMIT 0,1";
+        $rs = $this->doQuery($sql);
+        return $rs[0]->PurchaseDate;
+    }
    //Cập nhật nhân viên giao hàng, cập nhật phí ship và phụ thu các shop
     public function editnhanvien($date, $idEm,$phuthu,$phishipshop,$id)
     {

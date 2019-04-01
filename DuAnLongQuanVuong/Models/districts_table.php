@@ -1,11 +1,11 @@
 <?php
-	class districts extends Database {
+	class Districts extends Database {
 		public function __construct(){
 			parent::__construct();
 		}
 		public function getDistrict()
         {
-            $query = 'select * from districts';
+            $query = 'select * from districts ORDER BY districtName ASC';
             $rs = $this->doQuery($query);
             return $rs;
         }

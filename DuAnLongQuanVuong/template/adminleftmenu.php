@@ -1,5 +1,5 @@
 <?php ob_start(); ?>
-    <div class="list-group" style="background-color: #F3F3F3;">
+    <div class="list-group" style="background-color: #F3F3F3; margin-top: 60px;">
         <div class="list-title text-center">Quản Lý</div>
         <div class="list-group-item "><a href="admin_controller.php?action=dsshop">Shop</a></div>
         <div class="list-group-item list-group-item-action">
@@ -19,6 +19,7 @@
          <div class="list-group-item list-group-item-action"><a href="../Controllers/admin_controller.php?action=doihinh">THAY ĐỔI QUẢNG CÁO</a>
         </div>
         <div class="list-group-item list-group-item-action"><a href="../Controllers/admin_controller.php?action=xemdhshop">XEM ĐƠN HÀNG SHOP</a></div>
+        <div class="list-group-item list-group-item-action"><a href="../Controllers/admin_controller.php?action=xemhdnhanship">DỊCH VỤ NHẬN SHIP</a></div>
     </div>
     <div class="list-group" style="padding-top: 3%;">
         <div class="list-title text-center">

@@ -14,8 +14,6 @@
 		case 'index':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-			$tableDB = new Database();
-            $tables = $tableDB->getTables();
 			$dsCategories= $model->getCategories();            
 			$view = Page::View();
             $GLOBALS['template']['menu'] = include_once'../template/menu.php';
@@ -28,6 +26,9 @@
 		   $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
             $name = filter_input(INPUT_POST, 'category_name');
+            if(is_uploaded_file($_FILES['cate_img']['tmp_name'])){
+                $cate_img = Image::GetFile($_FILES['cate_img']);
+            }
 			if($name == NULL)
 			{
 				try{
@@ -50,7 +51,7 @@
 			}
 			else
 			{
-				$model->insertNewCategory($name);
+				$model->insertNewCategory($name, $cate_img);
 				header('Location: categories_controller.php');
 			}
 			break;
@@ -60,6 +61,7 @@
 		   $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
 			$name = filter_input(INPUT_POST, 'category_name');
+            
 			if($name == NULL)
 			{
 				try{
@@ -68,14 +70,13 @@
 						throw new MVCException('Tập tin không tồn tại' . $view);
 					else
 					{
-						$tablesDB = new Database();
-						$tables = $tablesDB->getTables();
+						$model = new Categories();
 						$dsCategories=$model->getCategories();
 						$CateByID = $model->getCategoryByID( $_GET['id']);
 						$GLOBALS['template']['menu'] = include_once '../template/menu.php';
 						$GLOBALS['template']['leftmenu'] = include_once'../template/adminleftmenu.php';
 						$GLOBALS['template']['content'] = include_once $view;
-						$GLOBALS['template']['title'] = 'Sửa loại sản phẩm';
+						$GLOBALS['template']['title'] = 'Sửa loại mặt hàng';
 						include_once '../template/index.php';
 					}
 				}
@@ -83,8 +84,14 @@
 			}
 			else
 			{
+                if(is_uploaded_file($_FILES['cate_img']['tmp_name'])){
+                    $img_name = Image::GetFile($_FILES['cate_img']);
+                }
+                else{
+                    $img_name = null;
+                }
 				$id = $_POST['category_id'];
-				$model->editCategory($name,$id);
+				$model->editCategory($name,$img_name, $id);
 				header('Location: categories_controller.php');
 			}
 			break;

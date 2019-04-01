@@ -1,6 +1,6 @@
-<?php
-session_start();
+<?php session_start();
 date_default_timezone_set("Asia/Ho_Chi_Minh");
+define('HOME_PATH', '/home/ahamuavn/public_html');
 include_once '../Errors/mvcexception.php';
 
 //define('FPDF_FONTPATH','D:/xampp/htdocs/DuAnLongQuanVuong/DuAnLongQuanVuong/Libs/font');
@@ -12,7 +12,9 @@ include_once '../Errors/mvcexception.php';
  */
 
 spl_autoload_register(function ($class) {
-    $model_dir = '../Models/' . $class . '_table.php';
+    $model_dir =  '../Models/' . $class . '_table.php';
+    
+    
     if(file_exists($model_dir) == true){
         include_once $model_dir;
     }   

@@ -2,6 +2,7 @@
 	ob_start();
     
 ?>
+<div class="container-fluid" style="margin-top: 60px ;">
     <form method="post" action="?action=donhang">
         <div class="col-md-12 text-center">
             <p>
@@ -22,6 +23,7 @@
     <table class="table table-bordered table-striped">
       <tr style="background-color:darkblue;color:#FFF">
         <td>&nbsp; STT</td>
+        <td>Mã HD</td>
         <td>&nbsp; Tên Khách hàng</td>
         <td>&nbsp; Loại ship </td>
         <td>&nbsp; Đơn giá </td>
@@ -46,6 +48,7 @@
                     
           <tr style="background-color: #000; color: #FFF;">
             <td>&nbsp;<?php echo $i++; ?></td>
+            <td>&nbsp;<?php echo 'HD'.$db['thongtinbill'][9]; ?></td>
             <td>&nbsp;<?php  echo $db['thongtinkh'][0];?></td>
             <td>&nbsp;<?php if($db['thongtinbill'][2]==0) 
                             {
@@ -53,7 +56,7 @@
                             }
                             else
                             {echo 'Giao Nhanh';}?></td>
-            <td>&nbsp;<?php echo $db['thongtinbill'][3];  $tong += $db['thongtinbill'][3];?></td>
+            <td>&nbsp;<?php echo number_format($db['thongtinbill'][3]);  $tong += $db['thongtinbill'][3];?></td>
             <td>&nbsp;<?php echo date_format($dt,'d-m-Y'); ?></td>
             <td>             
                 <a class="collapsed card-link" data-toggle="collapse" style="color: #fff;" 
@@ -178,7 +181,13 @@
                                     ?></td>
                                 <td><?php echo $detail_item[2];  ?></td>
                                 <td><?php echo $detail_item[5]; ?></td>
-                                <td><?php echo number_format($detail_item[6]); ?></td>
+                                <td><?php 
+                                        if($detail_item[13]> 0): 
+                                            echo number_format($detail_item[13]);
+                                        else:
+                                            echo number_format($detail_item[6]);
+                                        endif; 
+                                 ?></td>
                                 <td>
                                     <?php echo $detail_item[7]; ?>%
                                 </td>
@@ -273,5 +282,6 @@
 
 <?php
 }
+echo '</div>';
 	return ob_get_clean();
 ?>

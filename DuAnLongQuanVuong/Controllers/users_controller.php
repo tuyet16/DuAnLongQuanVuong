@@ -1,6 +1,4 @@
-<?php 
-include_once('../config/bootload.php');
-include_once('../Libs/messagebox_lib.php');
+<?php include_once('../Config/bootload.php');
     $action = filter_input(INPUT_POST,'action');
     if($action == Null)
     {
@@ -57,14 +55,10 @@ include_once('../Libs/messagebox_lib.php');
 				 {
 					 header('Location: home_controller.php');
 						exit(); 
-				 }
-			                   
-            }
-                   
+				 }                
+            }          
         break;
         case 'logout':
-			$user = new Users();
-		 	$rsvitriquangcao1 = $user->carosoulpanel();
             session_destroy();
             header('Location: home_controller.php');
         break;        
@@ -108,15 +102,14 @@ include_once('../Libs/messagebox_lib.php');
 						$_SESSION['error']="Kiểm tra lại mật khẩu hiện tại";	}
 					}
 				}
-				$GLOBALS['template']['menu'] = include_once'../template/menu.php';
-                $GLOBALS['template']['leftmenu'] = include_once'../template/shopleftmenu.php';
+				$GLOBALS['template']['menu'] = include_once'../template/shopmenu.php';
                 $GLOBALS['template']['content'] = include_once $view;
                 include_once('../template/index.php');
 		break;
         case 'donhang':
              $user = new Users();
             $rsvitriquangcao1 = $user->carosoulpanel();
-            $product_model = new products();
+            $product_model = new Products();
             $dsProducts = $product_model->getProduct();
             if(isset($_SESSION['userid']))
             {
@@ -160,14 +153,12 @@ include_once('../Libs/messagebox_lib.php');
             }                    
         break;
         case 'shopedit':
-            $user = new Users();
-            $rsvitriquangcao1 = $user->carosoulpanel();
             if(isset($_POST['submit']))
             {
-                print_r($_POST);
                 $tong = 1;
                 $tongtien =0;
                 //$billID = $_POST['billID'];
+                $user = new Users();
                 foreach($_POST as $detail_id=>$edit)
                 {
                     if($detail_id != 'submit')
@@ -177,26 +168,29 @@ include_once('../Libs/messagebox_lib.php');
                             if(is_numeric($detail_id)){
                               //echo $detail_id.'<br>';              
                             $tong *= $_POST[$detail_id] * $_POST['gia' . $detail_id] * ((100 - $_POST['giamgia' . $detail_id])/100);
-                            $user = new Users();
                             $user->editDetailPriceByID($_POST[$detail_id],$tong,$_POST['giamgia'.$detail_id],$_POST['nguoitraship'],$detail_id);
                             $tongtien += $tong;
-                            $tong=1;                    
+                            $tong=1;
+                            echo $_POST['nguoitraship'] . '--' . $_POST['phishipshop'] . '---' . $_POST['phishipkh'] . '<br/><br/>'; 
+                                if($_POST['nguoitraship'] == 0){
+                                    
+                                    $phishipshop = $_POST['phishipshop'] > 0 ? $_POST['phishipshop'] : $_POST['phishipkh'];
+                                    $user->editShipFee($phishipshop, $detail_id);
+                                }
+                                else{
+                                    
+                                    $phishipshop = $_POST['phishipkh'] > 0 ? $_POST['phishipkh'] : $_POST['phishipshop'];
+                                    $user->editShipFee($phishipshop, $detail_id, 1);
+                                }                    
                             }        
                         }
                     }
                 }
-                
-                $billID = $_POST['billID'];
-                $user = new Users();
-                $user->guidonhang($tongtien,$billID);
-                header('Location: ?action=donhang&id=' . $billID.'&date='.$_GET['ngay']);
-                
+                header('Location: ?action=donhang&id=' . $billID.'&date='.$_GET['ngay']);  
             }
         break;
         case 'guidonhang':
-             $user = new Users();
-            $rsvitriquangcao1 = $user->carosoulpanel();
-            $guidonhang =0;
+            $guidonhang=0;
             if(isset($_GET['detail_id']))
             {
                 $id= $_GET['detail_id'];
@@ -215,10 +209,23 @@ include_once('../Libs/messagebox_lib.php');
                 header('Location: ?action=donhang&date=' . $date);
             }            
         break;
-        
+        case 'tra_cuu_don_hang':
+            $user = new Users();
+            $rsvitriquangcao1 = $user->carosoulpanel();
+            if(isset($_POST['phone'])){
+                $userBills = new Bills();
+                $rsUserBills = $userBills->getBillsByCustomerID($_POST['phone']);
+                $findingWord = $_POST['phone'];
+                $view = Page::View();
+                $GLOBALS['template']['menu'] = include_once'../template/menu.php';
+                $GLOBALS['template']['content'] = include_once $view;
+                $GLOBALS['template']['footer'] = include_once'../template/footer.php';
+                include_once('../template/index.php');
+            }
+        break;
     }
 
-?>
+
 
 
 
