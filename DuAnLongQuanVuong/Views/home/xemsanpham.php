@@ -28,10 +28,17 @@ ob_start();
                             else:
                                 echo ' <p class="origin-price-not-promotion">'. number_format($row->price) .'đ/'.$row->unitName .'</p>';
                             endif;
-                    echo '
-                     <a href="../Controllers/shoppingcart_controller.php?action=add&id='.$row->productID.'&q=' .  base64_encode($_SERVER['QUERY_STRING']) .'" class="btn" style="background-color:#FE840E; color:#fff;">
-                        Mua hàng
-                     </a>
+                    if($row->count > 0):
+                        echo '<a href="../Controllers/shoppingcart_controller.php?action=add&id='.$row->productID.'&q=' .  base64_encode($_SERVER['QUERY_STRING']) .'" class="btn" style="background-color:#FE840E; color:#fff;">
+                                Mua hàng
+                             </a>';
+                    else:
+                        echo '<a class="btn" style="background-color:#FE840E; color:#fff;opacity: 0.5;">
+                                    Mua hàng
+                            </a>';
+                    
+                   endif;
+                echo'   
                 </div>
             </div>
         </div>            
@@ -54,10 +61,17 @@ ob_start();
                             else:
                                 echo ' <p class="origin-price-not-promotion">'. number_format($row->price) .'đ/'.$row->unitName .'</p>';
                             endif;
-                    echo '
-                     <a href="../Controllers/shoppingcart_controller.php?action=add&id='.$row->productID.'&q=' .  base64_encode($_SERVER['QUERY_STRING']) .'" class="btn" style="background-color:#FE840E; color:#fff;">
-                        Mua hàng
-                     </a>
+                    if($row->count > 0):
+                        echo '<a href="../Controllers/shoppingcart_controller.php?action=add&id='.$row->productID.'&q=' .  base64_encode($_SERVER['QUERY_STRING']) .'" class="btn" style="background-color:#FE840E; color:#fff;">
+                                Mua hàng
+                             </a>';
+                    else:
+                        echo '<a class="btn" style="background-color:#FE840E; color:#fff;opacity: 0.5;">
+                                    Mua hàng
+                            </a>';
+                    
+                   endif;
+                echo'   
                 </div>
             </div>
         </div>            

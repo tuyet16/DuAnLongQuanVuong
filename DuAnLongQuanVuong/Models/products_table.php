@@ -50,7 +50,7 @@
                                                                             'StartDate'=>$product->StartDate,
                                                                             'EndDate'=>$product->EndDate,
                                                                             'image'=>$product->image,
-                                                                            'count'=>$product->count                                                                            
+                                                                            'count'=>$product->count                                                                           
                                                                             
                                                                             ]; 
                 endforeach;
@@ -65,7 +65,6 @@
             $param[] = $masp;
             $this->doQuery($sql, $param);
         }
-        
         public function getByIDProduct($id)
         {
             $query ='select p.*, u.unitName, c.categoryName  

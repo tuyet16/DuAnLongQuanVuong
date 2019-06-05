@@ -39,7 +39,7 @@ $(document).ready(function(){
     <?php
         $i = 0;
     foreach($dsCategories as $row){        
-        echo '
+        echo '  
             <div class="col-md-3 col-sm-3 col-xs-6" style="padding:10px;">
                 <div class="panel" style="border: 1px solid silver; ">
                     <div class="panel-heading" style="text-align: center;background-color: #FE840E;">

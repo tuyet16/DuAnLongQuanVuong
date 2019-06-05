@@ -13,8 +13,7 @@
     switch($action)
     {
         case 'index':
-            	
-            //end mail
+       	    //end mail
              $product_model = new Products();
             //$dsProducts = $product_model->getProduct();
             $category = new Categories();
@@ -51,16 +50,18 @@
             if(isset($_GET['id'])){
                 $cate_id = $_GET['id'];
             }
+            if(isset($_GET['id_pr'])){
+                $id_pr = $_GET['id_pr'];
+            }
             $category = new Categories();
             $rsCategory = $category->getCategoryByID($cate_id);
-            $category_name = $rsCategory[0]->categoryName;      
+            $category_name = $rsCategory[0]->categoryName;    
             $product = new Products(); 
-            $rsProductsByCategory = $product->getProductBycategoryID($cate_id) ;
-           // $rsCategories = $category->getCategoryByID($id);           
+            //$rsProductsByCategory = $product->getProductBycategoryID($cate_id) ;           
             if(isset($_GET['id']))
             {
                 $id = $_GET['id'];
-                $product = new Products();
+                $product = new Products();  
                 $start = 0;
                 if(isset($_GET['start']))
                 {
