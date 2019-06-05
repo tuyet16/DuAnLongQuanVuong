@@ -43,6 +43,10 @@
                        	<div class="col-md-3"> <input type="text" name="gia" class="form-control" width="60%"/></div>
                     </div>
                     <div class="row" style="padding-top:15px">
+                    	<label class="control-label col-md-2">Số Lượng</label> 
+                       	<div class="col-md-3"> <input type="text" name="soluong" class="form-control" width="60%"/></div>
+                    </div>
+                    <div class="row" style="padding-top:15px">
                     	<label class="control-label col-md-2">Giá Khuyến Mãi</label> 
                        	<div class="col-md-3"> <input type="text" name="giakhuyenmai" class="form-control" width="60%"/></div>
                     </div>

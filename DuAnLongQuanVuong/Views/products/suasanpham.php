@@ -66,6 +66,12 @@
                     </div>
                 </div>
                 <div class="row" style="margin-top:15px">
+                	<div class="col-md-2">Số Lượng</div> 
+                   	<div class="col-md-8"> 
+                       <input type="text" name="soluong" value="<?php echo $rsProducts[0]->count; ?>" class="form-control" width="60%"/>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:15px">
                 	<div class="col-md-2">Hình ảnh</div> 
                    	<div class="col-md-5">
                         <input type="file" name="hinhanh" class="form-control" value="<?php echo $rsProducts[0]->image; ?>"/>                        

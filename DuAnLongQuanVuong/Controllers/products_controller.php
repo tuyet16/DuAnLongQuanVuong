@@ -62,6 +62,7 @@
                 $description = $_POST['description'];
                 $userid = $_SESSION['userid'];
                 $hinhanh = $_FILES['hinhanh'];
+                $count = $_POST['soluong'];
                 $img = Image::GetFile($hinhanh);
                 $subImageArr = [];
                 for($i = 0; $i < 5; $i++){
@@ -76,7 +77,7 @@
                 }
                 
                 $product_model = new Products();
-                $product_model->addProduct($tensp,$loaisp,$userid,$donvi,$gia,$khuyenmai, $img, $subImageArr, $description);
+                $product_model->addProduct($tensp,$loaisp,$userid,$donvi,$gia,$khuyenmai, $img, $subImageArr, $description,$count);
                 //print_r($_POST);
                 header('Location: shop_controller.php?action=xemdanhmucsanpham');
             }
@@ -109,7 +110,9 @@
                     $gia = $_POST['gia'];
                     $gia_khuyen_mai = $_POST['giakhuyenmai'];
                     $description = $_POST['description'];
-                    $userid = $_SESSION['userid'];
+                    $count = $_POST['soluong'];
+                    $userid = $_SESSION['userid'];                    
+                    
                     if(is_uploaded_file($_FILES['hinhanh']['tmp_name']))
                     {
                         $hinhanh = $_FILES['hinhanh'];
@@ -131,8 +134,9 @@
                         }
                     }
                     $product_model = new Products();
-                    $product_model->editProduct($tensp,$loaisp,$donvi,$gia,$gia_khuyen_mai, $img,$description, $subImageArr, $id);
+                    $product_model->editProduct($tensp,$loaisp,$donvi,$gia,$gia_khuyen_mai, $img,$description, $subImageArr,$count, $id);
                     header('Location: shop_controller.php?action=xemdanhmucsanpham');
+                    //print_r($_POST);
                 }
             }
         break;

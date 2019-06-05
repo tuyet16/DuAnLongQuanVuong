@@ -116,6 +116,9 @@
                     {
                         $model_pr = new Products();
                         $rsProducts = $model_pr->getByIDProduct($masp);
+                        $count = $rsProducts[0]->count;
+                        $soluong = $count - $amount;
+                        $model_pr->UpdateCountProduct($soluong,$masp);
                         if($rsProducts[0]->PromotionPrice > 0):
                             $gia = $rsProducts[0]->PromotionPrice;
                             $thanhtien = $amount * $rsProducts[0]->PromotionPrice;
@@ -133,8 +136,9 @@
                             $detail_id = $shopping_ml->addDetails($masp, $amount, $gia, $thanhtien,  $nguoitra, 0, $bills_id);
                         }
                     }
+                    
                     unset($_SESSION['cart']); 
-                    MessageBox::Show("Đặt hàng thành công", MB_SHOPPINGCART);                   
+                    //MessageBox::Show("Đặt hàng thành công", MB_SHOPPINGCART);                   
                 }
             }
             else

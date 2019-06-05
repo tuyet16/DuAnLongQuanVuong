@@ -30,6 +30,7 @@
         {
             $_SESSION['cart'][$masp] = $soluong;
         }
+        
         public function DeleteCart($masp)
         {
             unset($_SESSION['cart'][$masp]);
@@ -49,8 +50,7 @@
                     echo 'Không có sản phẩm nào trong giỏ';
                 }
                 else
-                {
-                    
+                {                    
                     foreach($_SESSION['cart'] as $masp=>$soluong)
                     {
                         $product_model = new Products();

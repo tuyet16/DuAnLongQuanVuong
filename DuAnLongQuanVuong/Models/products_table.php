@@ -33,13 +33,14 @@
                                                                     'cateName'=>$category->categoryName,
                                                                     'productCategory'=>[]];
                 $sql = "
-                        SELECT productID, productName, price, PromotionPrice, StartDate, EndDate, image 
-                        FROM products
-                        WHERE userid = ? AND categoryID = ?
+                        SELECT DISTINCT productID, productName, price, PromotionPrice, StartDate, EndDate, image, count
+                        FROM products p, units u
+                        WHERE p.userid = ? AND p.categoryID = ?
                         "; 
                 $param = [];
                 $param[] = $id;
                 $param[] = $category->categoryID;
+               
                 $rsProduct = $this->doQuery($sql, $param);
                 foreach($rsProduct as $product):
                     $productByCate['cateinfo'][$category->categoryID]['productCategory'][] = ['productID'=>$product->productID,
@@ -48,12 +49,23 @@
                                                                             'PromotionPrice'=>$product->PromotionPrice,
                                                                             'StartDate'=>$product->StartDate,
                                                                             'EndDate'=>$product->EndDate,
-                                                                            'image'=>$product->image
+                                                                            'image'=>$product->image,
+                                                                            'count'=>$product->count                                                                            
+                                                                            
                                                                             ]; 
                 endforeach;
             endforeach;
             return $productByCate;
         }
+        public function UpdateCountProduct($count,$masp)
+        {
+            $sql = "UPDATE products SET count = ? WHERE productID=?";
+            $param = [];
+            $param[] = $count;
+            $param[] = $masp;
+            $this->doQuery($sql, $param);
+        }
+        
         public function getByIDProduct($id)
         {
             $query ='select p.*, u.unitName, c.categoryName  
@@ -160,11 +172,11 @@
             $rs = $this->doQuery($query,$param);
             return $rs;
         }
-        public function addProduct($name,$categoryID,$userid,$unit,$price,$khuyenmai, $hinhanh, $subImageArr, $description)
+        public function addProduct($name,$categoryID,$userid,$unit,$price,$khuyenmai, $hinhanh, $subImageArr, $description,$count)
         {
             
-            $query = 'insert into products(productName,categoryID,userid,unitID,price, PromotionPrice, image, image1, image2, image3, image4, image5, description, created) 
-                        values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+            $query = 'insert into products(productName,categoryID,userid,unitID,price, PromotionPrice, image, image1, image2, image3, image4, image5, description, created,count) 
+                        values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
             $param = array();
             $param[]=$name;
             $param[]= $categoryID;
@@ -180,9 +192,10 @@
             $dt = date_create('');
             $date = date_format($dt,'Y-m-d');
             $param[] = $date;
+            $param[]= $count;
             $this->doQuery($query,$param);
         }
-        public function editProduct($name,$categoryID,$unit,$price,$promotionPrice, $hinhanh,$description, $subImageArr, $id)
+        public function editProduct($name,$categoryID,$unit,$price,$promotionPrice, $hinhanh,$description, $subImageArr,$count, $id)
         {
             $query = 'update products set 
                                 productName=?,
@@ -196,7 +209,8 @@
                                 image3=?,
                                 image4=?,
                                 image5=?,
-                                description=? 
+                                description=?, 
+                                count=?
                                 where productID=?';
             $param = array();
             $param[]=$name;
@@ -209,6 +223,7 @@
                 $param[] = $subImageArr[$i];
             }
             $param[] = $description;
+            $param[] = $count;
             $param[]=$id;
             $this->doQuery($query,$param);
         }

@@ -148,9 +148,8 @@
             </script>
             <?php
          break;
-         case 'xemdanhmucsanpham':
-            
-    if(isset($_SESSION['userid']))
+        case 'xemdanhmucsanpham':            
+        if(isset($_SESSION['userid']))
             {
                 $userid = $_SESSION['userid'];                  
                 $product_model = new Products();

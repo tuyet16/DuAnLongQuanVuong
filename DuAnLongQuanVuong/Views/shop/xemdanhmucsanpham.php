@@ -21,6 +21,10 @@
                               <p><?php echo number_format($product['price']); ?></p>
                             </div>
                             <div class="form-group">
+                              <label for="productPrice">Số lượng:</label>
+                              <p><?php echo $product['count']; ?></p>
+                            </div>
+                            <div class="form-group">
                               <label for="productName">Giảm giá:</label>
                               <p><?php echo number_format($product['PromotionPrice']); ?></p>
                             </div>

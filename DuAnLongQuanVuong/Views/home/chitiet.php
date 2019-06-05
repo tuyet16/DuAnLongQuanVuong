@@ -53,12 +53,27 @@ $(document).ready(function(){
                          <?php echo number_format($rs_chi_tiet_san_pham[0]->price);?> đ/<?php echo $rs_chi_tiet_san_pham[0]->unitName;?>
                     </div>
             <?php endif; ?>
-            <p class="button">
-                <a href="shoppingcart_controller.php?action=add&id=<?php echo $rs_chi_tiet_san_pham[0]->productID;?>" 
-                    >
-                    Mua sản phẩm
-                </a>
-            </p>
+            <?php if($rs_chi_tiet_san_pham[0]->count >0):?>
+                    <div class="product-price">
+                         <?php echo 'Số Lượng hàng còn:'.number_format($rs_chi_tiet_san_pham[0]->count);?> /<?php echo $rs_chi_tiet_san_pham[0]->unitName;?>
+                    </div>
+                    <p class="button">
+                        <a href="shoppingcart_controller.php?action=add&id=<?php echo $rs_chi_tiet_san_pham[0]->productID;?>" 
+                            >
+                            Mua sản phẩm
+                        </a>
+                    </p>
+            <?php else:?>
+                    <div class="product-price" style="color: #0000A0;">
+                         <?php echo 'Hết Hàng' ?>
+                    </div>
+                    <p class="button">
+                        <a style="opacity: 0.5;">
+                            Mua sản phẩm
+                        </a>
+                    </p>
+            <?php endif;?>
+            
             <div class="row">
             <div class="col-xs-12 col-sm-12">
                 <div class="product-information">THÔNG TIN SẢN PHẨM</div>
